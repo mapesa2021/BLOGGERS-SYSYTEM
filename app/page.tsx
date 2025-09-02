@@ -1,0 +1,257 @@
+'use client'
+
+import { useState } from 'react'
+import { templateEngine } from '@/lib/template-engine'
+import { Palette, User, Download, CheckCircle } from 'lucide-react'
+
+export default function Home() {
+  const [step, setStep] = useState<'template' | 'customize' | 'generate'>('template')
+  const [selectedTemplate, setSelectedTemplate] = useState('')
+  const [creatorData, setCreatorData] = useState({
+    creatorId: 'demo-user',
+    creatorName: '',
+    creatorBio: '',
+    creatorImage: '',
+    creatorPrice: 0,
+    creatorCurrency: 'TZS'
+  })
+  const [generatedUrl, setGeneratedUrl] = useState('')
+
+  const templates = templateEngine.getTemplates()
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Clubzila Landing Pages
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Create beautiful, fast-loading landing pages for your Clubzila creator profile. 
+            Choose from our templates and get a unique URL in seconds.
+          </p>
+          <div className="mt-6 flex space-x-4 justify-center">
+            <a
+              href="/demo"
+              className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
+            >
+              View Demo Templates
+            </a>
+          </div>
+        </div>
+
+        {/* Progress Steps */}
+        <div className="flex justify-center mb-8">
+          <div className="flex items-center space-x-4">
+            {[
+              { key: 'template', label: 'Choose Template', icon: Palette },
+              { key: 'customize', label: 'Customize', icon: User },
+              { key: 'generate', label: 'Generate', icon: Download }
+            ].map((stepInfo, index) => {
+              const Icon = stepInfo.icon
+              const isActive = step === stepInfo.key
+              const isCompleted = ['customize', 'generate'].indexOf(step) > ['customize', 'generate'].indexOf(stepInfo.key)
+              
+              return (
+                <div key={stepInfo.key} className="flex items-center">
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
+                    isActive ? 'border-blue-600 bg-blue-600 text-white' :
+                    isCompleted ? 'border-green-600 bg-green-600 text-white' :
+                    'border-gray-300 bg-white text-gray-400'
+                  }`}>
+                    {isCompleted ? <CheckCircle className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
+                  </div>
+                  <span className={`ml-2 text-sm font-medium ${
+                    isActive ? 'text-blue-600' : 'text-gray-500'
+                  }`}>
+                    {stepInfo.label}
+                  </span>
+                  {index < 2 && (
+                    <div className={`w-16 h-0.5 mx-4 ${
+                      isCompleted ? 'bg-green-600' : 'bg-gray-300'
+                    }`} />
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Step Content */}
+        <div className="max-w-2xl mx-auto">
+          {/* Template Selection Step */}
+          {step === 'template' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                Choose Your Template
+              </h2>
+              
+              <div className="grid gap-6">
+                {templates.map((template) => (
+                  <div
+                    key={template.id}
+                    className={`border-2 rounded-lg p-6 cursor-pointer transition-all ${
+                      selectedTemplate === template.id
+                        ? 'border-blue-600 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    }`}
+                    onClick={() => { setSelectedTemplate(template.id); setStep('customize'); }}
+                  >
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      {template.name}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {template.description}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">
+                        Template ID: {template.id}
+                      </span>
+                      {selectedTemplate === template.id && (
+                        <CheckCircle className="w-6 h-6 text-blue-600" />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Customization Step */}
+          {step === 'customize' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                Enter Creator ID
+              </h2>
+              
+              <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Creator ID
+                  </label>
+                  <input
+                    type="text"
+                    value={creatorData.creatorId}
+                    onChange={(e) => setCreatorData(prev => ({ ...prev, creatorId: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="Enter your Clubzila Creator ID"
+                    required
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    This is the unique identifier needed to initiate subscriptions from Clubzila
+                  </p>
+                </div>
+                
+                <div className="flex justify-between pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep('template')}
+                    className="px-6 py-2 text-gray-600 font-medium hover:text-gray-800 transition-colors"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Generation Step */}
+          {step === 'generate' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                Generate Your Landing Page
+              </h2>
+              
+              <div className="space-y-6">
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="font-semibold text-gray-900 mb-2">Page Summary</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
+                    <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => {
+                    const pageId = `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
+                    const url = `${window.location.origin}/page/${pageId}`
+                    setGeneratedUrl(url)
+                    
+                    // Store the page data for later retrieval
+                    localStorage.setItem(`page_${pageId}`, JSON.stringify({
+                      templateId: selectedTemplate,
+                      creatorId: creatorData.creatorId,
+                      creatorName: creatorData.creatorId,
+                      creatorBio: 'Creator bio will be displayed here',
+                      creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
+                      creatorPrice: 0,
+                      creatorCurrency: 'TZS'
+                    }))
+                  }}
+                  className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors"
+                >
+                  Generate Landing Page
+                </button>
+                
+                {generatedUrl && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-900 mb-2">Success! 🎉</h3>
+                    <p className="text-green-700 mb-3">
+                      Your landing page has been generated successfully!
+                    </p>
+                    <div className="flex items-center space-x-3">
+                      <input
+                        type="text"
+                        value={generatedUrl}
+                        readOnly
+                        className="flex-1 px-3 py-3 border border-green-300 rounded bg-white text-green-900"
+                      />
+                      <button
+                        onClick={() => navigator.clipboard.writeText(generatedUrl)}
+                        className="px-4 py-3 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                    <div className="mt-3 flex space-x-3">
+                      <a
+                        href={generatedUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-center"
+                      >
+                        View Page
+                      </a>
+                      <button
+                        onClick={() => setStep('template')}
+                        className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                      >
+                        Create Another
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="flex justify-between pt-4">
+                  <button
+                    onClick={() => setStep('customize')}
+                    className="px-6 py-2 text-gray-600 font-medium hover:text-gray-800 transition-colors"
+                  >
+                    ← Back
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
