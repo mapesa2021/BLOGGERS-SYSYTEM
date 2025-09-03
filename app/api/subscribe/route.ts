@@ -41,28 +41,14 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  try {
-    // Test the Clubzila integration
-    const clubzila = new ClubzilaIntegration();
-    const testResult = await clubzila.testIntegration();
-    
-    return NextResponse.json({
-      success: true,
-      message: 'Clubzila integration test completed',
-      data: testResult
-    });
-    
-  } catch (error) {
-    console.error('Integration test error:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: 'Integration test failed',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({
+    success: true,
+    message: 'Clubzila subscription API is running',
+    endpoints: {
+      POST: '/api/subscribe - Process subscription',
+      PUT: '/api/subscribe - Test API endpoints'
+    }
+  });
 }
 
 export async function PUT(request: NextRequest) {
