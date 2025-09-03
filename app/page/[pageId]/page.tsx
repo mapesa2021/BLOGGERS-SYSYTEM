@@ -9,6 +9,7 @@ interface PageData {
   template: 'minimal' | 'modern-business' | 'creative' | 'professional';
   creatorName: string;
   creatorIdDisplay: string; // What users see/enter
+  authorId: string; // Author ID for Clubzila API calls
   successRedirectUrl: string; // Where users go after payment
   failureRedirectUrl: string; // Where users go if payment fails
   subscriptionAmount: number;
@@ -77,6 +78,7 @@ export default function DynamicPage() {
           template: 'minimal',
           creatorName: 'Demo Creator',
           creatorIdDisplay: 'DEMO001',
+          authorId: '107',
           successRedirectUrl: '',
           failureRedirectUrl: '',
           subscriptionAmount: 500,
@@ -114,6 +116,7 @@ export default function DynamicPage() {
           template: templateType,
           creatorName: parsedData.creatorName || 'Creator',
           creatorIdDisplay: parsedData.creatorId, // Use the actual creator ID from storage
+          authorId: parsedData.authorId || '107', // Use stored author ID or fallback
           successRedirectUrl: parsedData.successRedirectUrl || '',
           failureRedirectUrl: parsedData.failureRedirectUrl || '',
           subscriptionAmount: parsedData.creatorPrice || 500,
@@ -133,6 +136,7 @@ export default function DynamicPage() {
           template: 'minimal',
           creatorName: 'Demo Creator',
           creatorIdDisplay: 'DEMO001',
+          authorId: '107',
           successRedirectUrl: '',
           failureRedirectUrl: '',
           subscriptionAmount: 500,
@@ -166,6 +170,7 @@ export default function DynamicPage() {
         body: JSON.stringify({
           pageId: pageData?.pageId,
           phoneNumber,
+          authorId: pageData?.authorId,
           userName
           // creatorId and amount are already built into the page data
         }),
@@ -226,6 +231,7 @@ export default function DynamicPage() {
   // Generate the actual HTML content using the template engine
   const html = templateEngine.generatePage(pageData.template, {
     creatorId: pageData.creatorIdDisplay,
+    authorId: pageData.authorId,
     creatorName: pageData.creatorName,
     creatorPrice: pageData.subscriptionAmount,
     creatorCurrency: pageData.currency

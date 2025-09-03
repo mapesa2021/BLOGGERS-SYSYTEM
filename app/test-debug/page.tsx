@@ -34,6 +34,7 @@ export default function TestDebugPage() {
     const testData = {
       templateId: 'minimal',
       creatorId: testPageId.split('-')[0], // Extract creator ID from testPageId
+      authorId: '999', // Test author ID
       creatorName: 'Test Creator',
       creatorPrice: 500,
       creatorCurrency: 'TZS'

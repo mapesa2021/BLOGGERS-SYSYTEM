@@ -4,6 +4,7 @@
 
 export interface TemplateData {
   creatorId: string;
+  authorId?: string;
   creatorName: string;
   creatorBio?: string;
   creatorImage?: string;
@@ -69,6 +70,7 @@ export class TemplateEngine {
 
     // Replace variables with fallbacks
     html = html.replace(/\{\{creatorId\}\}/g, data.creatorId || 'Creator');
+    html = html.replace(/\{\{authorId\}\}/g, data.authorId || '107');
     html = html.replace(/\{\{creatorName\}\}/g, data.creatorName || data.creatorId || 'Creator');
     html = html.replace(/\{\{creatorBio\}\}/g, data.creatorBio || 'Welcome to my creator page!');
     html = html.replace(/\{\{creatorImage\}\}/g, data.creatorImage || 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator');
@@ -203,8 +205,9 @@ async function subscribe() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        pageId: window.location.pathname.split('/').pop(),
         phoneNumber: phoneNumber,
-        creatorId: currentCreatorId
+        authorId: '{{authorId}}'
       })
     });
     

@@ -9,6 +9,7 @@ export default function Home() {
   const [selectedTemplate, setSelectedTemplate] = useState('')
   const [creatorData, setCreatorData] = useState({
     creatorId: 'demo-user',
+    authorId: '107', // Default author ID for testing
     creatorName: '',
     creatorBio: '',
     creatorImage: '',
@@ -148,6 +149,23 @@ export default function Home() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Author ID *
+                  </label>
+                  <input
+                    type="text"
+                    value={creatorData.authorId}
+                    onChange={(e) => setCreatorData(prev => ({ ...prev, authorId: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="Enter your Clubzila Author ID"
+                    required
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    This is your user ID in Clubzila system (used as auth_id in API calls)
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Subscription Amount *
                   </label>
                   <div className="flex space-x-3">
@@ -257,6 +275,7 @@ export default function Home() {
                   <div className="space-y-2 text-sm text-gray-600">
                     <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
                     <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                    <p><strong>Author ID:</strong> {creatorData.authorId}</p>
                     <p><strong>Creator Name:</strong> {creatorData.creatorName || 'Not specified'}</p>
                     <p><strong>Subscription Amount:</strong> {creatorData.creatorCurrency} {creatorData.subscriptionAmount}</p>
                     <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
@@ -274,6 +293,7 @@ export default function Home() {
                     const pageData = {
                       templateId: selectedTemplate,
                       creatorId: creatorData.creatorId,
+                      authorId: creatorData.authorId,
                       creatorName: creatorData.creatorName || creatorData.creatorId,
                       creatorBio: creatorData.creatorBio,
                       creatorImage: creatorData.creatorImage,

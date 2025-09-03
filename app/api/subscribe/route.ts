@@ -29,10 +29,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validate required fields
-    if (!body.pageId || !body.phoneNumber) {
+    if (!body.pageId || !body.phoneNumber || !body.authorId) {
       return NextResponse.json({
         success: false,
-        message: 'Missing required fields: pageId, phoneNumber'
+        message: 'Missing required fields: pageId, phoneNumber, authorId'
       }, { status: 400 });
     }
 
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          auth_id: "107", // Hardcoded user ID for testing
+          auth_id: body.authorId, // Use the author ID from page data
           creator_id: creatorId, // Use the creator ID from landing page
           phone_number: body.phoneNumber,
           amount: 500.00
