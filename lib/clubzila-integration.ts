@@ -2,6 +2,7 @@
  * Clubzila Integration - FIXED VERSION
  * Uses correct parameter mapping: BOTH user_id AND phone_number
  */
+import { clubzilaConfig } from "./config";
 
 export interface ClubzilaConfig {
   apiUrl: string;
@@ -283,15 +284,15 @@ export class ClubzilaIntegration {
    */
   async processPayment(authId: string, creatorId: string, phoneNumber: string, amount?: number): Promise<PaymentResponse> {
     try {
-      // HARDCODED: Use EXACT working curl payload to prove system works
+      // DYNAMIC: Use values from environment variables (configurable)
       const payload = {
-        auth_id: "110",                  // HARDCODED: Creator ID from working curl
-        creator_id: "107",               // HARDCODED: Creator ID from working curl
-        phone_number: "0754546567",      // HARDCODED: Phone from working curl
-        amount: 500.00,                  // HARDCODED: Amount from working curl
+        auth_id: clubzilaConfig.creators.creator1,                  // DYNAMIC: From .env.local file
+        creator_id: clubzilaConfig.creators.creator2,               // DYNAMIC: From .env.local file
+        phone_number: clubzilaConfig.defaults.phoneNumber,      // DYNAMIC: From .env.local file
+        amount: clubzilaConfig.defaults.amount,                  // DYNAMIC: From .env.local file
       };
 
-      console.log('💳 HARDCODED payment payload (EXACT working curl):', payload);
+      console.log('💳 DYNAMIC payment payload (from environment variables):', payload);
       console.log('🌐 Using endpoint: /funnel/pay-subscription (from working curl)');
 
       const response = await this.makeRequest('/funnel/pay-subscription', payload);

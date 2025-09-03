@@ -2,7 +2,8 @@
 const nextConfig = {
   // Comment out output: 'export' for development to allow dynamic routes
   // output: 'export',
-  trailingSlash: true,
+  // Remove trailingSlash for API routes to work properly
+  // trailingSlash: true,
   images: {
     unoptimized: true,
   },

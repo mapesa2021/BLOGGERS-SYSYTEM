@@ -13,7 +13,10 @@ export default function Home() {
     creatorBio: '',
     creatorImage: '',
     creatorPrice: 0,
-    creatorCurrency: 'TZS'
+    creatorCurrency: 'TZS',
+    subscriptionAmount: 0,
+    successRedirectUrl: '',
+    failureRedirectUrl: ''
   })
   const [generatedUrl, setGeneratedUrl] = useState('')
 
@@ -122,13 +125,13 @@ export default function Home() {
           {step === 'customize' && (
             <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                Enter Creator ID
+                Customize Your Landing Page
               </h2>
               
               <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Creator ID
+                    Creator ID *
                   </label>
                   <input
                     type="text"
@@ -140,6 +143,85 @@ export default function Home() {
                   />
                   <p className="mt-2 text-sm text-gray-500">
                     This is the unique identifier needed to initiate subscriptions from Clubzila
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Subscription Amount *
+                  </label>
+                  <div className="flex space-x-3">
+                    <input
+                      type="number"
+                      value={creatorData.subscriptionAmount}
+                      onChange={(e) => setCreatorData(prev => ({ ...prev, subscriptionAmount: parseFloat(e.target.value) || 0 }))}
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                      placeholder="0.00"
+                      step="0.01"
+                      min="0"
+                      required
+                    />
+                    <select
+                      value={creatorData.creatorCurrency}
+                      onChange={(e) => setCreatorData(prev => ({ ...prev, creatorCurrency: e.target.value }))}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    >
+                      <option value="TZS">TZS</option>
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                      <option value="GBP">GBP</option>
+                    </select>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-500">
+                    Amount customers will pay for subscription
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Success Redirect URL
+                  </label>
+                  <input
+                    type="url"
+                    value={creatorData.successRedirectUrl}
+                    onChange={(e) => setCreatorData(prev => ({ ...prev, successRedirectUrl: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="https://yoursite.com/success"
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    Where customers go after successful payment (optional)
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Failure Redirect URL
+                  </label>
+                  <input
+                    type="url"
+                    value={creatorData.failureRedirectUrl}
+                    onChange={(e) => setCreatorData(prev => ({ ...prev, failureRedirectUrl: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="https://yoursite.com/failure"
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    Where customers go if payment fails (optional)
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Creator Name
+                  </label>
+                  <input
+                    type="text"
+                    value={creatorData.creatorName}
+                    onChange={(e) => setCreatorData(prev => ({ ...prev, creatorName: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="Your name or business name"
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    Display name on your landing page
                   </p>
                 </div>
                 
@@ -175,6 +257,10 @@ export default function Home() {
                   <div className="space-y-2 text-sm text-gray-600">
                     <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
                     <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                    <p><strong>Creator Name:</strong> {creatorData.creatorName || 'Not specified'}</p>
+                    <p><strong>Subscription Amount:</strong> {creatorData.creatorCurrency} {creatorData.subscriptionAmount}</p>
+                    <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
+                    <p><strong>Failure Redirect:</strong> {creatorData.failureRedirectUrl || 'Default'}</p>
                   </div>
                 </div>
                 
@@ -185,15 +271,26 @@ export default function Home() {
                     setGeneratedUrl(url)
                     
                     // Store the page data for later retrieval
-                    localStorage.setItem(`page_${pageId}`, JSON.stringify({
+                    const pageData = {
                       templateId: selectedTemplate,
                       creatorId: creatorData.creatorId,
-                      creatorName: creatorData.creatorId,
-                      creatorBio: 'Creator bio will be displayed here',
-                      creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
-                      creatorPrice: 0,
-                      creatorCurrency: 'TZS'
-                    }))
+                      creatorName: creatorData.creatorName || creatorData.creatorId,
+                      creatorBio: creatorData.creatorBio,
+                      creatorImage: creatorData.creatorImage,
+                      creatorPrice: creatorData.subscriptionAmount,
+                      creatorCurrency: creatorData.creatorCurrency,
+                      successRedirectUrl: creatorData.successRedirectUrl,
+                      failureRedirectUrl: creatorData.failureRedirectUrl
+                    };
+                    
+                    console.log('💾 Storing page data:', pageData);
+                    localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                    
+                    // Also log what's in localStorage for debugging
+                    console.log('🔍 localStorage after storing:', {
+                      key: `page_${pageId}`,
+                      value: localStorage.getItem(`page_${pageId}`)
+                    });
                   }}
                   className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >

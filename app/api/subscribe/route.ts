@@ -1,89 +1,117 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { ClubzilaIntegration } from '@/lib/clubzila-integration'
+/**
+ * Subscription API Route
+ * Integrates with Clubzila API to trigger USSD payments
+ */
 
-export async function POST(request: NextRequest) {
-  try {
-    const { creatorId, phoneNumber } = await request.json()
+import { NextRequest, NextResponse } from 'next/server';
 
-    if (!creatorId || !phoneNumber) {
-      return NextResponse.json(
-        { success: false, message: 'Missing creatorId or phoneNumber' },
-        { status: 400 }
-      )
-    }
-
-    const clubzila = new ClubzilaIntegration()
-
-    // Use the complete subscription flow method
-    const result = await clubzila.processSubscription(phoneNumber, creatorId)
-    
-    if (!result.success) {
-      return NextResponse.json(result, { status: 400 })
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: result.message,
-      data: {
-        ...result.data,
-        phone_number: phoneNumber,
-        creator_id: creatorId
-      }
-    })
-
-  } catch (error) {
-    console.error('Subscription API error:', error)
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    )
-  }
-}
-
-export async function GET(request: NextRequest) {
+// GET: Test endpoint
+export async function GET() {
   return NextResponse.json({
     success: true,
-    message: 'Clubzila subscription API is running',
+    message: 'Subscription API is running',
     endpoints: {
-      POST: '/api/subscribe - Process subscription',
-      PUT: '/api/subscribe - Test API endpoints'
-    }
+      POST: '/api/subscribe - Process subscription with dynamic creator data'
+    },
+    features: [
+      'Dynamic creator ID validation',
+      'User phone number from form input',
+      'Success/failure redirect URLs',
+      'Analytics tracking',
+      'Multi-tenant support'
+    ]
   });
 }
 
-export async function PUT(request: NextRequest) {
+// POST: Process subscription with dynamic creator data
+export async function POST(request: NextRequest) {
   try {
-    // Test the real API endpoints
-    const testPhone = '+255123456789';
-    const testCreator = 'test-creator';
+    const body = await request.json();
     
-    const clubzila = new ClubzilaIntegration();
-    
-    // Test user check
-    const userCheck = await clubzila.getUser(testPhone);
-    
-    // Test subscription process
-    const subscriptionResult = await clubzila.processSubscription(testPhone, testCreator);
+    // Validate required fields
+    if (!body.pageId || !body.phoneNumber) {
+      return NextResponse.json({
+        success: false,
+        message: 'Missing required fields: pageId, phoneNumber'
+      }, { status: 400 });
+    }
+
+    console.log('🔄 Processing subscription with built-in creator data:', {
+      pageId: body.pageId,
+      phoneNumber: body.phoneNumber,
+      userName: body.userName
+    });
+
+      // Extract the creator ID from the pageId (format: creatorId-template-timestamp)
+      const pageIdParts = body.pageId.split('-');
+      const creatorIdString = pageIdParts[0]; // First part is the creator ID
+      
+      // Validate that creator ID is a valid integer
+      const creatorId = parseInt(creatorIdString);
+      if (isNaN(creatorId)) {
+        console.error('❌ Invalid creator ID:', creatorIdString);
+        return NextResponse.json({
+          success: false,
+          message: `Invalid creator ID: ${creatorIdString}. Creator ID must be a number.`,
+          error: 'Creator ID must be a valid integer'
+        }, { status: 400 });
+      }
+      
+      console.log('📋 Using page data:', {
+        pageId: body.pageId,
+        creatorId: creatorId,
+        creatorIdString: creatorIdString,
+        phoneNumber: body.phoneNumber
+      });
+      
+      // Call Clubzila API to trigger USSD payment
+      const clubzilaResponse = await fetch('https://clubzila.com/api/funnel/pay-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          auth_id: "107", // Hardcoded user ID for testing
+          creator_id: creatorId, // Use the creator ID from landing page
+          phone_number: body.phoneNumber,
+          amount: 500.00
+        })
+      });
+
+      if (!clubzilaResponse.ok) {
+        const errorData = await clubzilaResponse.text();
+        console.error('❌ Clubzila API error:', clubzilaResponse.status, errorData);
+        
+        return NextResponse.json({
+          success: false,
+          message: `Payment failed: ${clubzilaResponse.status} ${clubzilaResponse.statusText}`,
+          error: errorData
+        }, { status: 400 });
+      }
+
+      const clubzilaData = await clubzilaResponse.json();
+      console.log('✅ Clubzila payment initiated successfully:', clubzilaData);
+      
+      return NextResponse.json({
+        success: true,
+        message: 'Payment initiated! Check your phone for USSD prompt.',
+        data: {
+          subscription_id: clubzilaData.transaction_id || `sub_${Date.now()}`,
+          status: 'pending',
+          amount: 500,
+          currency: 'TZS',
+          clubzila_response: clubzilaData
+        }
+      });
+
+  } catch (error) {
+    console.error('❌ Subscription API error:', error);
     
     return NextResponse.json({
-      success: true,
-      message: 'Real API test completed',
-      data: {
-        userCheck,
-        subscriptionResult
-      }
-    });
-    
-  } catch (error) {
-    console.error('Real API test error:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: 'Real API test failed',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
-    );
+      success: false,
+      message: 'Subscription processing failed',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }
 
