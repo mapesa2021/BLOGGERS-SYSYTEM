@@ -14,55 +14,20 @@ export async function POST(request: NextRequest) {
 
     const clubzila = new ClubzilaIntegration()
 
-    // First, authenticate the user
-    const authResult = await clubzila.authenticateUser(phoneNumber)
+    // Use the complete subscription flow method
+    const result = await clubzila.processSubscription(phoneNumber, creatorId)
     
-    if (!authResult.success) {
-      return NextResponse.json(
-        { success: false, message: authResult.message },
-        { status: 400 }
-      )
-    }
-
-    const userId = authResult.data?.user_id
-    if (!userId) {
-      return NextResponse.json(
-        { success: false, message: 'Failed to get user ID' },
-        { status: 400 }
-      )
-    }
-
-    // Check if user already has an active subscription
-    const subscriptionCheck = await clubzila.checkSubscription(userId, creatorId)
-    
-    if (subscriptionCheck.success && subscriptionCheck.data?.has_active_subscription) {
-      return NextResponse.json({
-        success: true,
-        message: 'User already has an active subscription',
-        data: {
-          has_subscription: true,
-          subscription_details: subscriptionCheck.data.subscription_details
-        }
-      })
-    }
-
-    // Process payment for subscription
-    const paymentResult = await clubzila.processPayment(userId, creatorId, phoneNumber)
-    
-    if (!paymentResult.success) {
-      return NextResponse.json(
-        { success: false, message: paymentResult.message },
-        { status: 400 }
-      )
+    if (!result.success) {
+      return NextResponse.json(result, { status: 400 })
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Subscription payment initiated successfully',
+      message: result.message,
       data: {
-        has_subscription: false,
-        payment_initiated: true,
-        payment_data: paymentResult.data
+        ...result.data,
+        phone_number: phoneNumber,
+        creator_id: creatorId
       }
     })
 
@@ -72,6 +37,67 @@ export async function POST(request: NextRequest) {
       { success: false, message: 'Internal server error' },
       { status: 500 }
     )
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    // Test the Clubzila integration
+    const clubzila = new ClubzilaIntegration();
+    const testResult = await clubzila.testIntegration();
+    
+    return NextResponse.json({
+      success: true,
+      message: 'Clubzila integration test completed',
+      data: testResult
+    });
+    
+  } catch (error) {
+    console.error('Integration test error:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        message: 'Integration test failed',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    // Test the real API endpoints
+    const testPhone = '+255123456789';
+    const testCreator = 'test-creator';
+    
+    const clubzila = new ClubzilaIntegration();
+    
+    // Test user check
+    const userCheck = await clubzila.getUser(testPhone);
+    
+    // Test subscription process
+    const subscriptionResult = await clubzila.processSubscription(testPhone, testCreator);
+    
+    return NextResponse.json({
+      success: true,
+      message: 'Real API test completed',
+      data: {
+        userCheck,
+        subscriptionResult
+      }
+    });
+    
+  } catch (error) {
+    console.error('Real API test error:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        message: 'Real API test failed',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
   }
 }
 

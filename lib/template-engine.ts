@@ -137,7 +137,7 @@ export class TemplateEngine {
   <div class="hero-image">
     <img src="https://images.pexels.com/photos/40784/drops-of-water-water-nature-liquid-40784.jpeg?cs=srgb&dl=pexels-pixabay-40784.jpg&fm=jpg" alt="Water drops" class="hero-img">
   </div>
-  
+
   <div class="profile">
     <img src="{{creatorImage}}" alt="{{creatorName}}" class="avatar">
     <h1>{{creatorName}}</h1>
@@ -147,11 +147,101 @@ export class TemplateEngine {
   <div class="subscription">
     <h2>Subscribe to {{creatorName}}</h2>
     <div class="price">{{creatorPrice}} {{creatorCurrency}}/month</div>
-    <button class="subscribe-btn" data-clubzila-subscribe>Subscribe Now</button>
+    
+    <div class="subscription-form">
+      <div class="form-step" id="step1">
+        <p class="form-description">Enter your mobile money phone number to subscribe</p>
+        <input type="tel" id="phoneNumber" placeholder="Enter your mobile money phone number" class="form-input" required>
+        <button onclick="subscribe()" class="subscribe-btn">Subscribe Now</button>
+      </div>
+      
+      <div class="form-step" id="step2" style="display: none;">
+        <div class="success-message">
+          <h3>Subscription Initiated! 📱</h3>
+          <p>Check your phone for a USSD prompt to complete the payment.</p>
+          <p class="ussd-info">You'll receive a mobile money prompt on <strong id="userPhone"></strong></p>
+          <div class="payment-steps">
+            <p><strong>Next steps:</strong></p>
+            <ol>
+              <li>Check your phone for USSD prompt</li>
+              <li>Enter your mobile money PIN</li>
+              <li>Confirm the payment amount</li>
+              <li>You'll get access to {{creatorName}}'s content!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-step" id="step3" style="display: none;">
+        <div class="error-message">
+          <h3>Something went wrong</h3>
+          <p id="errorText">Please try again.</p>
+          <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <footer>
+    <p>&copy; 2024 {{creatorName}}. Powered by <a href="https://clubzila.com" target="_blank">Clubzila</a></p>
+  </footer>
+</div>
+
+<script>
+let currentCreatorId = '{{creatorId}}';
+
+async function subscribe() {
+  const phoneNumber = document.getElementById('phoneNumber').value.trim();
   
-  <footer>Powered by <a href="https://clubzila.com">Clubzila</a></footer>
-</div>`;
+  if (!phoneNumber) {
+    alert('Please enter your mobile money phone number');
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phoneNumber: phoneNumber,
+        creatorId: currentCreatorId
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      // Show success step with USSD instructions
+      document.getElementById('userPhone').textContent = phoneNumber;
+      showStep(2);
+    } else {
+      showError(result.message || 'Subscription failed');
+    }
+  } catch (error) {
+    showError('Network error. Please try again.');
+  }
+}
+
+function showStep(stepNumber) {
+  // Hide all steps
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('step' + i).style.display = 'none';
+  }
+  
+  // Show the specified step
+  document.getElementById('step' + stepNumber).style.display = 'block';
+}
+
+function showError(message) {
+  document.getElementById('errorText').textContent = message;
+  showStep(3);
+}
+
+function backToStep1() {
+  showStep(1);
+  document.getElementById('phoneNumber').value = '';
+}
+</script>`;
   }
 
   private getMinimalCSS(): string {
@@ -165,17 +255,28 @@ body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667e
 .bio { color: #666; margin-bottom: 1rem; }
 .subscription { background: white; padding: 2rem; margin: 0 2rem 2rem 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 .price { font-size: 2rem; font-weight: bold; color: #667eea; margin: 1rem 0; }
-.subscribe-btn { background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1.1rem; cursor: pointer; }
+.subscription-form { margin-top: 2rem; }
+.form-step { margin-bottom: 1rem; }
+.form-description { color: #666; margin-bottom: 1rem; font-size: 0.9rem; }
+.form-input { width: 100%; padding: 1rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; }
+.form-input:focus { outline: none; border-color: #667eea; }
+.subscribe-btn { background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1.1rem; cursor: pointer; margin: 0.5rem; }
 .subscribe-btn:hover { background: #5a6fd8; }
 .subscribe-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.success-message { color: #28a745; }
+.ussd-info { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+.payment-steps { text-align: left; margin-top: 1rem; }
+.payment-steps ol { margin-left: 1.5rem; }
+.payment-steps li { margin: 0.5rem 0; color: #666; }
+.error-message { color: #dc3545; }
 footer { margin: 0 2rem 2rem 2rem; color: white; }
 footer a { color: white; text-decoration: none; }`;
   }
 
   private getModernHTML(): string {
-    return `<div class="container">
+    return `<div class="app">
   <nav class="navbar">
-    <div class="logo">Clubzila</div>
+    <div class="logo">Clubzila Creator</div>
   </nav>
   
   <header class="hero">
@@ -187,34 +288,128 @@ footer a { color: white; text-decoration: none; }`;
       <div class="hero-text">
         <h1>{{creatorName}}</h1>
         <p>{{creatorBio}}</p>
-        <button class="cta-btn" data-clubzila-subscribe>Start Subscription</button>
+        <div class="subscription-form">
+          <div class="form-step" id="step1">
+            <p class="form-description">Enter your mobile money phone number to subscribe</p>
+            <input type="tel" id="phoneNumber" placeholder="Enter your mobile money phone number" class="form-input" required>
+            <button onclick="subscribe()" class="cta-btn">Subscribe Now</button>
+          </div>
+          
+          <div class="form-step" id="step2" style="display: none;">
+            <div class="success-message">
+              <h3>Subscription Initiated! 📱</h3>
+              <p>Check your phone for a USSD prompt to complete the payment.</p>
+              <p class="ussd-info">You'll receive a mobile money prompt on <strong id="userPhone"></strong></p>
+              <div class="payment-steps">
+                <p><strong>Next steps:</strong></p>
+                <ol>
+                  <li>Check your phone for USSD prompt</li>
+                  <li>Enter your mobile money PIN</li>
+                  <li>Confirm the payment amount</li>
+                  <li>You'll get access to {{creatorName}}'s content!</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-step" id="step3" style="display: none;">
+            <div class="error-message">
+              <h3>Something went wrong</h3>
+              <p id="errorText">Please try again.</p>
+              <button onclick="backToStep1()" class="cta-btn">Try Again</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
   
-  <main class="main">
-    <section class="pricing">
-      <h2>Monthly Subscription</h2>
-      <div class="price-card">
-        <div class="price">{{creatorPrice}} {{creatorCurrency}}</div>
-        <ul class="features">
-          <li>✓ Exclusive content</li>
-          <li>✓ Direct updates</li>
-          <li>✓ Community access</li>
-        </ul>
-        <button class="subscribe-btn" data-clubzila-subscribe>Subscribe Now</button>
+  <main class="main-content">
+    <section class="features">
+      <h2>What You'll Get</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <h3>Exclusive Content</h3>
+          <p>Access to premium content only available to subscribers</p>
+        </div>
+        <div class="feature">
+          <h3>Direct Access</h3>
+          <p>Connect directly with {{creatorName}} through Clubzila</p>
+        </div>
+        <div class="feature">
+          <h3>Premium Support</h3>
+          <p>Get priority support and faster response times</p>
+        </div>
       </div>
     </section>
   </main>
   
-  <footer>Powered by <a href="https://clubzila.com">Clubzila</a></footer>
-</div>`;
+  <footer class="footer">
+    <p>&copy; 2024 {{creatorName}}. Powered by <a href="https://clubzila.com" target="_blank">Clubzila</a></p>
+  </footer>
+</div>
+
+<script>
+let currentCreatorId = '{{creatorId}}';
+
+async function subscribe() {
+  const phoneNumber = document.getElementById('phoneNumber').value.trim();
+  
+  if (!phoneNumber) {
+    alert('Please enter your mobile money phone number');
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phoneNumber: phoneNumber,
+        creatorId: currentCreatorId
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      // Show success step with USSD instructions
+      document.getElementById('userPhone').textContent = phoneNumber;
+      showStep(2);
+    } else {
+      showError(result.message || 'Subscription failed');
+    }
+  } catch (error) {
+    showError('Network error. Please try again.');
+  }
+}
+
+function showStep(stepNumber) {
+  // Hide all steps
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('step' + i).style.display = 'none';
+  }
+  
+  // Show the specified step
+  document.getElementById('step' + stepNumber).style.display = 'block';
+}
+
+function showError(message) {
+  document.getElementById('errorText').textContent = message;
+  showStep(3);
+}
+
+function backToStep1() {
+  showStep(1);
+  document.getElementById('phoneNumber').value = '';
+}
+</script>`;
   }
 
   private getModernCSS(): string {
     return `* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; }
-.container { min-height: 100vh; display: flex; flex-direction: column; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+.app { min-height: 100vh; display: flex; flex-direction: column; }
 .navbar { background: white; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 .logo { font-size: 1.5rem; font-weight: bold; color: #3b82f6; }
 .hero { position: relative; padding: 4rem 2rem; flex: 1; overflow: hidden; }
@@ -224,21 +419,36 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height
 .hero-image { width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 .hero-text h1 { font-size: 3rem; margin-bottom: 1rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
 .hero-text p { font-size: 1.2rem; color: white; margin-bottom: 2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
-.cta-btn { background: #3b82f6; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; cursor: pointer; }
+.subscription-form { margin-top: 2rem; }
+.form-step { margin-bottom: 1rem; }
+.form-description { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-size: 0.9rem; }
+.form-input { width: 100%; padding: 1rem; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.1); color: white; }
+.form-input::placeholder { color: rgba(255,255,255,0.7); }
+.form-input:focus { outline: none; border-color: white; background: rgba(255,255,255,0.2); }
+.cta-btn { background: #3b82f6; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin: 0.5rem; }
 .cta-btn:hover { background: #2563eb; }
-.main { flex: 1; padding: 4rem 2rem; }
-.pricing { max-width: 600px; margin: 0 auto; text-align: center; }
-.pricing h2 { font-size: 2.5rem; margin-bottom: 2rem; color: #1f2937; }
-.price-card { background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-.price { font-size: 3rem; font-weight: bold; color: #3b82f6; margin-bottom: 2rem; }
-.features { list-style: none; margin-bottom: 2rem; text-align: left; }
-.features li { padding: 0.5rem 0; color: #6b7280; }
-.subscribe-btn { background: #3b82f6; color: white; border: none; padding: 1rem 3rem; border-radius: 8px; font-size: 1.1rem; cursor: pointer; width: 100%; }
-.subscribe-btn:hover { background: #2563eb; }
-.subscribe-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-footer { background: #1f2937; color: #d1d5db; padding: 2rem; text-align: center; margin-top: auto; }
-footer a { color: #3b82f6; text-decoration: none; }
-@media (max-width: 768px) { .hero-content { grid-template-columns: 1fr; text-align: center; } .hero-text h1 { font-size: 2rem; } }`;
+.success-message { color: #28a745; text-align: center; }
+.ussd-info { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; color: white; }
+.payment-steps { text-align: left; margin-top: 1rem; }
+.payment-steps ol { margin-left: 1.5rem; }
+.payment-steps li { margin: 0.5rem 0; color: rgba(255,255,255,0.9); }
+.error-message { color: #dc3545; text-align: center; }
+.main-content { flex: 1; padding: 4rem 2rem; background: white; }
+.features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #1f2937; }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+.feature { text-align: center; padding: 2rem; }
+.feature h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #3b82f6; }
+.feature p { color: #6b7280; line-height: 1.6; }
+.footer { background: #1f2937; color: white; text-align: center; padding: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+@media (max-width: 768px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero-text h1 { font-size: 2rem; }
+  .hero-text p { font-size: 1rem; }
+  .features h2 { font-size: 2rem; }
+  .feature-grid { grid-template-columns: 1fr; }
+}`;
   }
 }
 
