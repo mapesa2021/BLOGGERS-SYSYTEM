@@ -80,7 +80,7 @@ export class ClubzilaIntegration {
       retryAttempts: 3,
       ...config,
     };
-
+    
     console.log('Clubzila Integration initialized with:', {
       apiUrl: this.config.apiUrl,
       hasApiKey: !!this.config.apiKey,
@@ -99,7 +99,7 @@ export class ClubzilaIntegration {
     console.log('Request data (stringified):', JSON.stringify(data, null, 2));
     
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       'Accept': 'application/json',
       'User-Agent': 'Clubzila-Integration/1.0'
     };
@@ -293,7 +293,7 @@ export class ClubzilaIntegration {
 
       console.log('💳 HARDCODED payment payload (EXACT working curl):', payload);
       console.log('🌐 Using endpoint: /funnel/pay-subscription (from working curl)');
-      
+
       const response = await this.makeRequest('/funnel/pay-subscription', payload);
 
       if (response.ok) {
@@ -301,11 +301,11 @@ export class ClubzilaIntegration {
         return {
           success: true,
           message: 'Payment initiated successfully',
-                  data: {
+          data: {
           transaction_id: data.data?.payment_id || data.transaction_id || undefined,
           payment_status: data.data?.status || 'pending',
           payment_data: data.data || data,
-        },
+          },
         };
       }
 
@@ -417,7 +417,7 @@ export class ClubzilaIntegration {
             console.log('❌ User registration failed:', registration);
             return {
               success: false,
-              message: registration.message,
+              message: registration.message || "User registration failed",
               error: registration.error
             };
           }
@@ -490,7 +490,7 @@ export class ClubzilaIntegration {
       results.process_payment = paymentResult;
       
       console.log('✅ All endpoints tested successfully');
-      
+
       return {
         success: true,
         message: 'All endpoints tested with FIXED parameter mapping',
