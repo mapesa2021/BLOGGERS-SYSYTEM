@@ -3,7 +3,7 @@ import { templateEngine } from '@/lib/template-engine'
 interface PageData {
   templateId: string
   creatorId: string
-  creatorName?: string
+  creatorName: string // Required since we always provide it
   creatorBio?: string
   creatorImage?: string
   creatorPrice?: number
@@ -48,7 +48,7 @@ export default function LandingPage({ params }: { params: { pageId: string } }) 
       pageData = {
         templateId,
         creatorId,
-        creatorName: creatorId,
+        creatorName: creatorId, // This is always a string since creatorId is required
         creatorBio: 'Welcome to my creator page!',
         creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
         creatorPrice: 0,
