@@ -391,7 +391,7 @@ export class ClubzilaIntegration {
         console.log('❌ User check failed:', userCheck);
         return {
           success: false,
-          message: userCheck.message,
+          message: userCheck.message || "User check failed",
           error: userCheck.error
         };
       }
