@@ -19,6 +19,9 @@ type Creator = Database['public']['Tables']['creators']['Row']
 type CreatorInsert = Database['public']['Tables']['creators']['Insert']
 type CreatorUpdate = Database['public']['Tables']['creators']['Update']
 
+// In-memory storage for landing pages (temporary solution)
+const landingPagesStorage = new Map<string, LandingPage>();
+
 export class DatabaseService {
   // Landing Page Operations
   static async createLandingPage(data: LandingPageInsert): Promise<LandingPage> {
@@ -49,6 +52,9 @@ export class DatabaseService {
         updated_at: new Date().toISOString()
       }
       
+      // Store in memory
+      landingPagesStorage.set(processedData.page_id, landingPage);
+      
       console.log('✅ Created landing page:', landingPage)
       return landingPage
 
@@ -74,9 +80,14 @@ export class DatabaseService {
   }
 
   static async getLandingPageByPageId(pageId: string): Promise<LandingPage | null> {
-    // For now, return null since we're not using database storage
-    // The client-side will handle localStorage fallback
-    console.log('❌ Landing page not found in database:', pageId);
+    // Check in-memory storage first
+    const landingPage = landingPagesStorage.get(pageId);
+    if (landingPage) {
+      console.log('✅ Found landing page in memory:', pageId);
+      return landingPage;
+    }
+    
+    console.log('❌ Landing page not found in memory:', pageId);
     return null;
   }
 
