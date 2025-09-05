@@ -97,58 +97,122 @@ export class TemplateEngine {
   }
 
   private getMinimalHTML(): string {
-    return `<div class="container">
-  <div class="hero-image">
-    <img src="https://images.pexels.com/photos/40784/drops-of-water-water-nature-liquid-40784.jpeg?cs=srgb&dl=pexels-pixabay-40784.jpg&fm=jpg" alt="Water drops" class="hero-img">
-  </div>
-
-  <div class="profile">
-    <img src="{{creatorImage}}" alt="{{creatorName}}" class="avatar">
-    <h1>{{creatorName}}</h1>
-    <p class="bio">{{creatorBio}}</p>
+    return `<div class="dating-app">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-bg">
+      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=400&fit=crop" alt="Background" class="profile-bg-img">
+    </div>
+    <div class="profile-info">
+      <div class="profile-avatar">
+        <img src="{{creatorImage}}" alt="{{creatorName}}" class="avatar-img">
+        <div class="online-status"></div>
+      </div>
+      <div class="profile-details">
+        <h1 class="profile-name">{{creatorName}}</h1>
+        <div class="profile-stats">
+          <span class="stat">
+            <span class="stat-number">25</span>
+            <span class="stat-label">Age</span>
+          </span>
+          <span class="stat">
+            <span class="stat-number">5km</span>
+            <span class="stat-label">Away</span>
+          </span>
+          <span class="stat">
+            <span class="stat-number">Online</span>
+            <span class="stat-label">Now</span>
+          </span>
+        </div>
+        <p class="profile-bio">Hey there! I'm {{creatorName}} and I love connecting with new people. Let's chat and get to know each other better! 💕</p>
+      </div>
+    </div>
   </div>
   
-  <div class="subscription">
-    <h2>Subscribe to {{creatorName}}</h2>
-    <div class="price">{{creatorPrice}} {{creatorCurrency}}/month</div>
-    
-    <div class="subscription-form">
-      <div class="form-step" id="step1">
-        <p class="form-description">Enter your mobile money phone number to subscribe</p>
-        <input type="tel" id="phoneNumber" placeholder="Enter your mobile money phone number" class="form-input" required>
-        <button onclick="subscribe()" class="subscribe-btn">Subscribe Now</button>
+  <!-- Subscription Section -->
+  <div class="subscription-section">
+    <div class="subscription-card">
+      <div class="subscription-header">
+        <h3>💎 Premium Access</h3>
+        <p>Unlock exclusive content and chat with me directly</p>
       </div>
       
-      <div class="form-step" id="step2" style="display: none;">
-        <div class="success-message">
-          <h3>Subscription Initiated! 📱</h3>
-          <p>Check your phone for a USSD prompt to complete the payment.</p>
-          <p class="ussd-info">You'll receive a mobile money prompt on <strong id="userPhone"></strong></p>
-          <div class="payment-steps">
-            <p><strong>Next steps:</strong></p>
-            <ol>
-              <li>Check your phone for USSD prompt</li>
-              <li>Enter your mobile money PIN</li>
-              <li>Confirm the payment amount</li>
-              <li>You'll get access to {{creatorName}}'s content!</li>
-            </ol>
+      <div class="subscription-form">
+        <div class="form-step" id="step1">
+          <div class="form-description">Enter your mobile money number to start chatting</div>
+          <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
+          <button onclick="subscribe()" class="subscribe-btn">
+            <span class="btn-text">Start Chatting</span>
+            <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
+          </button>
+        </div>
+        
+        <div class="form-step" id="step2" style="display: none;">
+          <div class="success-message">
+            <div class="success-icon">💕</div>
+            <h3>Welcome to my world!</h3>
+            <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
+            <div class="ussd-info">
+              <h4>📱 Complete Your Payment</h4>
+              <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
+              <div class="payment-steps">
+                <ol>
+                  <li>Check your phone for the USSD prompt</li>
+                  <li>Enter your mobile money PIN</li>
+                  <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
+                  <li>Wait for confirmation message</li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <div class="form-step" id="step3" style="display: none;">
-        <div class="error-message">
-          <h3>Something went wrong</h3>
-          <p id="errorText">Please try again.</p>
-          <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+        
+        <div class="form-step" id="step3" style="display: none;">
+          <div class="error-message">
+            <div class="error-icon">😔</div>
+            <h3>Oops! Something went wrong</h3>
+            <p id="errorText">Subscription failed</p>
+            <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2024 {{creatorName}}. Powered by <a href="https://clubzila.com" target="_blank">Clubzila</a></p>
-  </footer>
+  <!-- Features Section -->
+  <div class="features-section">
+    <h3>What you'll get with premium access:</h3>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div class="feature-text">
+          <h4>Direct Messages</h4>
+          <p>Chat with me personally</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📸</div>
+        <div class="feature-text">
+          <h4>Exclusive Photos</h4>
+          <p>Private photo collection</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎥</div>
+        <div class="feature-text">
+          <h4>Premium Videos</h4>
+          <p>Exclusive video content</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">❤️</div>
+        <div class="feature-text">
+          <h4>Personal Updates</h4>
+          <p>Daily life updates</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -290,31 +354,89 @@ function backToStep1() {
 
   private getMinimalCSS(): string {
     return `* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; }
-.container { max-width: 600px; margin: 0 auto; padding: 0; text-align: center; }
-.hero-image { width: 100%; height: 300px; overflow: hidden; border-radius: 0 0 20px 20px; }
-.hero-img { width: 100%; height: 100%; object-fit: cover; }
-.profile { background: white; padding: 2rem; margin: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-.avatar { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 1rem; }
-.bio { color: #666; margin-bottom: 1rem; }
-.subscription { background: white; padding: 2rem; margin: 0 2rem 2rem 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-.price { font-size: 2rem; font-weight: bold; color: #667eea; margin: 1rem 0; }
-.subscription-form { margin-top: 2rem; }
-.form-step { margin-bottom: 1rem; }
-.form-description { color: #666; margin-bottom: 1rem; font-size: 0.9rem; }
-.form-input { width: 100%; padding: 1rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; }
-.form-input:focus { outline: none; border-color: #667eea; }
-.subscribe-btn { background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1.1rem; cursor: pointer; margin: 0.5rem; }
-.subscribe-btn:hover { background: #5a6fd8; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; min-height: 100vh; }
+.dating-app { max-width: 400px; margin: 0 auto; background: white; min-height: 100vh; position: relative; }
+
+/* Profile Header */
+.profile-header { position: relative; height: 500px; overflow: hidden; }
+.profile-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+.profile-bg-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+.profile-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+.profile-avatar { position: relative; display: inline-block; margin-bottom: 1rem; }
+.avatar-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; object-fit: cover; }
+.online-status { position: absolute; bottom: 5px; right: 5px; width: 20px; height: 20px; background: #4ade80; border: 3px solid white; border-radius: 50%; }
+.profile-details { text-align: center; color: white; }
+.profile-name { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+.profile-stats { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+.stat { text-align: center; }
+.stat-number { display: block; font-size: 1.2rem; font-weight: bold; }
+.stat-label { display: block; font-size: 0.8rem; opacity: 0.9; }
+.profile-bio { font-size: 1rem; line-height: 1.4; opacity: 0.95; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
+
+/* Subscription Section */
+.subscription-section { padding: 1.5rem; }
+.subscription-card { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+.subscription-header { text-align: center; margin-bottom: 1.5rem; }
+.subscription-header h3 { font-size: 1.5rem; color: #1f2937; margin-bottom: 0.5rem; }
+.subscription-header p { color: #6b7280; font-size: 0.9rem; }
+.form-description { color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem; text-align: center; }
+.form-input { width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; margin-bottom: 1rem; background: #f9fafb; }
+.form-input:focus { outline: none; border-color: #ec4899; background: white; }
+.subscribe-btn { width: 100%; background: linear-gradient(135deg, #ec4899, #be185d); color: white; border: none; padding: 1rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.subscribe-btn:hover { background: linear-gradient(135deg, #db2777, #9d174d); }
 .subscribe-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-.success-message { color: #28a745; }
-.ussd-info { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+.btn-text { font-size: 1.1rem; }
+.btn-price { font-size: 0.9rem; opacity: 0.9; }
+
+/* Success/Error Messages */
+.success-message { text-align: center; }
+.success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.success-message h3 { color: #1f2937; margin-bottom: 0.5rem; }
+.success-message p { color: #6b7280; margin-bottom: 1rem; }
+.ussd-info { background: #f0f9ff; padding: 1rem; border-radius: 12px; margin: 1rem 0; border-left: 4px solid #3b82f6; }
+.ussd-info h4 { color: #1e40af; margin-bottom: 0.5rem; }
+.ussd-info p { color: #1e40af; font-size: 0.9rem; }
 .payment-steps { text-align: left; margin-top: 1rem; }
 .payment-steps ol { margin-left: 1.5rem; }
-.payment-steps li { margin: 0.5rem 0; color: #666; }
-.error-message { color: #dc3545; }
-footer { margin: 0 2rem 2rem 2rem; color: white; }
-footer a { color: white; text-decoration: none; }`;
+.payment-steps li { margin: 0.5rem 0; color: #1e40af; font-size: 0.9rem; }
+.error-message { text-align: center; }
+.error-icon { font-size: 3rem; margin-bottom: 1rem; }
+.error-message h3 { color: #dc2626; margin-bottom: 0.5rem; }
+.error-message p { color: #6b7280; margin-bottom: 1rem; }
+
+/* Features Section */
+.features-section { padding: 1.5rem; background: #f8f9fa; }
+.features-section h3 { text-align: center; color: #1f2937; margin-bottom: 1.5rem; font-size: 1.2rem; }
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.feature-item { background: white; padding: 1rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.feature-text h4 { font-size: 0.9rem; color: #1f2937; margin-bottom: 0.25rem; }
+.feature-text p { font-size: 0.8rem; color: #6b7280; }
+
+/* Processing Popup */
+.processing-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.processing-content { background: white; padding: 2rem; border-radius: 20px; text-align: center; max-width: 300px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.processing-spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #ec4899; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+.processing-content h3 { color: #1f2937; margin-bottom: 0.5rem; }
+.processing-content p { color: #6b7280; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.processing-steps { text-align: left; }
+.processing-steps .step { display: flex; align-items: center; margin: 0.5rem 0; padding: 0.5rem; border-radius: 8px; transition: all 0.3s ease; }
+.processing-steps .step.active { background: #f0f9ff; color: #1e40af; }
+.processing-steps .step-icon { font-size: 1.2rem; margin-right: 0.5rem; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .dating-app { max-width: 100%; }
+  .profile-header { height: 450px; }
+  .profile-info { padding: 1.5rem; }
+  .avatar-img { width: 100px; height: 100px; }
+  .profile-name { font-size: 1.8rem; }
+  .profile-stats { gap: 1rem; }
+  .subscription-section { padding: 1rem; }
+  .features-section { padding: 1rem; }
+  .features-grid { grid-template-columns: 1fr; }
+}`;
   }
 
   private getModernHTML(): string {
