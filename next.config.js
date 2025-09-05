@@ -6,6 +6,10 @@ const nextConfig = {
   },
   // Netlify configuration
   trailingSlash: true,
+  // Disable static optimization for dynamic routes
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 }
 
 module.exports = nextConfig
