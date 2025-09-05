@@ -87,10 +87,27 @@ export default function DynamicPage() {
         return;
       }
       
-      // Try to get page data from localStorage (this is where the data is stored during page creation)
-      const storedData = localStorage.getItem(`page_${id}`);
-      console.log('📋 localStorage key:', `page_${id}`);
-      console.log('📋 Stored data found:', !!storedData);
+      // Try to get page data from database first, then fallback to localStorage
+      let storedData = null;
+      try {
+        const response = await fetch(`/api/landing-pages?pageId=${id}`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success) {
+            storedData = JSON.stringify(result.data);
+            console.log('📋 Database data found:', result.data);
+          }
+        }
+      } catch (error) {
+        console.error('❌ Database fetch failed, trying localStorage:', error);
+      }
+
+      // Fallback to localStorage if database fetch failed
+      if (!storedData && typeof window !== 'undefined') {
+        storedData = localStorage.getItem(`page_${id}`);
+        console.log('📋 localStorage fallback - key:', `page_${id}`);
+        console.log('📋 localStorage data found:', !!storedData);
+      }
       
       if (storedData) {
         const parsedData = JSON.parse(storedData);

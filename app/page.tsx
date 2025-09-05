@@ -293,7 +293,33 @@ export default function Home() {
                     console.log('💾 Storing page data:', pageData);
                     console.log('🔍 Generated pageId:', pageId);
                     console.log('🔍 Generated URL:', url);
-                    localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                    // Save to database instead of localStorage
+                    try {
+                      const response = await fetch('/api/landing-pages', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          pageId: pageId,
+                          creatorId: creatorData.creatorId,
+                          title: `Landing Page - ${creatorData.creatorId}`,
+                          template: selectedTemplate,
+                          creatorIdDisplay: creatorData.creatorId,
+                          successRedirectUrl: creatorData.successRedirectUrl,
+                          failureRedirectUrl: creatorData.failureRedirectUrl || '',
+                          description: `${selectedTemplate} template for creator ${creatorData.creatorId}`
+                        })
+                      });
+                      
+                      if (response.ok) {
+                        console.log('✅ Landing page saved to database');
+                      } else {
+                        console.error('❌ Failed to save to database, falling back to localStorage');
+                        localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                      }
+                    } catch (error) {
+                      console.error('❌ Database save failed, falling back to localStorage:', error);
+                      localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                    }
                     
                     // Also log what's in localStorage for debugging
                     console.log('🔍 localStorage after storing:', {
