@@ -170,75 +170,102 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Validate required fields
-    if (!body.pageId || !body.phoneNumber) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields: pageId, phoneNumber'
-      }, { status: 400 });
-    }
-
-    console.log('🔄 Processing subscription with dynamic user signup:', {
-      pageId: body.pageId,
-      phoneNumber: body.phoneNumber,
-      userName: body.userName
-    });
-
-    // Step 1: Smart user handling - try signup first, then get existing user if needed
-    console.log('📝 Step 1: Smart user handling...');
-    let userId: number;
+    // Validate required fields based on template type
+    const templateType = body.templateType || 'minimal'; // Default to minimal for backward compatibility
     
-    // First, try to signup the user
-    console.log('🔄 Attempting to signup new user...');
-    const signupResult = await signupUser(body.phoneNumber, body.userName);
-    
-    if (signupResult.success) {
-      // Signup successful - new user created
-      userId = parseInt(signupResult.userId!);
-      console.log('✅ New user signup successful, User ID:', userId);
-    } else {
-      // Signup failed - check if user already exists
-      console.log('⚠️ Signup failed, checking if user already exists...');
-      console.log('🔍 Signup error:', signupResult.error);
-      
-      // Check if the error indicates user already exists
-      if (signupResult.error && signupResult.error.includes('already been taken')) {
-        console.log('🔄 User already exists, getting existing user ID...');
-        const getUserResult = await getUserByPhone(body.phoneNumber);
-        
-        if (getUserResult.success) {
-          userId = parseInt(getUserResult.userId!);
-          console.log('✅ Found existing user, User ID:', userId);
-        } else {
-          console.error('❌ Failed to get existing user:', getUserResult.error);
-          return NextResponse.json({
-            success: false,
-            message: 'Failed to get existing user information',
-            error: getUserResult.error
-          }, { status: 400 });
-        }
-      } else {
-        // Some other signup error
-        console.error('❌ User signup failed with unexpected error:', signupResult.error);
+    if (templateType === 'minimal') {
+      // Minimal template: requires phoneNumber
+      if (!body.pageId || !body.phoneNumber) {
         return NextResponse.json({
           success: false,
-          message: 'User registration failed',
-          error: signupResult.error
+          message: 'Missing required fields: pageId, phoneNumber'
+        }, { status: 400 });
+      }
+    } else if (templateType === 'business') {
+      // Business template: requires userId, creatorId, and phoneNumber
+      if (!body.pageId || !body.userId || !body.creatorId || !body.phoneNumber) {
+        return NextResponse.json({
+          success: false,
+          message: 'Missing required fields: pageId, userId, creatorId, phoneNumber'
         }, { status: 400 });
       }
     }
 
-    // Step 2: Extract creator ID from pageId (format: creatorId-template-timestamp)
-    const pageIdParts = body.pageId.split('-');
-    const creatorIdString = pageIdParts[0]; // First part is the creator ID
-    
-    // Validate that creator ID is a valid integer
-    const creatorId = parseInt(creatorIdString);
+    console.log('🔄 Processing subscription:', {
+      templateType: templateType,
+      pageId: body.pageId,
+      phoneNumber: body.phoneNumber,
+      userId: body.userId,
+      creatorId: body.creatorId,
+      userName: body.userName
+    });
+
+    let userId: number;
+    let creatorId: number;
+
+    if (templateType === 'minimal') {
+      // Step 1: Smart user handling for minimal template - try signup first, then get existing user if needed
+      console.log('📝 Step 1: Smart user handling for minimal template...');
+      
+      // First, try to signup the user
+      console.log('🔄 Attempting to signup new user...');
+      const signupResult = await signupUser(body.phoneNumber, body.userName);
+      
+      if (signupResult.success) {
+        // Signup successful - new user created
+        userId = parseInt(signupResult.userId!);
+        console.log('✅ New user signup successful, User ID:', userId);
+      } else {
+        // Signup failed - check if user already exists
+        console.log('⚠️ Signup failed, checking if user already exists...');
+        console.log('🔍 Signup error:', signupResult.error);
+        
+        // Check if the error indicates user already exists
+        if (signupResult.error && signupResult.error.includes('already been taken')) {
+          console.log('🔄 User already exists, getting existing user ID...');
+          const getUserResult = await getUserByPhone(body.phoneNumber);
+          
+          if (getUserResult.success) {
+            userId = parseInt(getUserResult.userId!);
+            console.log('✅ Found existing user, User ID:', userId);
+          } else {
+            console.error('❌ Failed to get existing user:', getUserResult.error);
+            return NextResponse.json({
+              success: false,
+              message: 'Failed to get existing user information',
+              error: getUserResult.error
+            }, { status: 400 });
+          }
+        } else {
+          // Some other signup error
+          console.error('❌ User signup failed with unexpected error:', signupResult.error);
+          return NextResponse.json({
+            success: false,
+            message: 'User registration failed',
+            error: signupResult.error
+          }, { status: 400 });
+        }
+      }
+      
+      // Extract creator ID from pageId for minimal template
+      const pageIdParts = body.pageId.split('-');
+      const creatorIdString = pageIdParts[0];
+      creatorId = parseInt(creatorIdString);
+      
+    } else if (templateType === 'business') {
+      // Business template: use provided userId and creatorId directly
+      console.log('📝 Step 1: Using provided User ID and Creator ID for business template...');
+      userId = parseInt(body.userId);
+      creatorId = parseInt(body.creatorId);
+      console.log('✅ Using provided IDs - User ID:', userId, 'Creator ID:', creatorId, 'Phone:', body.phoneNumber);
+    }
+
+    // Step 2: Validate creator ID
     if (isNaN(creatorId)) {
-      console.error('❌ Invalid creator ID:', creatorIdString);
+      console.error('❌ Invalid creator ID:', creatorId);
       return NextResponse.json({
         success: false,
-        message: `Invalid creator ID: ${creatorIdString}. Creator ID must be a number.`,
+        message: `Invalid creator ID: ${creatorId}. Creator ID must be a number.`,
         error: 'Creator ID must be a valid integer'
       }, { status: 400 });
     }
@@ -247,8 +274,8 @@ export async function POST(request: NextRequest) {
       pageId: body.pageId,
       userId: userId,
       creatorId: creatorId,
-      creatorIdString: creatorIdString,
-      phoneNumber: body.phoneNumber
+      phoneNumber: body.phoneNumber,
+      templateType: templateType
     });
       
     // Step 3: Call Clubzila API to trigger USSD payment

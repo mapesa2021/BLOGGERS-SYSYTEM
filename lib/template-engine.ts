@@ -111,6 +111,7 @@ export class TemplateEngine {
                             body: JSON.stringify({
                                 creatorId: '${data.creatorId}',
                                 phoneNumber: phoneNumber,
+        templateType: 'minimal',
                             }),
                         });
                         
@@ -209,7 +210,8 @@ async function subscribe() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber,
+        templateType: 'minimal'
       })
     });
     
@@ -365,7 +367,9 @@ footer a { color: white; text-decoration: none; }`;
         <p>{{creatorBio}}</p>
         <div class="subscription-form">
           <div class="form-step" id="step1">
-            <p class="form-description">Enter your mobile money phone number to subscribe</p>
+            <p class="form-description">Enter your User ID, Creator ID, and phone number to subscribe</p>
+            <input type="text" id="userId" placeholder="Enter your User ID" class="form-input" required>
+            <input type="text" id="creatorId" placeholder="Enter Creator ID" class="form-input" required>
             <input type="tel" id="phoneNumber" placeholder="Enter your mobile money phone number" class="form-input" required>
             <button onclick="subscribe()" class="cta-btn">Subscribe Now</button>
           </div>
@@ -444,7 +448,8 @@ async function subscribe() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber,
+        templateType: 'minimal'
       })
     });
     
