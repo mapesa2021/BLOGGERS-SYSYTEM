@@ -37,10 +37,10 @@ export class TemplateEngine {
       css: this.getMinimalCSS(),
     });
 
-    // Modern Business Template
+    // BLOGGERS Template
     this.addTemplate({
       id: 'modern',
-      name: 'Modern Business',
+      name: 'BLOGGERS',
       description: 'Professional business-focused design',
       html: this.getModernHTML(),
       css: this.getModernCSS(),

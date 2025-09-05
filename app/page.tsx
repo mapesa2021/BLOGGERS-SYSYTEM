@@ -104,7 +104,7 @@ export default function Home() {
                     'modern': {
                       thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop',
                       gradient: 'from-blue-500 to-indigo-600',
-                      icon: '💼'
+                      icon: '📝'
                     },
                     'video-feed': {
                       thumbnail: 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&h=300&fit=crop',
@@ -191,8 +191,8 @@ export default function Home() {
                           )}
                           {template.id === 'modern' && (
                             <>
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Business</span>
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Professional</span>
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Blogging</span>
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Content</span>
                             </>
                           )}
                           {template.id === 'video-feed' && (
