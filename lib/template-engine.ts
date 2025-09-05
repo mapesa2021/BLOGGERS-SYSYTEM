@@ -68,8 +68,9 @@ export class TemplateEngine {
     let html = template.html;
     let css = template.css;
 
-    // Replace variables with fallbacks
-    html = html.replace(/\{\{creatorId\}\}/g, data.creatorId || 'Creator');
+    // Replace variables with fallbacks - escape for JavaScript
+    const escapedCreatorId = (data.creatorId || 'Creator').replace(/'/g, "\\'");
+    html = html.replace(/\{\{creatorId\}\}/g, escapedCreatorId);
     // No longer need authorId replacement - using dynamic signup
     html = html.replace(/\{\{creatorName\}\}/g, data.creatorName || data.creatorId || 'Creator');
     html = html.replace(/\{\{creatorBio\}\}/g, data.creatorBio || 'Welcome to my creator page!');
