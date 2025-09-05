@@ -91,46 +91,6 @@ export class TemplateEngine {
 </head>
 <body>
     ${html}
-    <script>
-        // Clubzila subscription handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const subscribeBtn = document.querySelector('[data-clubzila-subscribe]');
-            if (subscribeBtn) {
-                subscribeBtn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    const phoneNumber = prompt('Enter your phone number:');
-                    if (!phoneNumber) return;
-                    
-                    try {
-                        this.disabled = true;
-                        this.textContent = 'Processing...';
-                        
-                        const response = await fetch('/api/subscribe', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                creatorId: '${data.creatorId}',
-                                phoneNumber: phoneNumber,
-        templateType: 'minimal',
-                            }),
-                        });
-                        
-                        const result = await response.json();
-                        if (result.success) {
-                            alert('Subscription initiated! Check your phone for payment.');
-                        } else {
-                            alert('Error: ' + result.message);
-                        }
-                    } catch (error) {
-                        alert('Error: ' + error.message);
-                    } finally {
-                        this.disabled = false;
-                        this.textContent = 'Subscribe';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>`;
   }
@@ -211,7 +171,7 @@ async function subscribe() {
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
         phoneNumber: phoneNumber,
-        templateType: 'minimal'
+        templateType: 'modern'
       })
     });
     
@@ -449,7 +409,7 @@ async function subscribe() {
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
         phoneNumber: phoneNumber,
-        templateType: 'minimal'
+        templateType: 'modern'
       })
     });
     
