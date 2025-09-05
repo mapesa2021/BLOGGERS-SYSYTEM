@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     const landingPage = await DatabaseService.createLandingPage({
       page_id: pageId,
-      creator_id: creatorId,
+      // creator_id will be set to default UUID in DatabaseService
       title: title,
       template: template,
       creator_id_display: creatorIdDisplay || creatorId,
