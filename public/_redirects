@@ -1,5 +1,5 @@
-# API routes - redirect to Netlify functions
-/api/subscribe  /.netlify/functions/subscribe  200
+# API routes - let Next.js handle them directly
+# /api/subscribe  /.netlify/functions/subscribe  200
 
 # Dynamic page routes
 /page/*  /index.html  200
