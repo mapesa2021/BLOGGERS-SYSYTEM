@@ -311,9 +311,11 @@ export default function Home() {
                       });
                       
                       if (response.ok) {
-                        console.log('✅ Landing page saved to database');
+                        const result = await response.json();
+                        console.log('✅ Landing page saved to database:', result);
                       } else {
-                        console.error('❌ Failed to save to database, falling back to localStorage');
+                        const errorText = await response.text();
+                        console.error('❌ Failed to save to database:', response.status, errorText);
                         localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
                       }
                     } catch (error) {

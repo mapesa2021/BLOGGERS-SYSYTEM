@@ -40,6 +40,7 @@ export default function DynamicPageClient() {
       }
       
       const data = await response.json();
+      console.log('📄 Received page data:', data);
       setPageData(data);
     } catch (err) {
       console.error('Error fetching page data:', err);

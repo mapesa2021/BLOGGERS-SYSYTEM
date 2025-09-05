@@ -28,10 +28,19 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    return NextResponse.json({
-      success: true,
-      data: landingPage
-    })
+    // Transform the data to match what DynamicPageClient expects
+    const transformedData = {
+      pageId: landingPage.page_id,
+      template: landingPage.template,
+      creatorName: landingPage.title,
+      creatorIdDisplay: landingPage.creator_id_display,
+      successRedirectUrl: landingPage.success_redirect_url,
+      failureRedirectUrl: landingPage.failure_redirect_url,
+      subscriptionAmount: 500, // Default amount
+      currency: 'TZS' // Default currency
+    };
+
+    return NextResponse.json(transformedData)
 
   } catch (error) {
     console.error('Error fetching landing page:', error)

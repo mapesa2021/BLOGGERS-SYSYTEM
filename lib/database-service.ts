@@ -19,6 +19,9 @@ type Creator = Database['public']['Tables']['creators']['Row']
 type CreatorInsert = Database['public']['Tables']['creators']['Insert']
 type CreatorUpdate = Database['public']['Tables']['creators']['Update']
 
+// In-memory storage for landing pages (temporary solution)
+const landingPagesStorage = new Map<string, LandingPage>();
+
 export class DatabaseService {
   // Landing Page Operations
   static async createLandingPage(data: LandingPageInsert): Promise<LandingPage> {
@@ -29,9 +32,8 @@ export class DatabaseService {
     }
 
     try {
-      // For now, let's use a simple approach and return a mock response
-      // This bypasses the RLS issue temporarily
-      const mockLandingPage: LandingPage = {
+      // Create landing page object
+      const landingPage: LandingPage = {
         id: `mock-${Date.now()}`,
         creator_id: '00000000-0000-0000-0000-000000000000',
         page_id: processedData.page_id,
@@ -50,8 +52,11 @@ export class DatabaseService {
         updated_at: new Date().toISOString()
       }
 
-      console.log('✅ Created mock landing page:', mockLandingPage)
-      return mockLandingPage
+      // Store in memory
+      landingPagesStorage.set(processedData.page_id, landingPage);
+      
+      console.log('✅ Created and stored landing page:', landingPage)
+      return landingPage
 
       // TODO: Re-enable database operations once RLS is properly configured
       /*
@@ -75,22 +80,36 @@ export class DatabaseService {
   }
 
   static async getLandingPageByPageId(pageId: string): Promise<LandingPage | null> {
-    const { data: landingPage, error } = await supabaseTyped
-      .from('landing_pages')
-      .select('*')
-      .eq('page_id', pageId)
-      .single()
-
-    if (error) {
-      if (error.code === 'PGRST116') {
-        // No rows returned
-        return null
-      }
-      console.error('Error fetching landing page:', error)
-      throw new Error(`Failed to fetch landing page: ${error.message}`)
+    // First check in-memory storage
+    const inMemoryPage = landingPagesStorage.get(pageId);
+    if (inMemoryPage) {
+      console.log('✅ Found landing page in memory:', inMemoryPage);
+      return inMemoryPage;
     }
 
-    return landingPage
+    // Fallback to database (when RLS is properly configured)
+    try {
+      const { data: landingPage, error } = await supabaseTyped
+        .from('landing_pages')
+        .select('*')
+        .eq('page_id', pageId)
+        .single()
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows returned
+          console.log('❌ Landing page not found in database:', pageId);
+          return null
+        }
+        console.error('Error fetching landing page:', error)
+        throw new Error(`Failed to fetch landing page: ${error.message}`)
+      }
+
+      return landingPage
+    } catch (err) {
+      console.error('Database fetch failed:', err);
+      return null;
+    }
   }
 
   static async updateLandingPage(pageId: string, updates: LandingPageUpdate): Promise<LandingPage> {

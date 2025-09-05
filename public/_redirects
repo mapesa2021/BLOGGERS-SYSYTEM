@@ -1,8 +1,11 @@
+# API routes - redirect to Netlify functions
+/api/subscribe  /.netlify/functions/subscribe  200
+
 # Dynamic page routes
-/page/*  /page/:splat  200
+/page/*  /index.html  200
 
 # Admin routes
-/admin/*  /admin/:splat  200
+/admin/*  /index.html  200
 
 # Demo routes
 /demo  /demo  200

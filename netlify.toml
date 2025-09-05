@@ -22,7 +22,13 @@
   to = "/index.html"
   status = 200
 
-# Catch all for SPA behavior
+# Demo routes
+[[redirects]]
+  from = "/demo"
+  to = "/demo"
+  status = 200
+
+# Catch all for SPA behavior - this should be last
 [[redirects]]
   from = "/*"
   to = "/index.html"
