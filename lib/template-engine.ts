@@ -54,6 +54,15 @@ export class TemplateEngine {
       html: this.getVideoFeedHTML(),
       css: this.getVideoFeedCSS(),
     });
+
+    // JOSE Template
+    this.addTemplate({
+      id: 'jose',
+      name: 'JOSE Dating',
+      description: 'Dating profiles with payment integration',
+      html: this.getJoseHTML(),
+      css: this.getJoseCSS(),
+    });
   }
 
   addTemplate(template: Template): void {
@@ -135,7 +144,7 @@ export class TemplateEngine {
         </div>
         <p class="profile-bio">Hey there! I'm {{creatorName}} and I love connecting with new people. Let's chat and get to know each other better! 💕</p>
       </div>
-    </div>
+  </div>
   </div>
   
   <!-- Subscription Section -->
@@ -145,43 +154,43 @@ export class TemplateEngine {
         <h3>💎 Premium Access</h3>
         <p>Unlock exclusive content and chat with me directly</p>
       </div>
-      
-      <div class="subscription-form">
-        <div class="form-step" id="step1">
+    
+    <div class="subscription-form">
+      <div class="form-step" id="step1">
           <div class="form-description">Enter your mobile money number to start chatting</div>
           <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
           <button onclick="subscribe()" class="subscribe-btn">
             <span class="btn-text">Start Chatting</span>
             <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
           </button>
-        </div>
-        
-        <div class="form-step" id="step2" style="display: none;">
-          <div class="success-message">
+      </div>
+      
+      <div class="form-step" id="step2" style="display: none;">
+        <div class="success-message">
             <div class="success-icon">💕</div>
             <h3>Welcome to my world!</h3>
             <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
             <div class="ussd-info">
               <h4>📱 Complete Your Payment</h4>
               <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
-              <div class="payment-steps">
-                <ol>
+          <div class="payment-steps">
+            <ol>
                   <li>Check your phone for the USSD prompt</li>
-                  <li>Enter your mobile money PIN</li>
+              <li>Enter your mobile money PIN</li>
                   <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
                   <li>Wait for confirmation message</li>
-                </ol>
+            </ol>
               </div>
-            </div>
           </div>
         </div>
-        
-        <div class="form-step" id="step3" style="display: none;">
-          <div class="error-message">
+      </div>
+      
+      <div class="form-step" id="step3" style="display: none;">
+        <div class="error-message">
             <div class="error-icon">😔</div>
             <h3>Oops! Something went wrong</h3>
             <p id="errorText">Subscription failed</p>
-            <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+          <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
           </div>
         </div>
       </div>
@@ -1097,6 +1106,303 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   .subscription-section { padding: 1rem; }
   .features-section { padding: 1rem; }
   .features-grid { grid-template-columns: 1fr; }
+}`;
+  }
+
+  private getJoseHTML(): string {
+    return `<div class="jose-app">
+  <!-- Dating Profiles Section -->
+  <div class="section dating-profiles-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">JIUNGE NA GROUP LANGU UPATE XVIDEOS 10 KILA SIKU🍆💦🍑🔞</h2>
+        <p class="text-xl">NJOO UPATE CONNECTION ZOTE ZA MASTAA🍆👙💦</p>
+      </div>
+      
+      <div class="profiles-grid">
+        <div class="profile-card">
+          <img src="{{creatorImage}}" alt="{{creatorName}}">
+          <div class="profile-info">
+            <h3>{{creatorName}}</h3>
+            <p>Premium Content Creator</p>
+          </div>
+        </div>
+        
+        <div class="profile-card">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop" alt="Profile 2">
+          <div class="profile-info">
+            <h3>VIDEO CALL WHATSAPP MPAKA UNAKOJOA</h3>
+            <p>19 • DAR ES SALAAM</p>
+          </div>
+        </div>
+        
+        <div class="profile-card">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop" alt="Profile 3">
+          <div class="profile-info">
+            <h3>WATOTO WA CHUO MIKOA YOTE 🍆👙💦</h3>
+            <p>19 • TANZANIA</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-buttons">
+        <a href="#" class="cta-btn" onclick="openPopup(); return false;">
+          <span>🔥</span>
+          <span>JIUNGE SASA</span>
+        </a>
+        <a href="#" class="cta-btn" onclick="openPopup(); return false;">
+          <span>💎</span>
+          <span>PREMIUM ACCESS</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Popup Modal -->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-modal">
+      <button class="close-btn" onclick="closePopup()">&times;</button>
+      
+      <div class="popup-header">
+        <h2>Lipia {{creatorPrice}} {{creatorCurrency}} Kuendelea</h2>
+        <div class="benefits">
+          <div class="benefit">
+            <div class="benefit-icon">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span>Jipatie access ya full video</span>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span>Video call mpaka unakojoa</span>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span>Connection zote za mastaa</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="payment-amount">
+        <div class="amount">{{creatorPrice}}</div>
+        <div class="amount-label">{{creatorCurrency}}</div>
+      </div>
+      
+      <div class="popup-content">
+        <div class="form-group">
+          <label for="phone">Namba ya simu:</label>
+          <input type="tel" id="phone" placeholder="+255 123 456 789" required>
+        </div>
+        
+        <div class="providers">
+          <div class="provider" onclick="selectProvider('Tigo Pesa')">
+            <div class="provider-name">Tigo Pesa</div>
+            <div class="provider-subtext">Tanzania</div>
+          </div>
+          
+          <div class="provider" onclick="selectProvider('Vodacom')">
+            <div class="provider-name">Vodacom</div>
+            <div class="provider-subtext">M-Pesa</div>
+          </div>
+          
+          <div class="provider" onclick="selectProvider('Airtel Money')">
+            <div class="provider-name">Airtel Money</div>
+            <div class="provider-subtext">Tanzania</div>
+          </div>
+          
+          <div class="provider" onclick="selectProvider('Halo Pesa')">
+            <div class="provider-name">Halo Pesa</div>
+            <div class="provider-subtext">Tanzania</div>
+          </div>
+        </div>
+        
+        <button id="payBtn" class="pay-btn" onclick="initiatePayment()">LIPIA SASA</button>
+        
+        <div id="error" class="error" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let showPopup = false;
+let selectedProvider = null;
+let paymentStatus = 'idle';
+
+function openPopup() {
+  showPopup = true;
+  document.getElementById('popup').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePopup() {
+  if (paymentStatus === 'processing') return;
+  showPopup = false;
+  document.getElementById('popup').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+function selectProvider(providerName) {
+  selectedProvider = providerName;
+  document.querySelectorAll('.provider').forEach(p => p.classList.remove('selected'));
+  event.target.closest('.provider').classList.add('selected');
+}
+
+async function initiatePayment() {
+  const phone = document.getElementById('phone').value;
+  if (!phone) {
+    showError('Please enter your phone number');
+    return;
+  }
+  if (!selectedProvider) {
+    showError('Please select a payment provider');
+    return;
+  }
+  
+  paymentStatus = 'processing';
+  document.getElementById('payBtn').disabled = true;
+  document.getElementById('payBtn').textContent = 'Processing...';
+  hideError();
+  
+  try {
+    // Extract pageId from URL path
+    const pathParts = window.location.pathname.split('/');
+    const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+    
+    console.log('Subscribe data:', { pageId, phoneNumber: phone, templateType: 'jose' });
+    
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pageId: pageId,
+        phoneNumber: phone,
+        templateType: 'jose'
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      paymentStatus = 'success';
+      document.getElementById('payBtn').textContent = 'Payment Successful!';
+      document.getElementById('payBtn').style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      
+      // Show success message
+      setTimeout(() => {
+        alert('Payment successful! Check your phone for USSD prompt.');
+        closePopup();
+      }, 2000);
+    } else {
+      throw new Error(result.message || 'Payment failed');
+    }
+  } catch (error) {
+    paymentStatus = 'failed';
+    document.getElementById('payBtn').disabled = false;
+    document.getElementById('payBtn').textContent = 'LIPIA SASA';
+    showError('Payment failed. Please try again.');
+  }
+}
+
+function showError(message) {
+  const errorDiv = document.getElementById('error');
+  errorDiv.textContent = message;
+  errorDiv.style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('error').style.display = 'none';
+}
+
+// Close popup when clicking outside
+document.getElementById('popup').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closePopup();
+  }
+});
+
+// Add click handler to page
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.popup-modal') && !e.target.closest('.close-btn') && !e.target.closest('.cta-btn')) {
+    openPopup();
+  }
+});
+</script>`;
+  }
+
+  private getJoseCSS(): string {
+    return `* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+.jose-app { min-height: 100vh; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Dating Profiles Section */
+.dating-profiles-section { background: #000000; color: white; padding: 64px 20px; }
+.text-center { text-align: center; }
+.mb-12 { margin-bottom: 3rem; }
+.mb-4 { margin-bottom: 1rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-xl { font-size: 1.25rem; }
+.font-bold { font-weight: bold; }
+
+.profiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.profile-card { background: white; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 2px solid #fbbf24; }
+.profile-card img { width: 100%; height: 6rem; object-fit: cover; }
+.profile-info { padding: 0.75rem; text-align: center; }
+.profile-info h3 { font-weight: 600; color: #1f2937; font-size: 1.125rem; margin: 0; }
+.profile-info p { font-size: 0.875rem; color: #6b7280; margin: 0.25rem 0 0 0; }
+
+.cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 9999px; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); text-decoration: none; transition: transform 0.2s; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; }
+.cta-btn:hover { transform: scale(1.05); }
+
+/* Popup Modal Styles */
+.popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.popup-modal { background: white; border-radius: 12px; max-width: 400px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+.popup-header { background: linear-gradient(135deg, #ec4899, #8b5cf6); padding: 24px; text-align: center; color: white; }
+.popup-header h2 { font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; }
+.benefits { margin-top: 12px; }
+.benefit { display: flex; align-items: center; justify-content: center; margin-bottom: 8px; font-size: 0.875rem; }
+.benefit-icon { background: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 4px; margin-right: 8px; }
+.payment-amount { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); padding: 24px; text-align: center; border-bottom: 1px solid #e5e7eb; }
+.amount { font-size: 2rem; font-weight: bold; color: #1f2937; }
+.amount-label { font-size: 0.875rem; color: #6b7280; }
+.popup-content { padding: 24px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+.form-group input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
+.pay-btn { width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px; border: none; border-radius: 8px; font-size: 1.125rem; font-weight: bold; cursor: pointer; }
+.pay-btn:hover { background: linear-gradient(135deg, #059669, #047857); }
+.pay-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+.providers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+.provider { padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+.provider:hover { border-color: #3b82f6; background: #f8fafc; }
+.provider.selected { border-color: #3b82f6; background: #eff6ff; }
+.provider-name { font-weight: 500; }
+.provider-subtext { font-size: 0.875rem; color: #6b7280; }
+.error { color: #dc2626; font-size: 0.875rem; margin-top: 8px; }
+.success { color: #059669; font-size: 0.875rem; margin-top: 8px; }
+.close-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+@media (max-width: 640px) {
+  .text-4xl { font-size: 1.5rem; }
+  .text-xl { font-size: 1rem; }
+  .profiles-grid { grid-template-columns: 1fr; }
+  .popup-modal { margin: 10px; }
+  .providers { grid-template-columns: 1fr; }
+  .cta-buttons { flex-direction: column; align-items: center; }
 }`;
   }
 }
