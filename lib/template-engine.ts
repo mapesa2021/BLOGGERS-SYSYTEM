@@ -45,6 +45,15 @@ export class TemplateEngine {
       html: this.getModernHTML(),
       css: this.getModernCSS(),
     });
+
+    // Video Feed Template
+    this.addTemplate({
+      id: 'video-feed',
+      name: 'Video Feed',
+      description: 'Grid-style video feed optimized for mobile',
+      html: this.getVideoFeedHTML(),
+      css: this.getVideoFeedCSS(),
+    });
   }
 
   addTemplate(template: Template): void {
@@ -706,6 +715,388 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   .hero-text p { font-size: 1rem; }
   .features h2 { font-size: 2rem; }
   .feature-grid { grid-template-columns: 1fr; }
+}`;
+  }
+
+  private getVideoFeedHTML(): string {
+    return `<div class="video-feed-app">
+  <!-- Header -->
+  <div class="feed-header">
+    <div class="creator-info">
+      <img src="{{creatorImage}}" alt="{{creatorName}}" class="creator-avatar">
+      <div class="creator-details">
+        <h1 class="creator-name">{{creatorName}}</h1>
+        <p class="creator-bio">Exclusive video content • Premium access</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Video Grid Preview -->
+  <div class="video-grid-section">
+    <h3>🔥 Hot Videos</h3>
+    <div class="video-grid">
+      <div class="video-item">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=400&fit=crop" alt="Video 1">
+          <div class="play-overlay">▶️</div>
+          <div class="video-duration">2:45</div>
+        </div>
+        <div class="video-info">
+          <h4>Exclusive Content</h4>
+          <p>🔥 Hot</p>
+        </div>
+      </div>
+      
+      <div class="video-item">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop" alt="Video 2">
+          <div class="play-overlay">▶️</div>
+          <div class="video-duration">1:30</div>
+        </div>
+        <div class="video-info">
+          <h4>Premium Video</h4>
+          <p>💎 VIP</p>
+        </div>
+      </div>
+      
+      <div class="video-item">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop" alt="Video 3">
+          <div class="play-overlay">▶️</div>
+          <div class="video-duration">3:15</div>
+        </div>
+        <div class="video-info">
+          <h4>Special Content</h4>
+          <p>⭐ New</p>
+        </div>
+      </div>
+      
+      <div class="video-item locked">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop" alt="Video 4">
+          <div class="lock-overlay">🔒</div>
+          <div class="video-duration">4:20</div>
+        </div>
+        <div class="video-info">
+          <h4>Premium Only</h4>
+          <p>🔒 Locked</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Subscription Section -->
+  <div class="subscription-section">
+    <div class="subscription-card">
+      <div class="subscription-header">
+        <h3>🎬 Unlock All Videos</h3>
+        <p>Get instant access to {{creatorName}}'s exclusive video collection</p>
+      </div>
+      
+      <div class="subscription-form">
+        <div class="form-step" id="step1">
+          <div class="form-description">Enter your mobile money number to unlock all videos</div>
+          <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
+          <button onclick="subscribe()" class="subscribe-btn">
+            <span class="btn-text">Unlock Videos</span>
+            <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
+          </button>
+        </div>
+        
+        <div class="form-step" id="step2" style="display: none;">
+          <div class="success-message">
+            <div class="success-icon">🎉</div>
+            <h3>Welcome to the VIP club!</h3>
+            <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
+            <div class="ussd-info">
+              <h4>📱 Complete Your Payment</h4>
+              <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
+              <div class="payment-steps">
+                <ol>
+                  <li>Check your phone for the USSD prompt</li>
+                  <li>Enter your mobile money PIN</li>
+                  <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
+                  <li>Wait for confirmation message</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-step" id="step3" style="display: none;">
+          <div class="error-message">
+            <div class="error-icon">😔</div>
+            <h3>Oops! Something went wrong</h3>
+            <p id="errorText">Subscription failed</p>
+            <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Features Section -->
+  <div class="features-section">
+    <h3>What you'll get with premium access:</h3>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🎬</div>
+        <div class="feature-text">
+          <h4>Exclusive Videos</h4>
+          <p>Unlimited access to all videos</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📱</div>
+        <div class="feature-text">
+          <h4>Mobile Optimized</h4>
+          <p>Perfect viewing on your phone</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-text">
+          <h4>Instant Access</h4>
+          <p>Watch immediately after payment</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🆕</div>
+        <div class="feature-text">
+          <h4>New Content</h4>
+          <p>Fresh videos added regularly</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentCreatorId = '{{creatorId}}';
+
+async function subscribe() {
+  const phoneNumber = document.getElementById('phoneNumber').value.trim();
+  
+  if (!phoneNumber) {
+    alert('Please enter your mobile money phone number');
+    return;
+  }
+  
+  // Extract pageId from URL path
+  const pathParts = window.location.pathname.split('/');
+  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+  
+  console.log('Subscribe data:', { pageId, phoneNumber, templateType: 'video-feed' });
+  
+  // Show processing popup
+  showProcessingState();
+  
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pageId: pageId,
+        phoneNumber: phoneNumber,
+        templateType: 'video-feed'
+      })
+    });
+    
+    const result = await response.json();
+    
+    // Hide processing popup
+    hideProcessingState();
+    
+    if (result.success) {
+      // Show success step with USSD instructions
+      document.getElementById('userPhone').textContent = phoneNumber;
+      showStep(2);
+    } else {
+      showError(result.message || 'Subscription failed');
+    }
+  } catch (error) {
+    // Hide processing popup
+    hideProcessingState();
+    showError('Network error. Please try again.');
+  }
+}
+
+function showProcessingState() {
+  const subscribeBtn = document.querySelector('.subscribe-btn, .cta-btn');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = true;
+    subscribeBtn.textContent = 'Processing...';
+    subscribeBtn.style.opacity = '0.7';
+  }
+  
+  // Create processing popup
+  const processingPopup = document.createElement('div');
+  processingPopup.id = 'processing-popup';
+  processingPopup.className = 'processing-popup';
+  processingPopup.innerHTML = 
+    '<div class="processing-content">' +
+      '<div class="processing-spinner"></div>' +
+      '<h3>Processing Your Request</h3>' +
+      '<p>Please wait while we set up your subscription...</p>' +
+      '<div class="processing-steps">' +
+        '<div class="step" id="step-signup">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Checking user account...</span>' +
+        '</div>' +
+        '<div class="step" id="step-payment">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Initiating payment...</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  
+  document.body.appendChild(processingPopup);
+  
+  // Simulate step progression
+  setTimeout(() => {
+    const signupStep = document.getElementById('step-signup');
+    if (signupStep) {
+      signupStep.classList.add('active');
+      signupStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 2000);
+  
+  setTimeout(() => {
+    const paymentStep = document.getElementById('step-payment');
+    if (paymentStep) {
+      paymentStep.classList.add('active');
+      paymentStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 4000);
+}
+
+function hideProcessingState() {
+  const subscribeBtn = document.querySelector('.subscribe-btn, .cta-btn');
+  const processingPopup = document.getElementById('processing-popup');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = false;
+    subscribeBtn.textContent = 'Unlock Videos';
+    subscribeBtn.style.opacity = '1';
+  }
+  
+  if (processingPopup) {
+    processingPopup.remove();
+  }
+}
+
+function showStep(stepNumber) {
+  // Hide all steps
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('step' + i).style.display = 'none';
+  }
+  
+  // Show the specified step
+  document.getElementById('step' + stepNumber).style.display = 'block';
+}
+
+function showError(message) {
+  document.getElementById('errorText').textContent = message;
+  showStep(3);
+}
+
+function backToStep1() {
+  showStep(1);
+  document.getElementById('phoneNumber').value = '';
+}
+</script>`;
+  }
+
+  private getVideoFeedCSS(): string {
+    return `* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #000; min-height: 100vh; }
+.video-feed-app { max-width: 400px; margin: 0 auto; background: #000; min-height: 100vh; color: white; }
+
+/* Header */
+.feed-header { padding: 1rem; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-bottom: 1px solid #333; }
+.creator-info { display: flex; align-items: center; gap: 1rem; }
+.creator-avatar { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #ff6b6b; }
+.creator-details h1 { font-size: 1.3rem; margin-bottom: 0.25rem; color: white; }
+.creator-bio { font-size: 0.9rem; color: #ccc; }
+
+/* Video Grid */
+.video-grid-section { padding: 1.5rem 1rem; }
+.video-grid-section h3 { font-size: 1.2rem; margin-bottom: 1rem; color: #ff6b6b; }
+.video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.video-item { background: #1a1a1a; border-radius: 12px; overflow: hidden; position: relative; }
+.video-thumbnail { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+.video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.play-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.lock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.video-duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+.video-info { padding: 0.75rem; }
+.video-info h4 { font-size: 0.9rem; margin-bottom: 0.25rem; color: white; }
+.video-info p { font-size: 0.8rem; color: #ff6b6b; }
+.video-item.locked { opacity: 0.6; }
+
+/* Subscription Section */
+.subscription-section { padding: 1.5rem; }
+.subscription-card { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 20px; padding: 1.5rem; border: 1px solid #333; }
+.subscription-header { text-align: center; margin-bottom: 1.5rem; }
+.subscription-header h3 { font-size: 1.5rem; color: #ff6b6b; margin-bottom: 0.5rem; }
+.subscription-header p { color: #ccc; font-size: 0.9rem; }
+.form-description { color: #ccc; margin-bottom: 1rem; font-size: 0.9rem; text-align: center; }
+.form-input { width: 100%; padding: 1rem; border: 2px solid #333; border-radius: 12px; font-size: 1rem; margin-bottom: 1rem; background: #1a1a1a; color: white; }
+.form-input:focus { outline: none; border-color: #ff6b6b; background: #2d2d2d; }
+.subscribe-btn { width: 100%; background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; border: none; padding: 1rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.subscribe-btn:hover { background: linear-gradient(135deg, #ee5a52, #e74c3c); }
+.subscribe-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.btn-text { font-size: 1.1rem; }
+.btn-price { font-size: 0.9rem; opacity: 0.9; }
+
+/* Success/Error Messages */
+.success-message { text-align: center; }
+.success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.success-message h3 { color: #ff6b6b; margin-bottom: 0.5rem; }
+.success-message p { color: #ccc; margin-bottom: 1rem; }
+.ussd-info { background: #1a1a1a; padding: 1rem; border-radius: 12px; margin: 1rem 0; border-left: 4px solid #ff6b6b; }
+.ussd-info h4 { color: #ff6b6b; margin-bottom: 0.5rem; }
+.ussd-info p { color: #ccc; font-size: 0.9rem; }
+.payment-steps { text-align: left; margin-top: 1rem; }
+.payment-steps ol { margin-left: 1.5rem; }
+.payment-steps li { margin: 0.5rem 0; color: #ccc; font-size: 0.9rem; }
+.error-message { text-align: center; }
+.error-icon { font-size: 3rem; margin-bottom: 1rem; }
+.error-message h3 { color: #e74c3c; margin-bottom: 0.5rem; }
+.error-message p { color: #ccc; margin-bottom: 1rem; }
+
+/* Features Section */
+.features-section { padding: 1.5rem; background: #1a1a1a; }
+.features-section h3 { text-align: center; color: #ff6b6b; margin-bottom: 1.5rem; font-size: 1.2rem; }
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.feature-item { background: #2d2d2d; padding: 1rem; border-radius: 12px; text-align: center; border: 1px solid #333; }
+.feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.feature-text h4 { font-size: 0.9rem; color: white; margin-bottom: 0.25rem; }
+.feature-text p { font-size: 0.8rem; color: #ccc; }
+
+/* Processing Popup */
+.processing-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.processing-content { background: #1a1a1a; padding: 2rem; border-radius: 20px; text-align: center; max-width: 300px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid #333; }
+.processing-spinner { width: 40px; height: 40px; border: 4px solid #333; border-top: 4px solid #ff6b6b; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+.processing-content h3 { color: white; margin-bottom: 0.5rem; }
+.processing-content p { color: #ccc; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.processing-steps { text-align: left; }
+.processing-steps .step { display: flex; align-items: center; margin: 0.5rem 0; padding: 0.5rem; border-radius: 8px; transition: all 0.3s ease; }
+.processing-steps .step.active { background: #2d2d2d; color: #ff6b6b; }
+.processing-steps .step-icon { font-size: 1.2rem; margin-right: 0.5rem; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .video-feed-app { max-width: 100%; }
+  .feed-header { padding: 1rem; }
+  .creator-avatar { width: 50px; height: 50px; }
+  .creator-details h1 { font-size: 1.2rem; }
+  .video-grid-section { padding: 1rem; }
+  .subscription-section { padding: 1rem; }
+  .features-section { padding: 1rem; }
+  .features-grid { grid-template-columns: 1fr; }
 }`;
   }
 }
