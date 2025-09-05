@@ -8,9 +8,18 @@ import { createClient } from '@supabase/supabase-js'
 // Supabase configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ysvjirsmfvxnvzxsqoui.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlzdmppcnNtZnZ4bnZ6eHNxb3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwNzgxNjUsImV4cCI6MjA3MjY1NDE2NX0.VYpWhiUp-JRZ53yJRYeDx0XUOW5DDJpOoNTnv2N5W28'
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || supabaseAnonKey
 
-// Create Supabase client
+// Create Supabase client for client-side operations
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// Create Supabase client for server-side operations (bypasses RLS)
+export const supabaseTyped = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+})
 
 // Database types based on our schema
 export interface Database {
@@ -179,5 +188,3 @@ export interface Database {
   }
 }
 
-// Typed Supabase client
-export const supabaseTyped = createClient<Database>(supabaseUrl, supabaseAnonKey)
