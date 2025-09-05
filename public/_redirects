@@ -1,0 +1,14 @@
+# API routes
+/api/*  /api/:splat  200
+
+# Dynamic page routes
+/page/*  /page/:splat  200
+
+# Admin routes
+/admin/*  /admin/:splat  200
+
+# Demo routes
+/demo  /demo  200
+
+# Catch all - redirect to index.html for SPA behavior
+/*  /index.html  200

@@ -21,9 +21,15 @@ type CreatorUpdate = Database['public']['Tables']['creators']['Update']
 export class DatabaseService {
   // Landing Page Operations
   static async createLandingPage(data: LandingPageInsert): Promise<LandingPage> {
+    // Handle non-UUID creator IDs by using a default UUID or creating a placeholder
+    const processedData = {
+      ...data,
+      creator_id: data.creator_id || '00000000-0000-0000-0000-000000000000' // Default UUID for non-UUID creator IDs
+    }
+
     const { data: landingPage, error } = await supabaseTyped
       .from('landing_pages')
-      .insert(data)
+      .insert(processedData)
       .select()
       .single()
 
@@ -314,10 +320,10 @@ export class LegacyStorageService {
 
   static async savePageData(pageId: string, pageData: any): Promise<void> {
     try {
-      // Save to database
+      // Save to database with proper UUID handling
       await DatabaseService.createLandingPage({
         page_id: pageId,
-        creator_id: pageData.creatorId || 'default',
+        creator_id: '00000000-0000-0000-0000-000000000000', // Default UUID for non-UUID creator IDs
         title: pageData.creatorName || 'Landing Page',
         template: pageData.templateId || 'minimal',
         creator_id_display: pageData.creatorId || 'default',
