@@ -200,8 +200,8 @@ export async function POST(request: NextRequest) {
       userName: body.userName
     });
 
-    let userId: number;
-    let creatorId: number;
+    let userId: number | undefined;
+    let creatorId: number | undefined;
 
     if (templateType === 'minimal') {
       // Step 1: Smart user handling for minimal template - try signup first, then get existing user if needed
@@ -264,7 +264,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Step 2: Validate creator ID
-    if (isNaN(creatorId)) {
+    if (creatorId === undefined || isNaN(creatorId)) {
       console.error('❌ Invalid creator ID:', creatorId);
       return NextResponse.json({
         success: false,

@@ -4,10 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Enable experimental features
-  experimental: {
-    appDir: true,
-  },
 }
 
 module.exports = nextConfig

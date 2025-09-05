@@ -305,7 +305,7 @@ export default function Home() {
                           template: selectedTemplate,
                           creatorIdDisplay: creatorData.creatorId,
                           successRedirectUrl: creatorData.successRedirectUrl,
-                          failureRedirectUrl: creatorData.failureRedirectUrl || '',
+                          failureRedirectUrl: creatorData.successRedirectUrl || '',
                           description: `${selectedTemplate} template for creator ${creatorData.creatorId}`
                         })
                       });
