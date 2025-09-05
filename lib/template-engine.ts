@@ -171,7 +171,7 @@ async function subscribe() {
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
         phoneNumber: phoneNumber,
-        templateType: 'modern'
+        templateType: 'minimal'
       })
     });
     
