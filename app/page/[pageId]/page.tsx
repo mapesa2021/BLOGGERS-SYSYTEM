@@ -127,16 +127,28 @@ export default function DynamicPage() {
         setPageData(pageData);
         setLoading(false);
       } else {
-        // Fallback to mock data if nothing is stored
+        // Fallback to extracting data from URL if nothing is stored
         console.log('⚠️ No stored data found for page:', id);
         console.log('🔍 Available localStorage keys:', Object.keys(localStorage));
+        
+        // Try to extract userId and creatorId from the URL
+        // Format: userId-creatorId-template-timestamp
+        const urlParts = id.split('-');
+        let extractedUserId = 'DEMO001';
+        let extractedCreatorId = '107';
+        
+        if (urlParts.length >= 2) {
+          extractedUserId = urlParts[0]; // First part is user ID (who is subscribing)
+          extractedCreatorId = urlParts[1]; // Second part is creator ID (who they're subscribing to)
+          console.log('🔍 Extracted from URL:', { userId: extractedUserId, creatorId: extractedCreatorId });
+        }
         
         const mockPageData: PageData = {
           pageId: id,
           template: 'minimal',
-          creatorName: 'Demo Creator',
-          creatorIdDisplay: 'DEMO001',
-          authorId: '107',
+          creatorName: extractedCreatorId, // Use creator ID as the name
+          creatorIdDisplay: extractedCreatorId,
+          authorId: extractedUserId, // Store user ID in authorId field for compatibility
           successRedirectUrl: '',
           failureRedirectUrl: '',
           subscriptionAmount: 500,
@@ -170,9 +182,8 @@ export default function DynamicPage() {
         body: JSON.stringify({
           pageId: pageData?.pageId,
           phoneNumber,
-          authorId: pageData?.authorId,
           userName
-          // creatorId and amount are already built into the page data
+          // creatorId, authorId and amount are extracted from the URL
         }),
       });
 

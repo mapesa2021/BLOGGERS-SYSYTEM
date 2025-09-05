@@ -29,10 +29,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validate required fields
-    if (!body.pageId || !body.phoneNumber || !body.authorId) {
+    if (!body.pageId || !body.phoneNumber) {
       return NextResponse.json({
         success: false,
-        message: 'Missing required fields: pageId, phoneNumber, authorId'
+        message: 'Missing required fields: pageId, phoneNumber'
       }, { status: 400 });
     }
 
@@ -42,9 +42,21 @@ export async function POST(request: NextRequest) {
       userName: body.userName
     });
 
-      // Extract the creator ID from the pageId (format: creatorId-template-timestamp)
+      // Extract the user ID and creator ID from the pageId (format: userId-creatorId-template-timestamp)
       const pageIdParts = body.pageId.split('-');
-      const creatorIdString = pageIdParts[0]; // First part is the creator ID
+      const userIdString = pageIdParts[0]; // First part is the user ID (who is subscribing)
+      const creatorIdString = pageIdParts[1]; // Second part is the creator ID (who they're subscribing to)
+      
+      // Validate that user ID is a valid integer
+      const userId = parseInt(userIdString);
+      if (isNaN(userId)) {
+        console.error('❌ Invalid user ID:', userIdString);
+        return NextResponse.json({
+          success: false,
+          message: `Invalid user ID: ${userIdString}. User ID must be a number.`,
+          error: 'User ID must be a valid integer'
+        }, { status: 400 });
+      }
       
       // Validate that creator ID is a valid integer
       const creatorId = parseInt(creatorIdString);
@@ -59,6 +71,8 @@ export async function POST(request: NextRequest) {
       
       console.log('📋 Using page data:', {
         pageId: body.pageId,
+        userId: userId,
+        userIdString: userIdString,
         creatorId: creatorId,
         creatorIdString: creatorIdString,
         phoneNumber: body.phoneNumber
@@ -71,8 +85,8 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          auth_id: body.authorId, // Use the author ID from page data
-          creator_id: creatorId, // Use the creator ID from landing page
+          auth_id: userId, // Use the user ID (first part) - who is subscribing
+          creator_id: creatorId, // Use the creator ID (second part) - who they're subscribing to
           phone_number: body.phoneNumber,
           amount: 500.00
         })

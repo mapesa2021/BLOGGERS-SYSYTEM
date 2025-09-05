@@ -10,18 +10,14 @@ export default function Home() {
   const [creatorData, setCreatorData] = useState({
     creatorId: 'demo-user',
     authorId: '107', // Default author ID for testing
-    creatorName: '',
-    creatorBio: '',
-    creatorImage: '',
-    creatorPrice: 0,
-    creatorCurrency: 'TZS',
-    subscriptionAmount: 0,
-    successRedirectUrl: '',
-    failureRedirectUrl: ''
+    successRedirectUrl: ''
   })
   const [generatedUrl, setGeneratedUrl] = useState('')
+  // Debug: Monitor state changes
+  console.log('🔍 Component render - creatorData:', creatorData);
 
   const templates = templateEngine.getTemplates()
+  console.log('🔍 Available templates:', templates);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -100,7 +96,12 @@ export default function Home() {
                         ? 'border-blue-600 bg-blue-50'
                         : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                     }`}
-                    onClick={() => { setSelectedTemplate(template.id); setStep('customize'); }}
+                    onClick={() => { 
+                      console.log('🔍 Template clicked:', template.id);
+                      setSelectedTemplate(template.id); 
+                      setStep('customize'); 
+                      console.log('🔍 Step changed to customize');
+                    }}
                   >
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {template.name}
@@ -132,69 +133,40 @@ export default function Home() {
               <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Creator ID *
+                    User & Creator IDs *
                   </label>
                   <input
                     type="text"
-                    value={creatorData.creatorId}
-                    onChange={(e) => setCreatorData(prev => ({ ...prev, creatorId: e.target.value }))}
+                    defaultValue="107-1821"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      console.log('🔍 Input onChange - value:', value);
+                      const parts = value.split('-');
+                      console.log('🔍 Input onChange - parts:', parts);
+                      if (parts.length === 2) {
+                        const newCreatorData = {
+                          creatorId: parts[0],
+                          authorId: parts[1],
+                          successRedirectUrl: creatorData.successRedirectUrl
+                        };
+                        console.log('🔍 Input onChange - setting new data:', newCreatorData);
+                        setCreatorData(newCreatorData);
+                      }
+                    }}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="Enter your Clubzila Creator ID"
+                    placeholder="107-1821 (User ID-Creator ID)"
                     required
                   />
                   <p className="mt-2 text-sm text-gray-500">
-                    This is the unique identifier needed to initiate subscriptions from Clubzila
+                    Enter both IDs separated by a dash: User ID-Creator ID
+                  </p>
+                  <p className="mt-1 text-xs text-blue-600">
+                    Current: {creatorData.creatorId}-{creatorData.authorId}
                   </p>
                 </div>
+                
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Author ID *
-                  </label>
-                  <input
-                    type="text"
-                    value={creatorData.authorId}
-                    onChange={(e) => setCreatorData(prev => ({ ...prev, authorId: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="Enter your Clubzila Author ID"
-                    required
-                  />
-                  <p className="mt-2 text-sm text-gray-500">
-                    This is your user ID in Clubzila system (used as auth_id in API calls)
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subscription Amount *
-                  </label>
-                  <div className="flex space-x-3">
-                    <input
-                      type="number"
-                      value={creatorData.subscriptionAmount}
-                      onChange={(e) => setCreatorData(prev => ({ ...prev, subscriptionAmount: parseFloat(e.target.value) || 0 }))}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                      placeholder="0.00"
-                      step="0.01"
-                      min="0"
-                      required
-                    />
-                    <select
-                      value={creatorData.creatorCurrency}
-                      onChange={(e) => setCreatorData(prev => ({ ...prev, creatorCurrency: e.target.value }))}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    >
-                      <option value="TZS">TZS</option>
-                      <option value="USD">USD</option>
-                      <option value="EUR">EUR</option>
-                      <option value="GBP">GBP</option>
-                    </select>
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Amount customers will pay for subscription
-                  </p>
-                </div>
-
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Success Redirect URL
@@ -210,38 +182,10 @@ export default function Home() {
                     Where customers go after successful payment (optional)
                   </p>
                 </div>
+                
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Failure Redirect URL
-                  </label>
-                  <input
-                    type="url"
-                    value={creatorData.failureRedirectUrl}
-                    onChange={(e) => setCreatorData(prev => ({ ...prev, failureRedirectUrl: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="https://yoursite.com/failure"
-                  />
-                  <p className="mt-2 text-sm text-gray-500">
-                    Where customers go if payment fails (optional)
-                  </p>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Creator Name
-                  </label>
-                  <input
-                    type="text"
-                    value={creatorData.creatorName}
-                    onChange={(e) => setCreatorData(prev => ({ ...prev, creatorName: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="Your name or business name"
-                  />
-                  <p className="mt-2 text-sm text-gray-500">
-                    Display name on your landing page
-                  </p>
-                </div>
+
                 
                 <div className="flex justify-between pt-4">
                   <button
@@ -274,18 +218,18 @@ export default function Home() {
                   <h3 className="font-semibold text-gray-900 mb-2">Page Summary</h3>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
-                    <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
-                    <p><strong>Author ID:</strong> {creatorData.authorId}</p>
-                    <p><strong>Creator Name:</strong> {creatorData.creatorName || 'Not specified'}</p>
-                    <p><strong>Subscription Amount:</strong> {creatorData.creatorCurrency} {creatorData.subscriptionAmount}</p>
+                    <p><strong>IDs:</strong> {creatorData.creatorId}-{creatorData.authorId} (User-Creator)</p>
                     <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
-                    <p><strong>Failure Redirect:</strong> {creatorData.failureRedirectUrl || 'Default'}</p>
+                    <p><strong>Debug:</strong> creatorId={creatorData.creatorId}, authorId={creatorData.authorId}</p>
                   </div>
                 </div>
                 
                 <button
                   onClick={() => {
-                    const pageId = `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
+                    console.log('🔍 Current creatorData state:', creatorData);
+                    console.log('🔍 Selected template:', selectedTemplate);
+                    
+                    const pageId = `${creatorData.creatorId}-${creatorData.authorId}-${selectedTemplate}-${Date.now()}`
                     const url = `${window.location.origin}/page/${pageId}`
                     setGeneratedUrl(url)
                     
@@ -294,16 +238,18 @@ export default function Home() {
                       templateId: selectedTemplate,
                       creatorId: creatorData.creatorId,
                       authorId: creatorData.authorId,
-                      creatorName: creatorData.creatorName || creatorData.creatorId,
-                      creatorBio: creatorData.creatorBio,
-                      creatorImage: creatorData.creatorImage,
-                      creatorPrice: creatorData.subscriptionAmount,
-                      creatorCurrency: creatorData.creatorCurrency,
+                      creatorName: creatorData.creatorId, // Use Creator ID as name
+                      creatorBio: 'Welcome to my creator page!',
+                      creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
+                      creatorPrice: 500, // Default amount
+                      creatorCurrency: 'TZS', // Default currency
                       successRedirectUrl: creatorData.successRedirectUrl,
-                      failureRedirectUrl: creatorData.failureRedirectUrl
+                      failureRedirectUrl: creatorData.successRedirectUrl // Same as success redirect
                     };
                     
                     console.log('💾 Storing page data:', pageData);
+                    console.log('🔍 Generated pageId:', pageId);
+                    console.log('🔍 Generated URL:', url);
                     localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
                     
                     // Also log what's in localStorage for debugging
