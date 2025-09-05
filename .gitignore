@@ -57,3 +57,6 @@ jspm_packages/
 # dotenv environment variables file
 .env
 .env.local
+
+# landing pages storage
+lib/landing-pages-storage.json

@@ -279,21 +279,25 @@ export default function Home() {
                     
                     // Store the page data for later retrieval
                     const pageData = {
-                      templateId: selectedTemplate,
-                      creatorId: creatorData.creatorId,
-                      creatorName: creatorData.creatorId, // Use Creator ID as name
-                      creatorBio: 'Welcome to my creator page!',
-                      creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
-                      creatorPrice: 500, // Default amount
-                      creatorCurrency: 'TZS', // Default currency
+                      pageId: pageId,
+                      template: selectedTemplate,
+                      creatorName: `Landing Page - ${creatorData.creatorId}`,
+                      creatorIdDisplay: creatorData.creatorId,
                       successRedirectUrl: creatorData.successRedirectUrl,
-                      failureRedirectUrl: creatorData.successRedirectUrl // Same as success redirect
+                      failureRedirectUrl: creatorData.successRedirectUrl || '',
+                      subscriptionAmount: 500, // Default amount
+                      currency: 'TZS' // Default currency
                     };
                     
                     console.log('💾 Storing page data:', pageData);
                     console.log('🔍 Generated pageId:', pageId);
                     console.log('🔍 Generated URL:', url);
-                    // Save to database instead of localStorage
+                    
+                    // Store in localStorage with a more robust key
+                    localStorage.setItem(`landing_page_${pageId}`, JSON.stringify(pageData));
+                    console.log('✅ Stored landing page in localStorage');
+                    
+                    // Also try to save to database (but don't rely on it)
                     try {
                       const response = await fetch('/api/landing-pages', {
                         method: 'POST',
@@ -312,21 +316,18 @@ export default function Home() {
                       
                       if (response.ok) {
                         const result = await response.json();
-                        console.log('✅ Landing page saved to database:', result);
+                        console.log('✅ Landing page also saved to database:', result);
                       } else {
-                        const errorText = await response.text();
-                        console.error('❌ Failed to save to database:', response.status, errorText);
-                        localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                        console.log('⚠️ Database save failed, but localStorage is working');
                       }
                     } catch (error) {
-                      console.error('❌ Database save failed, falling back to localStorage:', error);
-                      localStorage.setItem(`page_${pageId}`, JSON.stringify(pageData));
+                      console.log('⚠️ Database save failed, but localStorage is working:', error);
                     }
                     
-                    // Also log what's in localStorage for debugging
+                    // Log what's in localStorage for debugging
                     console.log('🔍 localStorage after storing:', {
-                      key: `page_${pageId}`,
-                      value: localStorage.getItem(`page_${pageId}`)
+                      key: `landing_page_${pageId}`,
+                      value: localStorage.getItem(`landing_page_${pageId}`)
                     });
                   }}
                   className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors"

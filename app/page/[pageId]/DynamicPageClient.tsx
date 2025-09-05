@@ -33,6 +33,23 @@ export default function DynamicPageClient() {
   const fetchPageData = async (pageId: string) => {
     try {
       setLoading(true);
+      
+      // First check localStorage
+      const storedData = localStorage.getItem(`landing_page_${pageId}`);
+      if (storedData) {
+        try {
+          const pageData = JSON.parse(storedData);
+          console.log('✅ Found page data in localStorage:', pageData);
+          setPageData(pageData);
+          setLoading(false);
+          return;
+        } catch (parseError) {
+          console.error('Error parsing stored data:', parseError);
+        }
+      }
+      
+      // Fallback to API call
+      console.log('🔍 Page data not found in localStorage, trying API...');
       const response = await fetch(`/api/landing-pages?pageId=${pageId}`);
       
       if (!response.ok) {
@@ -40,7 +57,7 @@ export default function DynamicPageClient() {
       }
       
       const data = await response.json();
-      console.log('📄 Received page data:', data);
+      console.log('📄 Received page data from API:', data);
       setPageData(data);
     } catch (err) {
       console.error('Error fetching page data:', err);
