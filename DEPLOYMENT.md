@@ -17,9 +17,6 @@ npm run dev
 ```bash
 # Build for production
 npm run build
-
-# Export static files for CDN deployment
-npm run export
 ```
 
 ## 🌐 Deployment Options
@@ -40,13 +37,12 @@ npm run export
 
 3. **Deploy**
    - Vercel automatically builds and deploys
-   - Static export happens automatically
 
 ### Option 2: Netlify
 1. **Build Settings**
    ```bash
-   Build command: npm run export
-   Publish directory: out
+   Build command: npm run build
+   Publish directory: .next
    ```
 
 2. **Environment Variables**
@@ -58,15 +54,14 @@ npm run export
    - Netlify builds on push
 
 ### Option 3: AWS S3 + CloudFront
-1. **Build and Export**
+1. **Build**
    ```bash
    npm run build
-   npm run export
    ```
 
 2. **Upload to S3**
    ```bash
-   aws s3 sync out/ s3://your-bucket-name
+   aws s3 sync .next/ s3://your-bucket-name
    ```
 
 3. **Configure CloudFront**
@@ -77,8 +72,8 @@ npm run export
 ### Option 4: Cloudflare Pages
 1. **Build Settings**
    ```bash
-   Build command: npm run export
-   Build output directory: out
+   Build command: npm run build
+   Build output directory: .next
    ```
 
 2. **Environment Variables**
@@ -104,12 +99,11 @@ NEXT_PUBLIC_BASE_URL=https://pages.clubzila.com
 ```
 
 ### Next.js Configuration
-The platform is configured for static export:
+The platform is configured for dynamic rendering:
 
 ```js
 // next.config.js
 module.exports = {
-  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
@@ -205,10 +199,10 @@ curl -X POST https://your-domain.com/api/subscribe \
    npm run build
    ```
 
-2. **Static Export Issues**
-   - Ensure `output: 'export'` in next.config.js
-   - Remove client-side only features
-   - Use `generateStaticParams` for dynamic routes
+2. **Dynamic Route Issues**
+   - Ensure proper API route configuration
+   - Check Netlify function setup
+   - Verify environment variables
 
 3. **API Errors**
    - Check environment variables
