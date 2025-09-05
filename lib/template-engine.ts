@@ -63,6 +63,15 @@ export class TemplateEngine {
       html: this.getJoseHTML(),
       css: this.getJoseCSS(),
     });
+
+    // Business Services Template
+    this.addTemplate({
+      id: 'business-services',
+      name: 'Business Services',
+      description: 'Professional business services in Swahili',
+      html: this.getBusinessServicesHTML(),
+      css: this.getBusinessServicesCSS(),
+    });
   }
 
   addTemplate(template: Template): void {
@@ -1403,6 +1412,329 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   .popup-modal { margin: 10px; }
   .providers { grid-template-columns: 1fr; }
   .cta-buttons { flex-direction: column; align-items: center; }
+}`;
+  }
+
+  private getBusinessServicesHTML(): string {
+    return `<div class="business-services-app">
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b">
+    <div class="max-w-3xl mx-auto px-4 py-4">
+      <!-- Navigation removed as requested -->
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 py-6">
+    <div class="prose prose-lg max-w-none">
+      <h1 class="text-3xl font-bold text-gray-900 mb-6">Usikose Tenda kwasababu huna vitu hivi;</h1>
+      
+      <!-- Hero Image -->
+      <div class="my-8">
+        <img src="{{creatorImage}}" alt="{{creatorName}}" class="w-full h-64 object-cover rounded-lg shadow-lg">
+      </div>
+      
+      <p class="mb-4">Mfanya-Biashara alitupigia simu AKIWA AMEJAA MASIKITIKO MAKUBWA baada ya kukosa TENDA YA TSH MILIONI 45.</p>
+      
+      <p class="mb-4">Kisa Hakuwa na business email.</p>
+      
+      <!-- Problem Illustration -->
+      <div class="my-8 bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+        <div class="flex items-center mb-4">
+          <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Gmail icon" class="w-12 h-12 rounded mr-4">
+          <div>
+            <h3 class="font-semibold text-red-800">❌Alituma quotation kwa kutumia email ya Gmail account na hakua na webiste</h3>
+          </div>
+        </div>
+        <p class="text-red-700">Mteja akaona jamaa hayuko serious,na hajui anachokifanya, Badala yake, wakampatia tenda  mtu mwenye bei kubwa zaidi lakini aliyetuma quote yake kwa kutumia professional business email na alikua na proffesional website</p>
+      </div>
+      
+      <!-- Warning Section -->
+      <div class="my-8 bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+        <div class="flex items-center mb-4">
+          <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Warning" class="w-12 h-12 rounded mr-4">
+          <h3 class="font-semibold text-yellow-800">⚠️JANGA HILI LINAWEZA KUKUPATA NA WEWE PIA KAMA HUNA MUONGOZO SAHIHI WA KUENDESHA BIASHARA YAKO KISASA KATIKA SOKO LENYE USHINDANI NA KUKUFANYA UPOTEZE TENDA NA BIASHARA BILA HATA KUJUA</h3>
+        </div>
+      </div>
+      
+      <!-- Solution Section -->
+      <div class="my-8 bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+        <h3 class="font-semibold text-green-800 mb-4">✅ SULUHISHO LETU:</h3>
+        <p class="text-green-700 mb-4">Tunakupa Professional Business Email na Website ili uweze kushindana kwa usawa na wafanya biashara wengine na kupata tenda za kutosha.</p>
+        
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg">
+            <h4 class="font-semibold text-gray-800 mb-2">📧 Professional Business Email</h4>
+            <p class="text-gray-600 text-sm">Email ya biashara yako kama: info@biasharayako.co.tz</p>
+          </div>
+          <div class="bg-white p-4 rounded-lg">
+            <h4 class="font-semibold text-gray-800 mb-2">🌐 Professional Website</h4>
+            <p class="text-gray-600 text-sm">Website ya biashara yako ili mteja aweze kukujua zaidi</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CTA Buttons -->
+      <div class="my-8 text-center">
+        <button onclick="openPaymentModal()" class="bg-green-600 text-white px-8 py-4 rounded-lg text-center font-semibold hover:bg-green-700 transition-colors text-lg">
+          Pata Professional Business Email na Website - {{creatorPrice}} {{creatorCurrency}}
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Lipia kwa Mobile Money</h3>
+        <p class="text-gray-600 mb-4">Ingiza namba ya simu yako ya Mobile Money:</p>
+        
+        <form id="paymentForm">
+          <div class="mb-4">
+            <input type="tel" id="phoneNumber" placeholder="07XXXXXXXX" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+          </div>
+          
+          <div class="flex gap-3">
+            <button type="button" onclick="closePaymentModal()" class="flex-1 bg-gray-500 text-white px-4 py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+              Ghairi
+            </button>
+            <button type="submit" id="payButton" class="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+              Lipia {{creatorPrice}}
+            </button>
+          </div>
+        </form>
+        
+        <!-- Payment Success Section (Hidden initially) -->
+        <div id="paymentSuccessSection" class="hidden mt-4">
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-2">
+              <span class="text-green-600 text-2xl mr-2">✅</span>
+              <h4 class="text-green-800 font-semibold">Malipo yameanzishwa!</h4>
+            </div>
+            <p class="text-green-700 text-sm">Tafadhali thibitisha malipo kwenye simu yako.</p>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="redirectToWhatsApp()" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+              Nenda WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky CTA Buttons for Mobile -->
+  <div class="sticky-bottom bg-white border-t p-4 md:hidden">
+    <button onclick="openPaymentModal()" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+      Pata Professional Business Email na Website - {{creatorPrice}} {{creatorCurrency}}
+    </button>
+  </div>
+</div>
+
+<script>
+// Payment Modal Functions
+function openPaymentModal() {
+  document.getElementById('paymentModal').classList.remove('hidden');
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModal').classList.add('hidden');
+  document.getElementById('paymentForm').reset();
+  document.getElementById('paymentForm').style.display = 'block';
+  document.getElementById('paymentSuccessSection').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closePaymentModal();
+  }
+});
+
+// Handle payment form submission
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  
+  if (!phoneNumber) {
+    alert('Tafadhali ingiza namba ya simu yako');
+    return;
+  }
+  
+  // Show processing state
+  const payButton = document.getElementById('payButton');
+  payButton.disabled = true;
+  payButton.textContent = 'Inaendelea...';
+  
+  // Extract pageId from URL path
+  const pathParts = window.location.pathname.split('/');
+  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+  
+  console.log('Subscribe data:', { pageId, phoneNumber, templateType: 'business-services' });
+  
+  // Make API call
+  fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      pageId: pageId,
+      phoneNumber: phoneNumber,
+      templateType: 'business-services'
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      // Show success section
+      document.getElementById('paymentForm').style.display = 'none';
+      document.getElementById('paymentSuccessSection').classList.remove('hidden');
+    } else {
+      throw new Error(result.message || 'Payment failed');
+    }
+  })
+  .catch(error => {
+    console.error('Payment error:', error);
+    alert('Kuna tatizo na malipo. Tafadhali jaribu tena.');
+    payButton.disabled = false;
+    payButton.textContent = 'Lipia {{creatorPrice}}';
+  });
+});
+
+function redirectToWhatsApp() {
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  const message = 'Hujambo! Nimefanya malipo ya Professional Business Email na Website. Tafadhali nisaidie kuendelea.';
+  const whatsappUrl = 'https://wa.me/255' + phoneNumber.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(message);
+  window.open(whatsappUrl, '_blank');
+}
+</script>`;
+  }
+
+  private getBusinessServicesCSS(): string {
+    return `* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+.business-services-app { min-height: 100vh; background: white; color: #111827; }
+
+/* Header */
+.bg-white { background-color: white; }
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.border-b { border-bottom: 1px solid #e5e7eb; }
+.max-w-3xl { max-width: 48rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* Main Content */
+main { max-width: 48rem; margin: 0 auto; padding: 1.5rem 1rem; }
+.prose { color: #374151; max-width: none; }
+.prose-lg { font-size: 1.125rem; line-height: 1.7777778; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.font-bold { font-weight: 700; }
+.text-gray-900 { color: #111827; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.my-8 { margin-top: 2rem; margin-bottom: 2rem; }
+
+/* Images */
+.w-full { width: 100%; }
+.h-64 { height: 16rem; }
+.object-cover { object-fit: cover; }
+.rounded-lg { border-radius: 0.5rem; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+
+/* Problem/Solution Sections */
+.bg-red-50 { background-color: #fef2f2; }
+.bg-yellow-50 { background-color: #fffbeb; }
+.bg-green-50 { background-color: #f0fdf4; }
+.p-6 { padding: 1.5rem; }
+.border-l-4 { border-left-width: 4px; }
+.border-red-500 { border-color: #ef4444; }
+.border-yellow-500 { border-color: #eab308; }
+.border-green-500 { border-color: #22c55e; }
+
+/* Flexbox */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.mr-4 { margin-right: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+
+/* Text Colors */
+.text-red-800 { color: #991b1b; }
+.text-yellow-800 { color: #92400e; }
+.text-green-800 { color: #166534; }
+.text-red-700 { color: #b91c1c; }
+.text-green-700 { color: #15803d; }
+.text-gray-600 { color: #4b5563; }
+.text-gray-800 { color: #1f2937; }
+.font-semibold { font-weight: 600; }
+
+/* Grid */
+.grid { display: grid; }
+.md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gap-4 { gap: 1rem; }
+
+/* Buttons */
+.bg-green-600 { background-color: #16a34a; }
+.text-white { color: white; }
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.text-center { text-align: center; }
+.font-semibold { font-weight: 600; }
+.hover\\:bg-green-700:hover { background-color: #15803d; }
+.transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+
+/* Payment Modal */
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.bg-black { background-color: black; }
+.bg-opacity-50 { background-color: rgba(0, 0, 0, 0.5); }
+.hidden { display: none; }
+.z-50 { z-index: 50; }
+.min-h-screen { min-height: 100vh; }
+.justify-center { justify-content: center; }
+.max-w-md { max-width: 28rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+/* Form Elements */
+.w-full { width: 100%; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.border { border-width: 1px; }
+.border-gray-300 { border-color: #d1d5db; }
+.focus\\:ring-2:focus { box-shadow: 0 0 0 2px var(--tw-ring-color); }
+.focus\\:ring-green-500:focus { --tw-ring-color: #22c55e; }
+.focus\\:border-transparent:focus { border-color: transparent; }
+.required { }
+
+/* Button Groups */
+.flex { display: flex; }
+.gap-3 { gap: 0.75rem; }
+.flex-1 { flex: 1 1 0%; }
+.bg-gray-500 { background-color: #6b7280; }
+.hover\\:bg-gray-600:hover { background-color: #4b5563; }
+
+/* Success Section */
+.mt-4 { margin-top: 1rem; }
+.border-green-200 { border-color: #bbf7d0; }
+.text-green-600 { color: #16a34a; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+
+/* Sticky Bottom */
+.sticky-bottom { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: white; border-top: 1px solid #e5e7eb; padding: 1rem; }
+@media (min-width: 768px) { .sticky-bottom { position: static; } }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .md\\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .text-3xl { font-size: 1.5rem; line-height: 2rem; }
+  .px-8 { padding-left: 1rem; padding-right: 1rem; }
+  .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
 }`;
   }
 }
