@@ -25,7 +25,7 @@ export class DatabaseService {
     // Handle non-UUID creator IDs by using a default UUID or creating a placeholder
     const processedData: any = {
       ...data,
-      creator_id: data.creator_id || '00000000-0000-0000-0000-000000000000' // Default UUID for non-UUID creator IDs
+      creator_id: '00000000-0000-0000-0000-000000000000' // Always use default UUID for non-UUID creator IDs
     }
 
     const { data: landingPage, error } = await supabaseTyped

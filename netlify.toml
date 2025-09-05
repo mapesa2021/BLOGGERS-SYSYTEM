@@ -5,25 +5,21 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Next.js on Netlify configuration
-# [[plugins]]
-#   package = "@netlify/plugin-nextjs"
-
 # API routes - redirect to Netlify functions
 [[redirects]]
   from = "/api/subscribe"
   to = "/.netlify/functions/subscribe"
   status = 200
 
-# Handle dynamic routes
+# Handle dynamic routes - redirect to index.html for client-side routing
 [[redirects]]
   from = "/page/*"
-  to = "/page/:splat"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
   from = "/admin/*"
-  to = "/admin/:splat"
+  to = "/index.html"
   status = 200
 
 # Catch all for SPA behavior
