@@ -182,11 +182,11 @@ export async function POST(request: NextRequest) {
         }, { status: 400 });
       }
     } else if (templateType === 'business') {
-      // Business template: requires userId, creatorId, and phoneNumber
-      if (!body.pageId || !body.userId || !body.creatorId || !body.phoneNumber) {
+      // Business template: requires pageId and phoneNumber (userId and creatorId extracted from pageId)
+      if (!body.pageId || !body.phoneNumber) {
         return NextResponse.json({
           success: false,
-          message: 'Missing required fields: pageId, userId, creatorId, phoneNumber'
+          message: 'Missing required fields: pageId, phoneNumber'
         }, { status: 400 });
       }
     }
@@ -247,17 +247,20 @@ export async function POST(request: NextRequest) {
         }
       }
       
-      // Extract creator ID from pageId for minimal template
+      // Extract creator ID from pageId for minimal template (format: creatorId-template-timestamp)
       const pageIdParts = body.pageId.split('-');
       const creatorIdString = pageIdParts[0];
       creatorId = parseInt(creatorIdString);
       
     } else if (templateType === 'business') {
-      // Business template: use provided userId and creatorId directly
-      console.log('📝 Step 1: Using provided User ID and Creator ID for business template...');
-      userId = parseInt(body.userId);
-      creatorId = parseInt(body.creatorId);
-      console.log('✅ Using provided IDs - User ID:', userId, 'Creator ID:', creatorId, 'Phone:', body.phoneNumber);
+      // Business template: extract userId and creatorId from pageId (format: userId-creatorId-template-timestamp)
+      console.log('📝 Step 1: Extracting User ID and Creator ID from pageId for business template...');
+      const pageIdParts = body.pageId.split('-');
+      const userIdString = pageIdParts[0];
+      const creatorIdString = pageIdParts[1];
+      userId = parseInt(userIdString);
+      creatorId = parseInt(creatorIdString);
+      console.log('✅ Extracted IDs from pageId - User ID:', userId, 'Creator ID:', creatorId, 'Phone:', body.phoneNumber);
     }
 
     // Step 2: Validate creator ID

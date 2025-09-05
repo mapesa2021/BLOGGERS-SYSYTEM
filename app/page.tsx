@@ -8,6 +8,7 @@ export default function Home() {
   const [step, setStep] = useState<'template' | 'customize' | 'generate'>('template')
   const [selectedTemplate, setSelectedTemplate] = useState('')
   const [creatorData, setCreatorData] = useState({
+    userId: '107', // Default user ID for testing
     creatorId: '1821', // Default creator ID for testing
     successRedirectUrl: ''
   })
@@ -130,34 +131,71 @@ export default function Home() {
               </h2>
               
               <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Creator ID *
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="1821"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      console.log('🔍 Creator ID onChange - value:', value);
-                      const newCreatorData = {
-                        ...creatorData,
-                        creatorId: value
-                      };
-                      console.log('🔍 Creator ID onChange - setting new data:', newCreatorData);
-                      setCreatorData(newCreatorData);
-                    }}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="1821 (Creator ID)"
-                    required
-                  />
-                  <p className="mt-2 text-sm text-gray-500">
-                    Enter the Creator ID that users will subscribe to
-                  </p>
-                  <p className="mt-1 text-xs text-blue-600">
-                    Current Creator ID: {creatorData.creatorId}
-                  </p>
-                </div>
+                {selectedTemplate === 'business' ? (
+                  // Business template: User ID + Creator ID
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        User & Creator IDs *
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue="107-1821"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          console.log('🔍 Combined IDs onChange - value:', value);
+                          const parts = value.split('-');
+                          const newCreatorData = {
+                            ...creatorData,
+                            userId: parts[0] || '107',
+                            creatorId: parts[1] || '1821'
+                          };
+                          console.log('🔍 Combined IDs onChange - setting new data:', newCreatorData);
+                          setCreatorData(newCreatorData);
+                        }}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                        placeholder="107-1821 (User ID-Creator ID)"
+                        required
+                      />
+                      <p className="mt-2 text-sm text-gray-500">
+                        Enter User ID and Creator ID in format: UserID-CreatorID
+                      </p>
+                      <p className="mt-1 text-xs text-blue-600">
+                        Current: User ID: {creatorData.userId}, Creator ID: {creatorData.creatorId}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  // Minimal template: Creator ID only
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Creator ID *
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue="1821"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        console.log('🔍 Creator ID onChange - value:', value);
+                        const newCreatorData = {
+                          ...creatorData,
+                          creatorId: value
+                        };
+                        console.log('🔍 Creator ID onChange - setting new data:', newCreatorData);
+                        setCreatorData(newCreatorData);
+                      }}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                      placeholder="1821 (Creator ID)"
+                      required
+                    />
+                    <p className="mt-2 text-sm text-gray-500">
+                      Enter the Creator ID that users will subscribe to
+                    </p>
+                    <p className="mt-1 text-xs text-blue-600">
+                      Current Creator ID: {creatorData.creatorId}
+                    </p>
+                  </div>
+                )}
                 
 
                 
@@ -211,10 +249,20 @@ export default function Home() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 mb-2">Page Summary</h3>
                   <div className="space-y-2 text-sm text-gray-600">
-                                    <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
-                <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
-                <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
-                <p><strong>Note:</strong> User ID will be generated dynamically from phone number</p>
+                    <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
+                    {selectedTemplate === 'business' ? (
+                      <>
+                        <p><strong>User ID:</strong> {creatorData.userId}</p>
+                        <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                        <p><strong>Note:</strong> Business template uses manual User ID + Creator ID</p>
+                      </>
+                    ) : (
+                      <>
+                        <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                        <p><strong>Note:</strong> User ID will be generated dynamically from phone number</p>
+                      </>
+                    )}
+                    <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
                   </div>
                 </div>
                 
@@ -223,7 +271,9 @@ export default function Home() {
                     console.log('🔍 Current creatorData state:', creatorData);
                     console.log('🔍 Selected template:', selectedTemplate);
                     
-                    const pageId = `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
+                    const pageId = selectedTemplate === 'business' 
+                      ? `${creatorData.userId}-${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
+                      : `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
                     const url = `${window.location.origin}/page/${pageId}`
                     setGeneratedUrl(url)
                     
