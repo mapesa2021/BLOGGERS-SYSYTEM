@@ -162,6 +162,12 @@ async function subscribe() {
     return;
   }
   
+  // Extract pageId from URL path
+  const pathParts = window.location.pathname.split('/');
+  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+  
+  console.log('Subscribe data:', { pageId, phoneNumber, templateType: 'minimal' });
+  
   // Show processing popup
   showProcessingState();
   
@@ -170,7 +176,7 @@ async function subscribe() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        pageId: window.location.pathname.split('/').pop(),
+        pageId: pageId,
         phoneNumber: phoneNumber,
         templateType: 'minimal'
       })
@@ -400,6 +406,12 @@ async function subscribe() {
     return;
   }
   
+  // Extract pageId from URL path
+  const pathParts = window.location.pathname.split('/');
+  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+  
+  console.log('Subscribe data:', { pageId, phoneNumber, templateType: 'modern' });
+  
   // Show processing popup
   showProcessingState();
   
@@ -408,7 +420,7 @@ async function subscribe() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        pageId: window.location.pathname.split('/').pop(),
+        pageId: pageId,
         phoneNumber: phoneNumber,
         templateType: 'modern'
       })

@@ -23,12 +23,54 @@ export default function DynamicPageClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
+  const [html, setHtml] = useState<string>('');
 
   useEffect(() => {
     if (pageId) {
       fetchPageData(pageId);
     }
   }, [pageId]);
+
+  // Generate HTML when pageData changes
+  useEffect(() => {
+    if (pageData) {
+      const generatedHtml = templateEngine.generatePage(pageData.template, {
+        creatorId: pageData.creatorIdDisplay,
+        creatorName: pageData.creatorName,
+        creatorPrice: pageData.subscriptionAmount,
+        creatorCurrency: pageData.currency
+      });
+      setHtml(generatedHtml);
+    }
+  }, [pageData]);
+
+  // Execute JavaScript from HTML when html changes
+  useEffect(() => {
+    if (html && typeof window !== 'undefined') {
+      // Extract script content from the HTML
+      const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+      if (scriptMatch) {
+        const scriptContent = scriptMatch[1];
+        try {
+          // Create and inject a script tag to ensure proper global scope execution
+          const script = document.createElement('script');
+          script.textContent = scriptContent;
+          document.head.appendChild(script);
+          
+          // Clean up the script tag after execution
+          setTimeout(() => {
+            if (script.parentNode) {
+              script.parentNode.removeChild(script);
+            }
+          }, 100);
+          
+          console.log('Script executed, subscribe function available:', typeof window.subscribe);
+        } catch (error) {
+          console.error('Error executing template script:', error);
+        }
+      }
+    }
+  }, [html]);
 
   const fetchPageData = async (pageId: string) => {
     try {
@@ -140,18 +182,10 @@ export default function DynamicPageClient() {
     );
   }
 
-  // Generate the actual HTML content using the template engine
-  const html = templateEngine.generatePage(pageData.template, {
-    creatorId: pageData.creatorIdDisplay,
-    creatorName: pageData.creatorName,
-    creatorPrice: pageData.subscriptionAmount,
-    creatorCurrency: pageData.currency
-  });
-
   return (
     <div className="min-h-screen">
       {/* Landing Page Content */}
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      {html && <div dangerouslySetInnerHTML={{ __html: html }} />}
     </div>
   );
 }
