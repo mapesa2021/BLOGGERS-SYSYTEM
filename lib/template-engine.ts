@@ -70,7 +70,7 @@ export class TemplateEngine {
 
     // Replace variables with fallbacks
     html = html.replace(/\{\{creatorId\}\}/g, data.creatorId || 'Creator');
-    html = html.replace(/\{\{authorId\}\}/g, data.authorId || '107');
+    // No longer need authorId replacement - using dynamic signup
     html = html.replace(/\{\{creatorName\}\}/g, data.creatorName || data.creatorId || 'Creator');
     html = html.replace(/\{\{creatorBio\}\}/g, data.creatorBio || 'Welcome to my creator page!');
     html = html.replace(/\{\{creatorImage\}\}/g, data.creatorImage || 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator');
@@ -200,18 +200,23 @@ async function subscribe() {
     return;
   }
   
+  // Show processing popup
+  showProcessingState();
+  
   try {
     const response = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         pageId: window.location.pathname.split('/').pop(),
-        phoneNumber: phoneNumber,
-        authorId: '{{authorId}}'
+        phoneNumber: phoneNumber
       })
     });
     
     const result = await response.json();
+    
+    // Hide processing popup
+    hideProcessingState();
     
     if (result.success) {
       // Show success step with USSD instructions
@@ -221,7 +226,74 @@ async function subscribe() {
       showError(result.message || 'Subscription failed');
     }
   } catch (error) {
+    // Hide processing popup
+    hideProcessingState();
     showError('Network error. Please try again.');
+  }
+}
+
+function showProcessingState() {
+  const subscribeBtn = document.querySelector('.cta-btn');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = true;
+    subscribeBtn.textContent = 'Processing...';
+    subscribeBtn.style.opacity = '0.7';
+  }
+  
+  // Create processing popup
+  const processingPopup = document.createElement('div');
+  processingPopup.id = 'processing-popup';
+  processingPopup.className = 'processing-popup';
+  processingPopup.innerHTML = 
+    '<div class="processing-content">' +
+      '<div class="processing-spinner"></div>' +
+      '<h3>Processing Your Request</h3>' +
+      '<p>Please wait while we set up your subscription...</p>' +
+      '<div class="processing-steps">' +
+        '<div class="step" id="step-signup">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Checking user account...</span>' +
+        '</div>' +
+        '<div class="step" id="step-payment">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Initiating payment...</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  
+  document.body.appendChild(processingPopup);
+  
+  // Simulate step progression
+  setTimeout(() => {
+    const signupStep = document.getElementById('step-signup');
+    if (signupStep) {
+      signupStep.classList.add('active');
+      signupStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 2000);
+  
+  setTimeout(() => {
+    const paymentStep = document.getElementById('step-payment');
+    if (paymentStep) {
+      paymentStep.classList.add('active');
+      paymentStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 4000);
+}
+
+function hideProcessingState() {
+  const subscribeBtn = document.querySelector('.cta-btn');
+  const processingPopup = document.getElementById('processing-popup');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = false;
+    subscribeBtn.textContent = 'Subscribe Now';
+    subscribeBtn.style.opacity = '1';
+  }
+  
+  if (processingPopup) {
+    processingPopup.remove();
   }
 }
 
@@ -363,17 +435,23 @@ async function subscribe() {
     return;
   }
   
+  // Show processing popup
+  showProcessingState();
+  
   try {
     const response = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        phoneNumber: phoneNumber,
-        creatorId: currentCreatorId
+        pageId: window.location.pathname.split('/').pop(),
+        phoneNumber: phoneNumber
       })
     });
     
     const result = await response.json();
+    
+    // Hide processing popup
+    hideProcessingState();
     
     if (result.success) {
       // Show success step with USSD instructions
@@ -383,7 +461,74 @@ async function subscribe() {
       showError(result.message || 'Subscription failed');
     }
   } catch (error) {
+    // Hide processing popup
+    hideProcessingState();
     showError('Network error. Please try again.');
+  }
+}
+
+function showProcessingState() {
+  const subscribeBtn = document.querySelector('.cta-btn');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = true;
+    subscribeBtn.textContent = 'Processing...';
+    subscribeBtn.style.opacity = '0.7';
+  }
+  
+  // Create processing popup
+  const processingPopup = document.createElement('div');
+  processingPopup.id = 'processing-popup';
+  processingPopup.className = 'processing-popup';
+  processingPopup.innerHTML = 
+    '<div class="processing-content">' +
+      '<div class="processing-spinner"></div>' +
+      '<h3>Processing Your Request</h3>' +
+      '<p>Please wait while we set up your subscription...</p>' +
+      '<div class="processing-steps">' +
+        '<div class="step" id="step-signup">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Checking user account...</span>' +
+        '</div>' +
+        '<div class="step" id="step-payment">' +
+          '<span class="step-icon">⏳</span>' +
+          '<span>Initiating payment...</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  
+  document.body.appendChild(processingPopup);
+  
+  // Simulate step progression
+  setTimeout(() => {
+    const signupStep = document.getElementById('step-signup');
+    if (signupStep) {
+      signupStep.classList.add('active');
+      signupStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 2000);
+  
+  setTimeout(() => {
+    const paymentStep = document.getElementById('step-payment');
+    if (paymentStep) {
+      paymentStep.classList.add('active');
+      paymentStep.querySelector('.step-icon').textContent = '✅';
+    }
+  }, 4000);
+}
+
+function hideProcessingState() {
+  const subscribeBtn = document.querySelector('.cta-btn');
+  const processingPopup = document.getElementById('processing-popup');
+  
+  if (subscribeBtn) {
+    subscribeBtn.disabled = false;
+    subscribeBtn.textContent = 'Subscribe Now';
+    subscribeBtn.style.opacity = '1';
+  }
+  
+  if (processingPopup) {
+    processingPopup.remove();
   }
 }
 
@@ -444,6 +589,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .feature p { color: #6b7280; line-height: 1.6; }
 .footer { background: #1f2937; color: white; text-align: center; padding: 2rem; }
 .footer a { color: #3b82f6; text-decoration: none; }
+.processing-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.processing-content { background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.processing-spinner { width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+.processing-content h3 { color: #1f2937; margin-bottom: 0.5rem; }
+.processing-content p { color: #6b7280; margin-bottom: 1.5rem; }
+.processing-steps { text-align: left; }
+.processing-steps .step { display: flex; align-items: center; margin: 0.5rem 0; padding: 0.5rem; border-radius: 8px; transition: all 0.3s ease; }
+.processing-steps .step.active { background: #f0f9ff; color: #3b82f6; }
+.processing-steps .step-icon { font-size: 1.2rem; margin-right: 0.5rem; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 @media (max-width: 768px) {
   .hero-content { grid-template-columns: 1fr; text-align: center; }

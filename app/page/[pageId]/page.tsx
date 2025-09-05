@@ -9,7 +9,6 @@ interface PageData {
   template: 'minimal' | 'modern-business' | 'creative' | 'professional';
   creatorName: string;
   creatorIdDisplay: string; // What users see/enter
-  authorId: string; // Author ID for Clubzila API calls
   successRedirectUrl: string; // Where users go after payment
   failureRedirectUrl: string; // Where users go if payment fails
   subscriptionAmount: number;
@@ -78,7 +77,6 @@ export default function DynamicPage() {
           template: 'minimal',
           creatorName: 'Demo Creator',
           creatorIdDisplay: 'DEMO001',
-          authorId: '107',
           successRedirectUrl: '',
           failureRedirectUrl: '',
           subscriptionAmount: 500,
@@ -116,7 +114,6 @@ export default function DynamicPage() {
           template: templateType,
           creatorName: parsedData.creatorName || 'Creator',
           creatorIdDisplay: parsedData.creatorId, // Use the actual creator ID from storage
-          authorId: parsedData.authorId || '107', // Use stored author ID or fallback
           successRedirectUrl: parsedData.successRedirectUrl || '',
           failureRedirectUrl: parsedData.failureRedirectUrl || '',
           subscriptionAmount: parsedData.creatorPrice || 500,
@@ -131,16 +128,14 @@ export default function DynamicPage() {
         console.log('⚠️ No stored data found for page:', id);
         console.log('🔍 Available localStorage keys:', Object.keys(localStorage));
         
-        // Try to extract userId and creatorId from the URL
-        // Format: userId-creatorId-template-timestamp
+        // Try to extract creatorId from the URL
+        // Format: creatorId-template-timestamp
         const urlParts = id.split('-');
-        let extractedUserId = 'DEMO001';
-        let extractedCreatorId = '107';
+        let extractedCreatorId = '1821'; // Default creator ID
         
-        if (urlParts.length >= 2) {
-          extractedUserId = urlParts[0]; // First part is user ID (who is subscribing)
-          extractedCreatorId = urlParts[1]; // Second part is creator ID (who they're subscribing to)
-          console.log('🔍 Extracted from URL:', { userId: extractedUserId, creatorId: extractedCreatorId });
+        if (urlParts.length >= 1) {
+          extractedCreatorId = urlParts[0]; // First part is creator ID
+          console.log('🔍 Extracted from URL:', { creatorId: extractedCreatorId });
         }
         
         const mockPageData: PageData = {
@@ -148,7 +143,6 @@ export default function DynamicPage() {
           template: 'minimal',
           creatorName: extractedCreatorId, // Use creator ID as the name
           creatorIdDisplay: extractedCreatorId,
-          authorId: extractedUserId, // Store user ID in authorId field for compatibility
           successRedirectUrl: '',
           failureRedirectUrl: '',
           subscriptionAmount: 500,
@@ -242,7 +236,6 @@ export default function DynamicPage() {
   // Generate the actual HTML content using the template engine
   const html = templateEngine.generatePage(pageData.template, {
     creatorId: pageData.creatorIdDisplay,
-    authorId: pageData.authorId,
     creatorName: pageData.creatorName,
     creatorPrice: pageData.subscriptionAmount,
     creatorCurrency: pageData.currency

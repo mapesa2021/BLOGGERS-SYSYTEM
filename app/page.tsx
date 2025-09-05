@@ -8,8 +8,7 @@ export default function Home() {
   const [step, setStep] = useState<'template' | 'customize' | 'generate'>('template')
   const [selectedTemplate, setSelectedTemplate] = useState('')
   const [creatorData, setCreatorData] = useState({
-    creatorId: 'demo-user',
-    authorId: '107', // Default author ID for testing
+    creatorId: '1821', // Default creator ID for testing
     successRedirectUrl: ''
   })
   const [generatedUrl, setGeneratedUrl] = useState('')
@@ -133,35 +132,30 @@ export default function Home() {
               <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    User & Creator IDs *
+                    Creator ID *
                   </label>
                   <input
                     type="text"
-                    defaultValue="107-1821"
+                    defaultValue="1821"
                     onChange={(e) => {
                       const value = e.target.value;
-                      console.log('🔍 Input onChange - value:', value);
-                      const parts = value.split('-');
-                      console.log('🔍 Input onChange - parts:', parts);
-                      if (parts.length === 2) {
-                        const newCreatorData = {
-                          creatorId: parts[0],
-                          authorId: parts[1],
-                          successRedirectUrl: creatorData.successRedirectUrl
-                        };
-                        console.log('🔍 Input onChange - setting new data:', newCreatorData);
-                        setCreatorData(newCreatorData);
-                      }
+                      console.log('🔍 Creator ID onChange - value:', value);
+                      const newCreatorData = {
+                        ...creatorData,
+                        creatorId: value
+                      };
+                      console.log('🔍 Creator ID onChange - setting new data:', newCreatorData);
+                      setCreatorData(newCreatorData);
                     }}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                    placeholder="107-1821 (User ID-Creator ID)"
+                    placeholder="1821 (Creator ID)"
                     required
                   />
                   <p className="mt-2 text-sm text-gray-500">
-                    Enter both IDs separated by a dash: User ID-Creator ID
+                    Enter the Creator ID that users will subscribe to
                   </p>
                   <p className="mt-1 text-xs text-blue-600">
-                    Current: {creatorData.creatorId}-{creatorData.authorId}
+                    Current Creator ID: {creatorData.creatorId}
                   </p>
                 </div>
                 
@@ -217,10 +211,10 @@ export default function Home() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 mb-2">Page Summary</h3>
                   <div className="space-y-2 text-sm text-gray-600">
-                    <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
-                    <p><strong>IDs:</strong> {creatorData.creatorId}-{creatorData.authorId} (User-Creator)</p>
-                    <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
-                    <p><strong>Debug:</strong> creatorId={creatorData.creatorId}, authorId={creatorData.authorId}</p>
+                                    <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
+                <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
+                <p><strong>Success Redirect:</strong> {creatorData.successRedirectUrl || 'Default'}</p>
+                <p><strong>Note:</strong> User ID will be generated dynamically from phone number</p>
                   </div>
                 </div>
                 
@@ -229,7 +223,7 @@ export default function Home() {
                     console.log('🔍 Current creatorData state:', creatorData);
                     console.log('🔍 Selected template:', selectedTemplate);
                     
-                    const pageId = `${creatorData.creatorId}-${creatorData.authorId}-${selectedTemplate}-${Date.now()}`
+                    const pageId = `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
                     const url = `${window.location.origin}/page/${pageId}`
                     setGeneratedUrl(url)
                     
@@ -237,7 +231,6 @@ export default function Home() {
                     const pageData = {
                       templateId: selectedTemplate,
                       creatorId: creatorData.creatorId,
-                      authorId: creatorData.authorId,
                       creatorName: creatorData.creatorId, // Use Creator ID as name
                       creatorBio: 'Welcome to my creator page!',
                       creatorImage: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator',
