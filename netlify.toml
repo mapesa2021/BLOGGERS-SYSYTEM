@@ -32,14 +32,14 @@
   to = "/demo"
   status = 200
 
-# API routes should not be redirected
-[[redirects]]
-  from = "/api/*"
-  to = "/api/:splat"
-  status = 200
+# API routes should not be redirected - let Next.js handle them
+# [[redirects]]
+#   from = "/api/*"
+#   to = "/api/:splat"
+#   status = 200
 
-# Catch all for SPA behavior - this should be last
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Catch all for SPA behavior - commented out to prevent API route interference
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
