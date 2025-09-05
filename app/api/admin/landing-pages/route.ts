@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
         page_id: 'tech-solutions-landing',
         title: 'Tech Solutions Landing Page',
         description: 'Professional tech solutions for businesses',
-        template: 'modern-business',
+        template: 'modern',
         status: 'published',
         creator_id_display: 'TECH001',
         success_redirect_url: 'https://techsolutions.com/success',

@@ -131,15 +131,15 @@ export default function Home() {
               </h2>
               
               <form onSubmit={(e) => { e.preventDefault(); setStep('generate'); }} className="space-y-6">
-                {selectedTemplate === 'business' ? (
+                {selectedTemplate === 'modern' ? (
                   // Business template: User ID + Creator ID
                   <>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                         User & Creator IDs *
-                      </label>
-                      <input
-                        type="text"
+                  </label>
+                  <input
+                    type="text"
                         defaultValue="107-1821"
                         onChange={(e) => {
                           const value = e.target.value;
@@ -153,24 +153,24 @@ export default function Home() {
                           console.log('🔍 Combined IDs onChange - setting new data:', newCreatorData);
                           setCreatorData(newCreatorData);
                         }}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                         placeholder="107-1821 (User ID-Creator ID)"
-                        required
-                      />
+                    required
+                  />
                       <p className="mt-2 text-sm text-gray-500">
                         Enter User ID and Creator ID in format: UserID-CreatorID
                       </p>
                       <p className="mt-1 text-xs text-blue-600">
                         Current: User ID: {creatorData.userId}, Creator ID: {creatorData.creatorId}
                       </p>
-                    </div>
+                </div>
                   </>
                 ) : (
                   // Minimal template: Creator ID only
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                       Creator ID *
-                    </label>
+                  </label>
                     <input
                       type="text"
                       defaultValue="1821"
@@ -184,7 +184,7 @@ export default function Home() {
                         console.log('🔍 Creator ID onChange - setting new data:', newCreatorData);
                         setCreatorData(newCreatorData);
                       }}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                       placeholder="1821 (Creator ID)"
                       required
                     />
@@ -194,7 +194,7 @@ export default function Home() {
                     <p className="mt-1 text-xs text-blue-600">
                       Current Creator ID: {creatorData.creatorId}
                     </p>
-                  </div>
+                </div>
                 )}
                 
 
@@ -250,7 +250,7 @@ export default function Home() {
                   <h3 className="font-semibold text-gray-900 mb-2">Page Summary</h3>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p><strong>Template:</strong> {templates.find(t => t.id === selectedTemplate)?.name}</p>
-                    {selectedTemplate === 'business' ? (
+                    {selectedTemplate === 'modern' ? (
                       <>
                         <p><strong>User ID:</strong> {creatorData.userId}</p>
                         <p><strong>Creator ID:</strong> {creatorData.creatorId}</p>
@@ -271,7 +271,7 @@ export default function Home() {
                     console.log('🔍 Current creatorData state:', creatorData);
                     console.log('🔍 Selected template:', selectedTemplate);
                     
-                    const pageId = selectedTemplate === 'business' 
+                    const pageId = selectedTemplate === 'modern' 
                       ? `${creatorData.userId}-${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
                       : `${creatorData.creatorId}-${selectedTemplate}-${Date.now()}`
                     const url = `${window.location.origin}/page/${pageId}`

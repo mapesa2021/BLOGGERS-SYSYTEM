@@ -181,7 +181,7 @@ export async function POST(request: NextRequest) {
           message: 'Missing required fields: pageId, phoneNumber'
         }, { status: 400 });
       }
-    } else if (templateType === 'business') {
+    } else if (templateType === 'modern') {
       // Business template: requires pageId and phoneNumber (userId and creatorId extracted from pageId)
       if (!body.pageId || !body.phoneNumber) {
         return NextResponse.json({
@@ -252,7 +252,7 @@ export async function POST(request: NextRequest) {
       const creatorIdString = pageIdParts[0];
       creatorId = parseInt(creatorIdString);
       
-    } else if (templateType === 'business') {
+    } else if (templateType === 'modern') {
       // Business template: extract userId and creatorId from pageId (format: userId-creatorId-template-timestamp)
       console.log('📝 Step 1: Extracting User ID and Creator ID from pageId for business template...');
       const pageIdParts = body.pageId.split('-');

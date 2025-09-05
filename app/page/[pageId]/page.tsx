@@ -6,7 +6,7 @@ import { templateEngine } from '../../../lib/template-engine';
 
 interface PageData {
   pageId: string;
-  template: 'minimal' | 'modern-business' | 'creative' | 'professional';
+  template: 'minimal' | 'modern' | 'creative' | 'professional';
   creatorName: string;
   creatorIdDisplay: string; // What users see/enter
   successRedirectUrl: string; // Where users go after payment
@@ -97,13 +97,13 @@ export default function DynamicPage() {
         console.log('📋 Found stored page data:', parsedData);
         
         // Map template ID to the correct template type
-        let templateType: 'minimal' | 'modern-business' | 'creative' | 'professional';
+        let templateType: 'minimal' | 'modern' | 'creative' | 'professional';
         switch (parsedData.templateId) {
           case 'minimal':
             templateType = 'minimal';
             break;
           case 'modern':
-            templateType = 'modern-business';
+            templateType = 'modern';
             break;
           default:
             templateType = 'minimal'; // fallback

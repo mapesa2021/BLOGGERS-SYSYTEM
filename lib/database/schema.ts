@@ -26,7 +26,7 @@ export interface LandingPage {
   page_id: string; // Unique URL identifier
   title: string;
   description?: string;
-  template: 'minimal' | 'modern-business' | 'creative' | 'professional';
+  template: 'minimal' | 'modern' | 'creative' | 'professional';
   custom_domain?: string;
   status: 'draft' | 'published' | 'archived';
   
