@@ -309,7 +309,7 @@ export async function POST(request: NextRequest) {
 
     const clubzilaData = await clubzilaResponse.json();
     console.log('✅ Payment initiated successfully:', clubzilaData);
-    
+
     return NextResponse.json({
       success: true,
       message: 'Payment initiated! Check your phone for USSD prompt.',
