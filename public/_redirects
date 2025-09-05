@@ -1,5 +1,5 @@
-# API routes
-/api/*  /api/:splat  200
+# API routes - redirect to Netlify functions
+/api/*  /.netlify/functions/api/:splat  200
 
 # Dynamic page routes
 /page/*  /page/:splat  200
