@@ -32,12 +32,9 @@ export default function Home() {
             Choose from our templates and get a unique URL in seconds.
           </p>
           <div className="mt-6 flex space-x-4 justify-center">
-            <a
-              href="/demo"
-              className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
-            >
-              View Demo Templates
-            </a>
+            <div className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold shadow-lg">
+              Choose Your Landing Page
+            </div>
           </div>
         </div>
 
