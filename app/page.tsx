@@ -267,7 +267,7 @@ export default function Home() {
                 </div>
                 
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     console.log('🔍 Current creatorData state:', creatorData);
                     console.log('🔍 Selected template:', selectedTemplate);
                     
