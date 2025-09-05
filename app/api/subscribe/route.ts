@@ -189,6 +189,14 @@ export async function POST(request: NextRequest) {
           message: 'Missing required fields: pageId, phoneNumber'
         }, { status: 400 });
       }
+    } else if (templateType === 'video-feed') {
+      // Video feed template: requires pageId and phoneNumber (creatorId extracted from pageId)
+      if (!body.pageId || !body.phoneNumber) {
+        return NextResponse.json({
+          success: false,
+          message: 'Missing required fields: pageId, phoneNumber'
+        }, { status: 400 });
+      }
     }
 
     console.log('🔄 Processing subscription:', {
@@ -261,6 +269,55 @@ export async function POST(request: NextRequest) {
       userId = parseInt(userIdString);
       creatorId = parseInt(creatorIdString);
       console.log('✅ Extracted IDs from pageId - User ID:', userId, 'Creator ID:', creatorId, 'Phone:', body.phoneNumber);
+    } else if (templateType === 'video-feed') {
+      // Video feed template: same logic as minimal template - smart user handling and extract creatorId from pageId
+      console.log('📝 Step 1: Smart user handling for video-feed template...');
+      
+      // First, try to signup the user
+      console.log('🔄 Attempting to signup new user...');
+      const signupResult = await signupUser(body.phoneNumber, body.userName);
+      
+      if (signupResult.success) {
+        // Signup successful - new user created
+        userId = parseInt(signupResult.userId!);
+        console.log('✅ New user signup successful, User ID:', userId);
+      } else {
+        // Signup failed - check if user already exists
+        console.log('⚠️ Signup failed, checking if user already exists...');
+        console.log('🔍 Signup error:', signupResult.error);
+        
+        // Check if the error indicates user already exists
+        if (signupResult.error && signupResult.error.includes('already been taken')) {
+          console.log('🔄 User already exists, getting existing user ID...');
+          const getUserResult = await getUserByPhone(body.phoneNumber);
+          
+          if (getUserResult.success) {
+            userId = parseInt(getUserResult.userId!);
+            console.log('✅ Found existing user, User ID:', userId);
+          } else {
+            console.error('❌ Failed to get existing user:', getUserResult.error);
+            return NextResponse.json({
+              success: false,
+              message: 'Failed to get existing user information',
+              error: getUserResult.error
+            }, { status: 400 });
+          }
+        } else {
+          // Some other signup error
+          console.error('❌ User signup failed with unexpected error:', signupResult.error);
+          return NextResponse.json({
+            success: false,
+            message: 'User registration failed',
+            error: signupResult.error
+          }, { status: 400 });
+        }
+      }
+      
+      // Extract creator ID from pageId for video-feed template (format: creatorId-template-timestamp)
+      const pageIdParts = body.pageId.split('-');
+      const creatorIdString = pageIdParts[0];
+      creatorId = parseInt(creatorIdString);
+      console.log('✅ Extracted Creator ID from pageId:', creatorId);
     }
 
     // Step 2: Validate creator ID
