@@ -9,11 +9,11 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# API routes - redirect to Netlify functions
-[[redirects]]
-  from = "/api/subscribe"
-  to = "/.netlify/functions/subscribe"
-  status = 200
+# API routes - let Next.js handle them directly
+# [[redirects]]
+#   from = "/api/subscribe"
+#   to = "/.netlify/functions/subscribe"
+#   status = 200
 
 # Handle dynamic routes - redirect to index.html for client-side routing
 [[redirects]]
