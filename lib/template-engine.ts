@@ -101,7 +101,7 @@ export class TemplateEngine {
   <!-- Profile Header -->
   <div class="profile-header">
     <div class="profile-bg">
-      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=400&fit=crop" alt="Background" class="profile-bg-img">
+      <img src="https://i.postimg.cc/C104cH8G/Screenshot-2025-08-21-at-17-12-53.png" alt="Background" class="profile-bg-img">
     </div>
     <div class="profile-info">
       <div class="profile-avatar">
