@@ -64,7 +64,7 @@ export default function DynamicPageClient() {
             }
           }, 100);
           
-          console.log('Script executed, subscribe function available:', typeof window.subscribe);
+          console.log('Script executed, subscribe function available:', typeof (window as any).subscribe);
         } catch (error) {
           console.error('Error executing template script:', error);
         }
