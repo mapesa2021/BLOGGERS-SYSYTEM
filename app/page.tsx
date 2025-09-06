@@ -117,6 +117,11 @@ export default function Home() {
                       thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop',
                       gradient: 'from-green-500 to-emerald-600',
                       icon: '💼'
+                    },
+                    'betting': {
+                      thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop',
+                      gradient: 'from-orange-500 to-red-600',
+                      icon: '⚽'
                     }
                   };
                   
@@ -208,6 +213,12 @@ export default function Home() {
                             <>
                               <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Swahili</span>
                               <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Services</span>
+                            </>
+                          )}
+                          {template.id === 'betting' && (
+                            <>
+                              <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">Football</span>
+                              <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">Live</span>
                             </>
                           )}
                         </div>

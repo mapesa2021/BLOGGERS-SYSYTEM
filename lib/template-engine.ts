@@ -72,6 +72,15 @@ export class TemplateEngine {
       html: this.getBusinessServicesHTML(),
       css: this.getBusinessServicesCSS(),
     });
+
+    // Betting Template
+    this.addTemplate({
+      id: 'betting',
+      name: 'Football Betting',
+      description: 'Modern football betting platform with live matches',
+      html: this.getBettingHTML(),
+      css: this.getBettingCSS(),
+    });
   }
 
   addTemplate(template: Template): void {
@@ -155,14 +164,14 @@ export class TemplateEngine {
       </div>
   </div>
   </div>
-  
+
   <!-- Subscription Section -->
   <div class="subscription-section">
     <div class="subscription-card">
       <div class="subscription-header">
         <h3>💎 Premium Access</h3>
         <p>Unlock exclusive content and chat with me directly</p>
-      </div>
+  </div>
     
     <div class="subscription-form">
       <div class="form-step" id="step1">
@@ -1736,6 +1745,626 @@ main { max-width: 48rem; margin: 0 auto; padding: 1.5rem 1rem; }
   .px-8 { padding-left: 1rem; padding-right: 1rem; }
   .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
 }`;
+  }
+
+  private getBettingHTML(): string {
+    return `<div class="betting-app">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-futbol"></i>
+                <h1>{{creatorName}}</h1>
+            </div>
+            <div class="header-stats">
+                <div class="stat">
+                    <span class="stat-number">1,247</span>
+                    <span class="stat-label">Active Bets</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">TSH 2,234,800</span>
+                    <span class="stat-label">Total Winnings</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Live Matches Section -->
+            <section class="matches-section">
+                <h2 class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    Live Matches
+                </h2>
+                
+                <div class="matches-grid">
+                    <!-- Match 1 -->
+                    <div class="match-card" data-match="1">
+                        <div class="match-header">
+                            <div class="league">Championship</div>
+                            <div class="match-time">LIVE 67'</div>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="Bristol City" class="team-logo">
+                                <span class="team-name">Bristol City</span>
+                                <span class="team-score">2</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <span class="team-score">1</span>
+                                <span class="team-name">Preston North End</span>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="Preston North End" class="team-logo">
+                            </div>
+                        </div>
+                        <div class="odds-section">
+                            <h4>Match Result</h4>
+                            <div class="odds-grid">
+                                <button class="odds-btn" data-odds="18.50" data-bet="home">
+                                    <span class="bet-type">1</span>
+                                    <span class="odds">18.50</span>
+                                </button>
+                                <button class="odds-btn" data-odds="22.00" data-bet="draw">
+                                    <span class="bet-type">X</span>
+                                    <span class="odds">22.00</span>
+                                </button>
+                                <button class="odds-btn" data-odds="19.75" data-bet="away">
+                                    <span class="bet-type">2</span>
+                                    <span class="odds">19.75</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match 2 -->
+                    <div class="match-card" data-match="2">
+                        <div class="match-header">
+                            <div class="league">Segunda División</div>
+                            <div class="match-time">Today 20:00</div>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="Real Oviedo" class="team-logo">
+                                <span class="team-name">Real Oviedo</span>
+                                <span class="team-score">-</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <span class="team-score">-</span>
+                                <span class="team-name">CD Mirandés</span>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="CD Mirandés" class="team-logo">
+                            </div>
+                        </div>
+                        <div class="odds-section">
+                            <h4>Match Result</h4>
+                            <div class="odds-grid">
+                                <button class="odds-btn" data-odds="16.25" data-bet="home">
+                                    <span class="bet-type">1</span>
+                                    <span class="odds">16.25</span>
+                                </button>
+                                <button class="odds-btn" data-odds="24.50" data-bet="draw">
+                                    <span class="bet-type">X</span>
+                                    <span class="odds">24.50</span>
+                                </button>
+                                <button class="odds-btn" data-odds="17.80" data-bet="away">
+                                    <span class="bet-type">2</span>
+                                    <span class="odds">17.80</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match 3 -->
+                    <div class="match-card" data-match="3">
+                        <div class="match-header">
+                            <div class="league">Serie B</div>
+                            <div class="match-time">Tomorrow 18:30</div>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="Pisa SC" class="team-logo">
+                                <span class="team-name">Pisa SC</span>
+                                <span class="team-score">-</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <span class="team-score">-</span>
+                                <span class="team-name">Cosenza Calcio</span>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRou2OiEkjargTJ3Wr6FT2INGd8h4DUmtr82w&s" alt="Cosenza Calcio" class="team-logo">
+                            </div>
+                        </div>
+                        <div class="odds-section">
+                            <h4>Match Result</h4>
+                            <div class="odds-grid">
+                                <button class="odds-btn" data-odds="20.00" data-bet="home">
+                                    <span class="bet-type">1</span>
+                                    <span class="odds">20.00</span>
+                                </button>
+                                <button class="odds-btn" data-odds="25.00" data-bet="draw">
+                                    <span class="bet-type">X</span>
+                                    <span class="odds">25.00</span>
+                                </button>
+                                <button class="odds-btn" data-odds="21.50" data-bet="away">
+                                    <span class="bet-type">2</span>
+                                    <span class="odds">21.50</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Betting Slip -->
+            <aside class="betting-slip">
+                <div class="slip-header">
+                    <h3><i class="fas fa-receipt"></i> Betting Slip</h3>
+                    <button class="clear-btn" id="clearSlip">Clear All</button>
+                </div>
+                
+                <div class="slip-content" id="slipContent">
+                    <div class="empty-slip">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>Select odds to add bets</p>
+                    </div>
+                </div>
+
+                <div class="slip-footer" id="slipFooter" style="display: none;">
+                    <div class="total-section">
+                        <div class="stake-input">
+                            <label for="stake">Stake (TSH)</label>
+                            <input type="number" id="stake" placeholder="0" min="1000" step="100">
+                        </div>
+                        <div class="potential-win">
+                            <span class="label">Potential Win:</span>
+                            <span class="amount" id="potentialWin">TSH 0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-section">
+                        <h4>Payment Details</h4>
+                        <div class="input-group">
+                            <label for="mobile">Mobile Number</label>
+                            <input type="tel" id="mobile" placeholder="07 1234 5678" required>
+                        </div>
+                        <div class="payment-methods">
+                            <div class="payment-method active">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>SMS Payment</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="place-bet-btn" id="placeBetBtn">
+                        <i class="fas fa-check"></i>
+                        Place Bet
+                    </button>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Success Modal -->
+        <div class="modal" id="successModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h3>Bet Placed Successfully!</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Your bet has been placed and payment will be processed via SMS.</p>
+                    <div class="bet-details" id="betDetails"></div>
+                </div>
+                <button class="modal-btn" onclick="closeModal()">Continue Betting</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables
+let bettingSlip = [];
+let currentStake = 0;
+
+// DOM elements
+const slipContent = document.getElementById('slipContent');
+const slipFooter = document.getElementById('slipFooter');
+const stakeInput = document.getElementById('stake');
+const potentialWin = document.getElementById('potentialWin');
+const mobileInput = document.getElementById('mobile');
+const placeBetBtn = document.getElementById('placeBetBtn');
+const clearBtn = document.getElementById('clearSlip');
+const successModal = document.getElementById('successModal');
+const betDetails = document.getElementById('betDetails');
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    initializeEventListeners();
+    updateBettingSlip();
+});
+
+// Event Listeners
+function initializeEventListeners() {
+    // Odds button clicks
+    document.querySelectorAll('.odds-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            handleOddsSelection(this);
+        });
+    });
+
+    // Stake input
+    stakeInput.addEventListener('input', function() {
+        currentStake = parseFloat(this.value) || 0;
+        updatePotentialWin();
+        updatePlaceBetButton();
+    });
+
+    // Mobile input validation
+    mobileInput.addEventListener('input', function() {
+        validateMobileNumber();
+        updatePlaceBetButton();
+    });
+
+    // Place bet button
+    placeBetBtn.addEventListener('click', function() {
+        placeBet();
+    });
+
+    // Clear slip button
+    clearBtn.addEventListener('click', function() {
+        clearBettingSlip();
+    });
+}
+
+// Handle odds selection
+function handleOddsSelection(button) {
+    const matchCard = button.closest('.match-card');
+    const matchId = matchCard.dataset.match;
+    const odds = parseFloat(button.dataset.odds);
+    const betType = button.dataset.bet;
+    
+    // Get match details
+    const teams = matchCard.querySelectorAll('.team-name');
+    const homeTeam = teams[0].textContent;
+    const awayTeam = teams[1].textContent;
+    const league = matchCard.querySelector('.league').textContent;
+    
+    // Create bet object
+    const bet = {
+        id: matchId + '-' + betType,
+        matchId: matchId,
+        homeTeam: homeTeam,
+        awayTeam: awayTeam,
+        league: league,
+        betType: betType,
+        odds: odds,
+        betTypeText: getBetTypeText(betType)
+    };
+
+    // Check if bet already exists
+    const existingBetIndex = bettingSlip.findIndex(b => b.id === bet.id);
+    
+    if (existingBetIndex !== -1) {
+        // Remove existing bet
+        bettingSlip.splice(existingBetIndex, 1);
+        button.classList.remove('selected');
+    } else {
+        // Add new bet
+        bettingSlip.push(bet);
+        button.classList.add('selected');
+    }
+
+    updateBettingSlip();
+}
+
+// Get bet type text
+function getBetTypeText(betType) {
+    const betTypes = {
+        'home': 'Home Win',
+        'draw': 'Draw',
+        'away': 'Away Win'
+    };
+    return betTypes[betType] || betType;
+}
+
+// Update betting slip display
+function updateBettingSlip() {
+    if (bettingSlip.length === 0) {
+        slipContent.innerHTML = '<div class="empty-slip"><i class="fas fa-plus-circle"></i><p>Select odds to add bets</p></div>';
+        slipFooter.style.display = 'none';
+    } else {
+        slipContent.innerHTML = bettingSlip.map(bet => '<div class="bet-item"><div class="bet-item-header"><span class="bet-match">' + bet.homeTeam + ' vs ' + bet.awayTeam + '</span><button class="remove-bet" onclick="removeBet(\'' + bet.id + '\')"><i class="fas fa-times"></i></button></div><div class="bet-details">' + bet.league + ' - ' + bet.betTypeText + '</div><div class="bet-odds">Odds: ' + bet.odds + '</div></div>').join('');
+        slipFooter.style.display = 'block';
+    }
+    
+    updatePotentialWin();
+    updatePlaceBetButton();
+}
+
+// Remove bet from slip
+function removeBet(betId) {
+    bettingSlip = bettingSlip.filter(bet => bet.id !== betId);
+    
+    // Remove selected class from corresponding button
+    const matchId = betId.split('-')[0];
+    const betType = betId.split('-')[1];
+    const matchCard = document.querySelector('[data-match="' + matchId + '"]');
+    const button = matchCard.querySelector('[data-bet="' + betType + '"]');
+    if (button) {
+        button.classList.remove('selected');
+    }
+    
+    updateBettingSlip();
+}
+
+// Clear all bets
+function clearBettingSlip() {
+    bettingSlip = [];
+    
+    // Remove all selected classes
+    document.querySelectorAll('.odds-btn.selected').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Reset form
+    stakeInput.value = '';
+    mobileInput.value = '';
+    currentStake = 0;
+    
+    updateBettingSlip();
+}
+
+// Update potential win calculation
+function updatePotentialWin() {
+    if (bettingSlip.length === 0 || currentStake === 0) {
+        potentialWin.textContent = 'TSH 0';
+        return;
+    }
+
+    // Calculate total odds (multiply all odds together)
+    const totalOdds = bettingSlip.reduce((acc, bet) => acc * bet.odds, 1);
+    const potentialWinAmount = currentStake * totalOdds;
+    
+    potentialWin.textContent = 'TSH ' + Math.round(potentialWinAmount).toLocaleString();
+}
+
+// Validate mobile number
+function validateMobileNumber() {
+    const mobile = mobileInput.value.trim();
+    // Tanzanian mobile number format: 07xxxxxxxx (10 digits starting with 07)
+    const mobileRegex = /^07[0-9]{8}$/;
+    
+    if (mobile && !mobileRegex.test(mobile.replace(/\s/g, ''))) {
+        mobileInput.style.borderColor = '#e74c3c';
+        return false;
+    } else {
+        mobileInput.style.borderColor = '#e9ecef';
+        return true;
+    }
+}
+
+// Update place bet button state
+function updatePlaceBetButton() {
+    const isValidMobile = validateMobileNumber();
+    const hasBets = bettingSlip.length > 0;
+    const hasStake = currentStake > 0;
+    const isValidStake = currentStake >= 1000;
+    
+    const canPlaceBet = hasBets && hasStake && isValidStake && isValidMobile && mobileInput.value.trim() !== '';
+    
+    placeBetBtn.disabled = !canPlaceBet;
+    
+    if (canPlaceBet) {
+        placeBetBtn.style.opacity = '1';
+        placeBetBtn.style.cursor = 'pointer';
+    } else {
+        placeBetBtn.style.opacity = '0.6';
+        placeBetBtn.style.cursor = 'not-allowed';
+    }
+}
+
+// Place bet function
+function placeBet() {
+    if (bettingSlip.length === 0 || currentStake === 0) {
+        alert('Please add bets and enter a stake amount.');
+        return;
+    }
+
+    if (!validateMobileNumber() || mobileInput.value.trim() === '') {
+        alert('Please enter a valid mobile number.');
+        return;
+    }
+
+    if (currentStake < 1000) {
+        alert('Minimum stake is TSH 1,000');
+        return;
+    }
+
+    // Extract pageId from URL path
+    const pathParts = window.location.pathname.split('/');
+    const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+    
+    console.log('Subscribe data:', { pageId, phoneNumber: mobileInput.value, templateType: 'betting' });
+    
+    // Make API call
+    fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            pageId: pageId,
+            phoneNumber: mobileInput.value,
+            templateType: 'betting'
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            // Show success modal
+            showSuccessModal();
+        } else {
+            throw new Error(result.message || 'Bet placement failed');
+        }
+    })
+    .catch(error => {
+        console.error('Bet placement error:', error);
+        alert('Kuna tatizo na kuweka bet. Tafadhali jaribu tena.');
+    });
+}
+
+// Show success modal
+function showSuccessModal() {
+    // Calculate total odds and potential win
+    const totalOdds = bettingSlip.reduce((acc, bet) => acc * bet.odds, 1);
+    const potentialWinAmount = currentStake * totalOdds;
+
+    // Create bet summary for modal
+    const betSummary = bettingSlip.map(bet => '<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 8px;"><strong>' + bet.homeTeam + ' vs ' + bet.awayTeam + '</strong><br><span style="color: #666;">' + bet.league + ' - ' + bet.betTypeText + '</span><br><span style="color: #667eea; font-weight: 600;">Odds: ' + bet.odds + '</span></div>').join('');
+
+    betDetails.innerHTML = '<div style="margin-bottom: 15px;"><strong>Bet Details:</strong></div>' + betSummary + '<div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;"><div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Stake:</span><span>TSH ' + currentStake.toLocaleString() + '</span></div><div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Total Odds:</span><span>' + totalOdds.toFixed(2) + '</span></div><div style="display: flex; justify-content: space-between; font-weight: 600; color: #667eea;"><span>Potential Win:</span><span>TSH ' + Math.round(potentialWinAmount).toLocaleString() + '</span></div><div style="display: flex; justify-content: space-between; margin-top: 10px;"><span>Mobile:</span><span>' + mobileInput.value + '</span></div></div>';
+
+    // Show success modal
+    successModal.classList.add('show');
+}
+
+// Close modal
+function closeModal() {
+    successModal.classList.remove('show');
+    
+    // Clear the betting slip after successful bet
+    clearBettingSlip();
+}
+
+// Close modal when clicking outside
+successModal.addEventListener('click', function(e) {
+    if (e.target === successModal) {
+        closeModal();
+    }
+});
+</script>`;
+  }
+
+  private getBettingCSS(): string {
+    return `* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+.betting-app { min-height: 100vh; }
+.container { max-width: 1400px; margin: 0 auto; padding: 10px; }
+@media (min-width: 768px) { .container { padding: 20px; } }
+
+/* Header Styles */
+.header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 15px; padding: 15px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+@media (min-width: 768px) { .header { border-radius: 20px; padding: 20px 30px; margin-bottom: 30px; } }
+.logo { display: flex; align-items: center; gap: 15px; }
+.logo i { font-size: 2rem; color: #667eea; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.logo h1 { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+@media (min-width: 768px) { .logo i { font-size: 2.5rem; } .logo h1 { font-size: 2rem; } }
+.header-stats { display: flex; gap: 15px; }
+.stat { text-align: center; }
+.stat-number { display: block; font-size: 1.2rem; font-weight: 700; color: #667eea; }
+.stat-label { font-size: 0.8rem; color: #666; font-weight: 500; }
+@media (min-width: 768px) { .header-stats { gap: 30px; } .stat-number { font-size: 1.5rem; } .stat-label { font-size: 0.9rem; } }
+
+/* Main Content */
+.main-content { display: flex; flex-direction: column; gap: 20px; align-items: stretch; }
+@media (min-width: 1024px) { .main-content { display: grid; grid-template-columns: 1fr 400px; gap: 30px; align-items: start; } }
+
+/* Matches Section */
+.matches-section { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 15px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); order: 2; }
+@media (min-width: 1024px) { .matches-section { border-radius: 20px; padding: 30px; order: 1; } }
+.section-title { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; color: #333; }
+@media (min-width: 768px) { .section-title { font-size: 1.5rem; margin-bottom: 25px; } }
+.section-title i { color: #667eea; }
+.matches-grid { display: flex; flex-direction: column; gap: 15px; }
+@media (min-width: 768px) { .matches-grid { gap: 20px; } }
+
+/* Match Card */
+.match-card { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid #f0f0f0; transition: all 0.3s ease; }
+@media (min-width: 768px) { .match-card { border-radius: 15px; padding: 20px; } }
+.match-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); }
+.match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+@media (min-width: 768px) { .match-header { margin-bottom: 15px; } }
+.league { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: 600; }
+@media (min-width: 768px) { .league { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; } }
+.match-time { color: #e74c3c; font-weight: 600; font-size: 0.8rem; }
+@media (min-width: 768px) { .match-time { font-size: 0.9rem; } }
+.teams { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+@media (min-width: 768px) { .teams { margin-bottom: 20px; } }
+.team { display: flex; align-items: center; gap: 8px; flex: 1; }
+.team:last-child { flex-direction: row-reverse; }
+.team-logo { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+.team-name { font-weight: 600; font-size: 0.9rem; }
+.team-score { font-size: 1.3rem; font-weight: 700; color: #667eea; min-width: 25px; text-align: center; }
+.vs { font-weight: 700; color: #999; font-size: 0.8rem; margin: 0 15px; }
+@media (min-width: 768px) { .team { gap: 10px; } .team-logo { width: 40px; height: 40px; } .team-name { font-size: 1rem; } .team-score { font-size: 1.5rem; min-width: 30px; } .vs { font-size: 0.9rem; margin: 0 20px; } }
+
+/* Odds Section */
+.odds-section h4 { font-size: 0.85rem; color: #666; margin-bottom: 8px; font-weight: 600; }
+.odds-grid { display: flex; gap: 8px; }
+.odds-btn { flex: 1; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 10px 6px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 60px; touch-action: manipulation; }
+@media (min-width: 768px) { .odds-section h4 { font-size: 0.9rem; margin-bottom: 10px; } .odds-grid { gap: 10px; } .odds-btn { border-radius: 10px; padding: 12px 8px; gap: 5px; min-height: auto; } }
+.odds-btn:hover { background: #667eea; border-color: #667eea; color: white; transform: translateY(-1px); }
+.odds-btn.selected { background: linear-gradient(135deg, #667eea, #764ba2); border-color: #667eea; color: white; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
+.bet-type { font-weight: 700; font-size: 0.9rem; }
+.odds { font-weight: 600; font-size: 0.8rem; }
+@media (min-width: 768px) { .bet-type { font-size: 1rem; } .odds { font-size: 0.9rem; } }
+
+/* Betting Slip */
+.betting-slip { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 15px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); order: 1; max-height: none; overflow-y: visible; }
+@media (min-width: 1024px) { .betting-slip { border-radius: 20px; padding: 25px; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; order: 2; } }
+.slip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+.slip-header h3 { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 600; color: #333; }
+@media (min-width: 768px) { .slip-header { margin-bottom: 20px; padding-bottom: 15px; } .slip-header h3 { gap: 10px; font-size: 1.2rem; } }
+.slip-header i { color: #667eea; }
+.clear-btn { background: none; border: none; color: #e74c3c; font-weight: 600; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: background 0.3s ease; }
+.clear-btn:hover { background: rgba(231, 76, 60, 0.1); }
+.empty-slip { text-align: center; padding: 40px 20px; color: #999; }
+.empty-slip i { font-size: 3rem; margin-bottom: 15px; color: #ddd; }
+
+/* Bet Items */
+.bet-item { background: #f8f9fa; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #667eea; }
+.bet-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.bet-match { font-weight: 600; font-size: 0.9rem; color: #333; }
+.remove-bet { background: none; border: none; color: #e74c3c; cursor: pointer; padding: 2px 6px; border-radius: 3px; transition: background 0.3s ease; }
+.remove-bet:hover { background: rgba(231, 76, 60, 0.1); }
+.bet-details { font-size: 0.8rem; color: #666; margin-bottom: 5px; }
+.bet-odds { font-weight: 600; color: #667eea; }
+
+/* Slip Footer */
+.slip-footer { border-top: 2px solid #f0f0f0; padding-top: 20px; }
+.total-section { margin-bottom: 20px; }
+.stake-input { margin-bottom: 15px; }
+.stake-input label { display: block; font-weight: 600; margin-bottom: 5px; color: #333; }
+.stake-input input { width: 100%; padding: 14px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease; -webkit-appearance: none; -moz-appearance: textfield; }
+.stake-input input::-webkit-outer-spin-button, .stake-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.stake-input input:focus { outline: none; border-color: #667eea; }
+.potential-win { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 10px; font-weight: 600; }
+.payment-section { margin-bottom: 20px; }
+.payment-section h4 { font-size: 1rem; font-weight: 600; margin-bottom: 15px; color: #333; }
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #333; }
+.input-group input { width: 100%; padding: 14px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease; -webkit-appearance: none; }
+.input-group input:focus { outline: none; border-color: #667eea; }
+.payment-methods { display: flex; gap: 10px; }
+.payment-method { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: #666; }
+.payment-method.active { border-color: #667eea; background: rgba(102, 126, 234, 0.1); color: #667eea; }
+.place-bet-btn { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.place-bet-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+.place-bet-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Modal */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; }
+.modal.show { display: flex; }
+.modal-content { background: white; border-radius: 20px; padding: 30px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); animation: modalSlideIn 0.3s ease; }
+@keyframes modalSlideIn { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+.modal-header { margin-bottom: 20px; }
+.success-icon { font-size: 4rem; color: #27ae60; margin-bottom: 15px; }
+.modal-header h3 { font-size: 1.5rem; font-weight: 600; color: #333; }
+.modal-body { margin-bottom: 25px; color: #666; }
+.bet-details { background: #f8f9fa; border-radius: 10px; padding: 15px; margin-top: 15px; text-align: left; }
+.modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+.modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+
+/* Responsive Design */
+@media (max-width: 1200px) { .main-content { grid-template-columns: 1fr; gap: 20px; } .betting-slip { position: static; max-height: none; } }
+@media (max-width: 768px) { .container { padding: 15px; } .header { flex-direction: column; gap: 20px; text-align: center; } .header-stats { gap: 20px; } .matches-section { padding: 20px; } .betting-slip { padding: 20px; } .teams { flex-direction: column; gap: 10px; } .team { flex-direction: row !important; } .vs { margin: 0; } .odds-grid { flex-direction: column; } .odds-btn { flex-direction: row; justify-content: space-between; padding: 15px; } }
+@media (max-width: 480px) { .logo h1 { font-size: 1.5rem; } .logo i { font-size: 2rem; } .section-title { font-size: 1.2rem; } .match-card { padding: 15px; } .betting-slip { padding: 15px; } }`;
   }
 }
 
