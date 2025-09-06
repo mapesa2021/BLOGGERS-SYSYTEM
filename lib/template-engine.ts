@@ -2238,6 +2238,79 @@ successModal.addEventListener('click', function(e) {
         closeModal();
     }
 });
+
+// Add some interactive animations
+document.querySelectorAll('.odds-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        if (!this.classList.contains('selected')) {
+            this.style.transform = 'translateY(-2px)';
+        }
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+        if (!this.classList.contains('selected')) {
+            this.style.transform = 'translateY(0)';
+        }
+    });
+});
+
+// Add keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Enter key to place bet when form is valid
+    if (e.key === 'Enter' && !placeBetBtn.disabled) {
+        placeBet();
+    }
+    
+    // Escape key to close modal
+    if (e.key === 'Escape' && successModal.classList.contains('show')) {
+        closeModal();
+    }
+});
+
+// Add loading animation for place bet button
+placeBetBtn.addEventListener('click', function() {
+    if (!this.disabled) {
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        this.disabled = true;
+        
+        // Reset after modal shows
+        setTimeout(() => {
+            this.innerHTML = originalText;
+        }, 2000);
+    }
+});
+
+// Add real-time odds updates simulation (optional)
+function simulateOddsUpdate() {
+    const oddsButtons = document.querySelectorAll('.odds-btn');
+    oddsButtons.forEach(btn => {
+        if (!btn.classList.contains('selected')) {
+            const currentOdds = parseFloat(btn.dataset.odds);
+            const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
+            const newOdds = Math.max(1.01, currentOdds + variation);
+            btn.dataset.odds = newOdds.toFixed(2);
+            btn.querySelector('.odds').textContent = newOdds.toFixed(2);
+        }
+    });
+}
+
+// Update odds every 30 seconds (simulation)
+setInterval(simulateOddsUpdate, 30000);
+
+// Add smooth scrolling for better UX
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 </script>`;
   }
 
