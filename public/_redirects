@@ -1,0 +1,14 @@
+# API routes - let Next.js handle them directly
+# /api/subscribe  /.netlify/functions/subscribe  200
+
+# Dynamic page routes
+/page/*  /index.html  200
+
+# Admin routes
+/admin/*  /index.html  200
+
+# Demo routes
+/demo  /demo  200
+
+# Catch all - redirect to index.html for SPA behavior
+/*  /index.html  200

@@ -1,0 +1,45 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Use Netlify Next.js plugin for proper Next.js support
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# API routes - let Next.js handle them directly
+# [[redirects]]
+#   from = "/api/subscribe"
+#   to = "/.netlify/functions/subscribe"
+#   status = 200
+
+# Handle dynamic routes - redirect to index.html for client-side routing
+[[redirects]]
+  from = "/page/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/index.html"
+  status = 200
+
+# Demo routes
+[[redirects]]
+  from = "/demo"
+  to = "/demo"
+  status = 200
+
+# API routes should not be redirected - let Next.js handle them
+# [[redirects]]
+#   from = "/api/*"
+#   to = "/api/:splat"
+#   status = 200
+
+# Catch all for SPA behavior - commented out to prevent API route interference
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
