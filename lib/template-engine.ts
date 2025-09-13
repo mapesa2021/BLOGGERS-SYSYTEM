@@ -37,11 +37,11 @@ export class TemplateEngine {
       css: this.getMinimalCSS(),
     });
 
-    // BLOGGERS Template
+    // Premium Video Feed Template
     this.addTemplate({
       id: 'modern',
-      name: 'BLOGGERS',
-      description: 'Professional business-focused design',
+      name: 'Premium Video Feed',
+      description: 'YouTube-like video feed with subscription gating',
       html: this.getModernHTML(),
       css: this.getModernCSS(),
     });
@@ -476,76 +476,242 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   }
 
   private getModernHTML(): string {
-    return `<div class="app">
-  <nav class="navbar">
-    <div class="logo">Clubzila Creator</div>
-  </nav>
-  
-  <header class="hero">
-    <div class="hero-bg">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVXizNz-j3efqxTqoFLMoIOsCZawMMMWYAw&s" alt="Business background" class="hero-bg-img">
+    return `<div class="video-platform">
+  <!-- Header -->
+  <header class="platform-header">
+    <div class="header-content">
+      <div class="creator-channel">
+        <img src="{{creatorImage}}" alt="{{creatorName}}" class="channel-avatar">
+        <div class="channel-info">
+          <h1 class="channel-name">{{creatorName}}</h1>
+          <p class="channel-subtitle">{{creatorBio}}</p>
+          <div class="channel-stats">
+            <span class="subscriber-count">🔥 Premium Content</span>
+            <span class="video-count">📹 Exclusive Videos</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="hero-content">
-      <img src="{{creatorImage}}" alt="{{creatorName}}" class="hero-image">
-      <div class="hero-text">
-        <h1>{{creatorName}}</h1>
-        <p>{{creatorBio}}</p>
+  </header>
+
+  <!-- Video Feed Section -->
+  <main class="video-feed">
+    <div class="feed-header">
+      <h2>🎬 Premium Video Collection</h2>
+      <p class="feed-subtitle">Subscribe to unlock all exclusive content</p>
+    </div>
+
+    <!-- Video Grid -->
+    <div class="video-grid">
+      <!-- Preview Video 1 -->
+      <div class="video-card preview">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=225&fit=crop" alt="Premium Video 1">
+          <div class="video-overlay">
+            <div class="play-button">▶️</div>
+            <div class="video-duration">2:45</div>
+            <div class="premium-badge">PREMIUM</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">Exclusive Content Preview</h3>
+          <p class="video-description">🔥 Hot content - Subscribe to watch full video</p>
+          <div class="video-meta">
+            <span class="views">👀 1.2K views</span>
+            <span class="likes">❤️ 89 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Video 2 -->
+      <div class="video-card preview">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop" alt="Premium Video 2">
+          <div class="video-overlay">
+            <div class="play-button">▶️</div>
+            <div class="video-duration">1:30</div>
+            <div class="premium-badge">PREMIUM</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">VIP Exclusive Access</h3>
+          <p class="video-description">💎 Premium content - Unlock with subscription</p>
+          <div class="video-meta">
+            <span class="views">👀 856 views</span>
+            <span class="likes">❤️ 67 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Video 3 -->
+      <div class="video-card preview">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=225&fit=crop" alt="Premium Video 3">
+          <div class="video-overlay">
+            <div class="play-button">▶️</div>
+            <div class="video-duration">3:15</div>
+            <div class="premium-badge">PREMIUM</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">Special Content</h3>
+          <p class="video-description">⭐ New upload - Subscribe to watch</p>
+          <div class="video-meta">
+            <span class="views">👀 2.1K views</span>
+            <span class="likes">❤️ 156 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locked Video 4 -->
+      <div class="video-card locked">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=225&fit=crop" alt="Locked Video">
+          <div class="video-overlay">
+            <div class="lock-icon">🔒</div>
+            <div class="video-duration">4:20</div>
+            <div class="locked-badge">LOCKED</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">Premium Only Content</h3>
+          <p class="video-description">🔒 Subscribe to unlock this exclusive video</p>
+          <div class="video-meta">
+            <span class="views">👀 3.4K views</span>
+            <span class="likes">❤️ 234 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locked Video 5 -->
+      <div class="video-card locked">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=225&fit=crop" alt="Locked Video">
+          <div class="video-overlay">
+            <div class="lock-icon">🔒</div>
+            <div class="video-duration">5:12</div>
+            <div class="locked-badge">LOCKED</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">VIP Exclusive</h3>
+          <p class="video-description">🔒 Premium subscribers only</p>
+          <div class="video-meta">
+            <span class="views">👀 1.8K views</span>
+            <span class="likes">❤️ 145 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locked Video 6 -->
+      <div class="video-card locked">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=225&fit=crop" alt="Locked Video">
+          <div class="video-overlay">
+            <div class="lock-icon">🔒</div>
+            <div class="video-duration">2:58</div>
+            <div class="locked-badge">LOCKED</div>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">Latest Upload</h3>
+          <p class="video-description">🔒 New content - Subscribe to access</p>
+          <div class="video-meta">
+            <span class="views">👀 4.2K views</span>
+            <span class="likes">❤️ 312 likes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscription Section -->
+    <div class="subscription-section">
+      <div class="subscription-card">
+        <div class="subscription-header">
+          <h3>🎬 Unlock All Premium Videos</h3>
+          <p>Get instant access to {{creatorName}}'s exclusive video collection</p>
+          <div class="pricing-info">
+            <span class="price">{{creatorPrice}} {{creatorCurrency}}</span>
+            <span class="period">/month</span>
+          </div>
+        </div>
+        
         <div class="subscription-form">
           <div class="form-step" id="step1">
-            <p class="form-description">Enter your User ID, Creator ID, and phone number to subscribe</p>
-            <input type="text" id="userId" placeholder="Enter your User ID" class="form-input" required>
-            <input type="text" id="creatorId" placeholder="Enter Creator ID" class="form-input" required>
-            <input type="tel" id="phoneNumber" placeholder="Enter your mobile money phone number" class="form-input" required>
-            <button onclick="subscribe()" class="cta-btn">Subscribe Now</button>
+            <div class="form-description">Enter your mobile money number to unlock all videos</div>
+            <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
+            <button onclick="subscribe()" class="subscribe-btn">
+              <span class="btn-text">🔓 Unlock All Videos</span>
+              <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
+            </button>
           </div>
           
           <div class="form-step" id="step2" style="display: none;">
             <div class="success-message">
-              <h3>Subscription Initiated! 📱</h3>
-              <p>Check your phone for a USSD prompt to complete the payment.</p>
-              <p class="ussd-info">You'll receive a mobile money prompt on <strong id="userPhone"></strong></p>
+              <div class="success-icon">🎉</div>
+              <h3>Welcome to the VIP club!</h3>
+              <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
+              <div class="ussd-info">
+                <h4>📱 Complete Your Payment</h4>
+                <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
               <div class="payment-steps">
-                <p><strong>Next steps:</strong></p>
                 <ol>
-                  <li>Check your phone for USSD prompt</li>
+                    <li>Check your phone for the USSD prompt</li>
                   <li>Enter your mobile money PIN</li>
-                  <li>Confirm the payment amount</li>
-                  <li>You'll get access to {{creatorName}}'s content!</li>
+                    <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
+                    <li>Wait for confirmation message</li>
                 </ol>
+                </div>
               </div>
             </div>
           </div>
           
           <div class="form-step" id="step3" style="display: none;">
             <div class="error-message">
-              <h3>Something went wrong</h3>
-              <p id="errorText">Please try again.</p>
-              <button onclick="backToStep1()" class="cta-btn">Try Again</button>
+              <div class="error-icon">😔</div>
+              <h3>Oops! Something went wrong</h3>
+              <p id="errorText">Subscription failed</p>
+              <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </header>
-  
-  <main class="main-content">
-    <section class="features">
-      <h2>What You'll Get</h2>
-      <div class="feature-grid">
-        <div class="feature">
-          <h3>Exclusive Content</h3>
-          <p>Access to premium content only available to subscribers</p>
+
+    <!-- Features Section -->
+    <div class="features-section">
+      <h3>What you'll get with premium access:</h3>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🎬</div>
+          <div class="feature-text">
+            <h4>Unlimited Videos</h4>
+            <p>Access to all premium content</p>
         </div>
-        <div class="feature">
-          <h3>Direct Access</h3>
-          <p>Connect directly with {{creatorName}} through Clubzila</p>
         </div>
-        <div class="feature">
-          <h3>Premium Support</h3>
-          <p>Get priority support and faster response times</p>
+        <div class="feature-item">
+          <div class="feature-icon">📱</div>
+          <div class="feature-text">
+            <h4>Mobile Optimized</h4>
+            <p>Perfect viewing on your phone</p>
         </div>
       </div>
-    </section>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">
+            <h4>Instant Access</h4>
+            <p>Watch immediately after payment</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🆕</div>
+          <div class="feature-text">
+            <h4>New Content</h4>
+            <p>Fresh videos added regularly</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   
   <footer class="footer">
@@ -692,56 +858,127 @@ function backToStep1() {
 
   private getModernCSS(): string {
     return `* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-.app { min-height: 100vh; display: flex; flex-direction: column; }
-.navbar { background: white; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-.logo { font-size: 1.5rem; font-weight: bold; color: #3b82f6; }
-.hero { position: relative; padding: 4rem 2rem; flex: 1; overflow: hidden; }
-.hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-.hero-bg-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
-.hero-content { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-.hero-image { width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-.hero-text h1 { font-size: 3rem; margin-bottom: 1rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
-.hero-text p { font-size: 1.2rem; color: white; margin-bottom: 2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
-.subscription-form { margin-top: 2rem; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #ffffff; }
+.video-platform { min-height: 100vh; background: #0f0f0f; }
+
+/* Header Styles */
+.platform-header { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); padding: 2rem 1rem; border-bottom: 1px solid #333; }
+.header-content { max-width: 1200px; margin: 0 auto; }
+.creator-channel { display: flex; align-items: center; gap: 1.5rem; }
+.channel-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #ff0040; }
+.channel-info { flex: 1; }
+.channel-name { font-size: 2rem; font-weight: bold; color: #ffffff; margin-bottom: 0.5rem; }
+.channel-subtitle { color: #aaaaaa; font-size: 1rem; margin-bottom: 1rem; }
+.channel-stats { display: flex; gap: 1rem; }
+.subscriber-count, .video-count { background: #ff0040; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+/* Video Feed Styles */
+.video-feed { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+.feed-header { text-align: center; margin-bottom: 3rem; }
+.feed-header h2 { font-size: 2.5rem; color: #ffffff; margin-bottom: 0.5rem; }
+.feed-subtitle { color: #aaaaaa; font-size: 1.1rem; }
+
+/* Video Grid */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+.video-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+.video-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 0, 64, 0.3); }
+.video-thumbnail { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+.video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.video-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
+.play-button { font-size: 3rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.lock-icon { font-size: 3rem; color: #ff0040; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.video-duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.premium-badge { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #ff0040, #ff4081); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+.locked-badge { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #666, #999); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+
+/* Video Info */
+.video-info { padding: 1rem; }
+.video-title { font-size: 1.1rem; font-weight: 600; color: #ffffff; margin-bottom: 0.5rem; line-height: 1.3; }
+.video-description { color: #aaaaaa; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.video-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #888; }
+.views, .likes { display: flex; align-items: center; gap: 0.25rem; }
+
+/* Subscription Section */
+.subscription-section { margin: 3rem 0; }
+.subscription-card { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 20px; padding: 2rem; border: 1px solid #333; }
+.subscription-header { text-align: center; margin-bottom: 2rem; }
+.subscription-header h3 { font-size: 2rem; color: #ffffff; margin-bottom: 0.5rem; }
+.subscription-header p { color: #aaaaaa; font-size: 1rem; margin-bottom: 1rem; }
+.pricing-info { display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; }
+.price { font-size: 2.5rem; font-weight: bold; color: #ff0040; }
+.period { color: #aaaaaa; font-size: 1rem; }
+
+/* Form Styles */
+.subscription-form { max-width: 400px; margin: 0 auto; }
 .form-step { margin-bottom: 1rem; }
-.form-description { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-size: 0.9rem; }
-.form-input { width: 100%; padding: 1rem; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.1); color: white; }
-.form-input::placeholder { color: rgba(255,255,255,0.7); }
-.form-input:focus { outline: none; border-color: white; background: rgba(255,255,255,0.2); }
-.cta-btn { background: #3b82f6; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin: 0.5rem; }
-.cta-btn:hover { background: #2563eb; }
-.success-message { color: #28a745; text-align: center; }
-.ussd-info { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; color: white; }
+.form-description { color: #aaaaaa; text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.form-input { width: 100%; padding: 1rem; border: 2px solid #333; border-radius: 12px; font-size: 1rem; margin-bottom: 1rem; background: #1a1a1a; color: white; }
+.form-input::placeholder { color: #666; }
+.form-input:focus { outline: none; border-color: #ff0040; background: #2d2d2d; }
+.subscribe-btn { width: 100%; background: linear-gradient(135deg, #ff0040, #ff4081); color: white; border: none; padding: 1rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: transform 0.3s ease; }
+.subscribe-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 64, 0.4); }
+.subscribe-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.btn-text { font-size: 1.1rem; }
+.btn-price { font-size: 0.9rem; opacity: 0.9; }
+
+/* Success/Error Messages */
+.success-message { text-align: center; }
+.success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.success-message h3 { color: #ffffff; margin-bottom: 0.5rem; }
+.success-message p { color: #aaaaaa; margin-bottom: 1rem; }
+.ussd-info { background: rgba(255, 0, 64, 0.1); padding: 1rem; border-radius: 12px; margin: 1rem 0; border-left: 4px solid #ff0040; }
+.ussd-info h4 { color: #ff0040; margin-bottom: 0.5rem; }
+.ussd-info p { color: #aaaaaa; font-size: 0.9rem; }
 .payment-steps { text-align: left; margin-top: 1rem; }
 .payment-steps ol { margin-left: 1.5rem; }
-.payment-steps li { margin: 0.5rem 0; color: rgba(255,255,255,0.9); }
-.error-message { color: #dc3545; text-align: center; }
-.main-content { flex: 1; padding: 4rem 2rem; background: white; }
-.features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #1f2937; }
-.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-.feature { text-align: center; padding: 2rem; }
-.feature h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #3b82f6; }
-.feature p { color: #6b7280; line-height: 1.6; }
-.footer { background: #1f2937; color: white; text-align: center; padding: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-.processing-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.processing-content { background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-.processing-spinner { width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
-.processing-content h3 { color: #1f2937; margin-bottom: 0.5rem; }
-.processing-content p { color: #6b7280; margin-bottom: 1.5rem; }
+.payment-steps li { margin: 0.5rem 0; color: #aaaaaa; font-size: 0.9rem; }
+.error-message { text-align: center; }
+.error-icon { font-size: 3rem; margin-bottom: 1rem; }
+.error-message h3 { color: #ff0040; margin-bottom: 0.5rem; }
+.error-message p { color: #aaaaaa; margin-bottom: 1rem; }
+
+/* Features Section */
+.features-section { margin: 3rem 0; }
+.features-section h3 { text-align: center; color: #ffffff; margin-bottom: 2rem; font-size: 1.5rem; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+.feature-item { background: #1a1a1a; padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid #333; }
+.feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+.feature-text h4 { font-size: 1rem; color: #ffffff; margin-bottom: 0.5rem; }
+.feature-text p { color: #aaaaaa; font-size: 0.9rem; }
+
+/* Footer */
+.footer { background: #1a1a1a; color: #aaaaaa; text-align: center; padding: 2rem; border-top: 1px solid #333; }
+.footer a { color: #ff0040; text-decoration: none; }
+
+/* Processing Popup */
+.processing-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.processing-content { background: #1a1a1a; padding: 2rem; border-radius: 20px; text-align: center; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid #333; }
+.processing-spinner { width: 50px; height: 50px; border: 4px solid #333; border-top: 4px solid #ff0040; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+.processing-content h3 { color: #ffffff; margin-bottom: 0.5rem; }
+.processing-content p { color: #aaaaaa; margin-bottom: 1.5rem; }
 .processing-steps { text-align: left; }
 .processing-steps .step { display: flex; align-items: center; margin: 0.5rem 0; padding: 0.5rem; border-radius: 8px; transition: all 0.3s ease; }
-.processing-steps .step.active { background: #f0f9ff; color: #3b82f6; }
+.processing-steps .step.active { background: rgba(255, 0, 64, 0.1); color: #ff0040; }
 .processing-steps .step-icon { font-size: 1.2rem; margin-right: 0.5rem; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
-  .hero-content { grid-template-columns: 1fr; text-align: center; }
-  .hero-text h1 { font-size: 2rem; }
-  .hero-text p { font-size: 1rem; }
-  .features h2 { font-size: 2rem; }
-  .feature-grid { grid-template-columns: 1fr; }
+  .creator-channel { flex-direction: column; text-align: center; }
+  .channel-avatar { width: 100px; height: 100px; }
+  .channel-name { font-size: 1.5rem; }
+  .feed-header h2 { font-size: 2rem; }
+  .video-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .subscription-card { padding: 1.5rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .channel-stats { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .platform-header { padding: 1rem; }
+  .video-feed { padding: 1rem; }
+  .subscription-card { padding: 1rem; }
+  .price { font-size: 2rem; }
 }`;
   }
 

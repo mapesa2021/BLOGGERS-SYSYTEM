@@ -193,8 +193,8 @@ export default function Home() {
                           )}
                           {template.id === 'modern' && (
                             <>
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Blogging</span>
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Content</span>
+                              <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Video Feed</span>
+                              <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Premium</span>
                             </>
                           )}
                           {template.id === 'video-feed' && (
