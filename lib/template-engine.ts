@@ -504,7 +504,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     <!-- Video Grid -->
     <div class="video-grid">
       <!-- Preview Video 1 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionModal('Exclusive Content Preview', '2:45')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=225&fit=crop" alt="Premium Video 1">
           <div class="video-overlay">
@@ -524,7 +524,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
 
       <!-- Preview Video 2 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionModal('VIP Exclusive Access', '1:30')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop" alt="Premium Video 2">
           <div class="video-overlay">
@@ -544,7 +544,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
 
       <!-- Preview Video 3 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionModal('Special Content', '3:15')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=225&fit=crop" alt="Premium Video 3">
           <div class="video-overlay">
@@ -564,7 +564,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
 
       <!-- Locked Video 4 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionModal('Premium Only Content', '4:20')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
@@ -584,7 +584,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
 
       <!-- Locked Video 5 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionModal('VIP Exclusive', '5:12')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
@@ -604,7 +604,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
 
       <!-- Locked Video 6 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionModal('Latest Upload', '2:58')">
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
@@ -713,6 +713,72 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
     </div>
   </main>
+  
+  <!-- Subscription Modal -->
+  <div id="subscriptionModal" class="subscription-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎬 Unlock Premium Video</h3>
+        <button class="close-btn" onclick="closeSubscriptionModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="video-preview">
+          <h4 id="modalVideoTitle">Video Title</h4>
+          <p id="modalVideoDuration">Duration: 0:00</p>
+        </div>
+        <div class="subscription-card">
+          <div class="subscription-header">
+            <h3>🔓 Unlock All Premium Videos</h3>
+            <p>Get instant access to {{creatorName}}'s exclusive video collection</p>
+            <div class="pricing-info">
+              <span class="price">{{creatorPrice}} {{creatorCurrency}}</span>
+              <span class="period">/month</span>
+            </div>
+          </div>
+          
+          <div class="subscription-form">
+            <div class="form-step" id="modalStep1">
+              <div class="form-description">Enter your mobile money number to unlock all videos</div>
+              <input type="tel" id="modalPhoneNumber" placeholder="Enter your phone number" class="form-input" required>
+              <button onclick="subscribeFromModal()" class="subscribe-btn">
+                <span class="btn-text">🔓 Unlock All Videos</span>
+                <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
+              </button>
+            </div>
+            
+            <div class="form-step" id="modalStep2" style="display: none;">
+              <div class="success-message">
+                <div class="success-icon">🎉</div>
+                <h3>Welcome to the VIP club!</h3>
+                <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
+                <div class="ussd-info">
+                  <h4>📱 Complete Your Payment</h4>
+                  <p>You will receive a USSD prompt on your phone <strong id="modalUserPhone"></strong></p>
+                  <div class="payment-steps">
+                    <ol>
+                      <li>Check your phone for the USSD prompt</li>
+                      <li>Enter your mobile money PIN</li>
+                      <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
+                      <li>Wait for confirmation message</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-step" id="modalStep3" style="display: none;">
+              <div class="error-message">
+                <div class="error-icon">😔</div>
+                <h3>Oops! Something went wrong</h3>
+                <p id="modalErrorText">Subscription failed</p>
+                <button onclick="backToModalStep1()" class="subscribe-btn">Try Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <footer class="footer">
     <p>&copy; 2024 {{creatorName}}. Powered by <a href="https://clubzila.com" target="_blank">Clubzila</a></p>
@@ -853,6 +919,97 @@ function backToStep1() {
   showStep(1);
   document.getElementById('phoneNumber').value = '';
 }
+
+// Modal Functions
+function openSubscriptionModal(videoTitle, videoDuration) {
+  document.getElementById('modalVideoTitle').textContent = videoTitle;
+  document.getElementById('modalVideoDuration').textContent = 'Duration: ' + videoDuration;
+  document.getElementById('subscriptionModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSubscriptionModal() {
+  document.getElementById('subscriptionModal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+  // Reset modal form
+  backToModalStep1();
+}
+
+async function subscribeFromModal() {
+  const phoneNumber = document.getElementById('modalPhoneNumber').value.trim();
+  
+  if (!phoneNumber) {
+    alert('Please enter your mobile money phone number');
+    return;
+  }
+  
+  // Extract pageId from URL path
+  const pathParts = window.location.pathname.split('/');
+  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+  
+  console.log('Subscribe from modal:', { pageId, phoneNumber, templateType: 'modern' });
+  
+  // Show processing popup
+  showProcessingState();
+  
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pageId: pageId,
+        phoneNumber: phoneNumber,
+        templateType: 'modern'
+      })
+    });
+    
+    const result = await response.json();
+    
+    // Hide processing popup
+    hideProcessingState();
+    
+    if (result.success) {
+      // Show success step with USSD instructions
+      document.getElementById('modalUserPhone').textContent = phoneNumber;
+      showModalStep(2);
+    } else {
+      showModalError(result.message || 'Subscription failed');
+    }
+  } catch (error) {
+    console.error('Subscription error:', error);
+    // Hide processing popup
+    hideProcessingState();
+    showModalError('Network error. Please try again.');
+  }
+}
+
+function showModalStep(stepNumber) {
+  // Hide all modal steps
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('modalStep' + i).style.display = 'none';
+  }
+  
+  // Show the specified step
+  document.getElementById('modalStep' + stepNumber).style.display = 'block';
+}
+
+function showModalError(message) {
+  document.getElementById('modalErrorText').textContent = message;
+  showModalStep(3);
+}
+
+function backToModalStep1() {
+  showModalStep(1);
+  document.getElementById('modalPhoneNumber').value = '';
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('subscriptionModal');
+  if (event.target === modal) {
+    closeSubscriptionModal();
+  }
+});
 </script>`;
   }
 
@@ -2669,6 +2826,18 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .bet-details { background: #f8f9fa; border-radius: 10px; padding: 15px; margin-top: 15px; text-align: left; }
 .modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
 .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+
+/* Subscription Modal */
+.subscription-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center; }
+.subscription-modal .modal-content { background: #1a1a1a; border-radius: 20px; padding: 0; max-width: 600px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5); animation: modalSlideIn 0.3s ease; }
+.subscription-modal .modal-header { background: linear-gradient(135deg, #ff0040, #ff4081); color: white; padding: 20px; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.subscription-modal .modal-header h3 { font-size: 1.5rem; font-weight: 600; margin: 0; }
+.subscription-modal .close-btn { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s ease; }
+.subscription-modal .close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.subscription-modal .modal-body { padding: 20px; }
+.subscription-modal .video-preview { background: #2d2d2d; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: center; }
+.subscription-modal .video-preview h4 { color: #ffffff; font-size: 1.2rem; margin-bottom: 10px; }
+.subscription-modal .video-preview p { color: #aaaaaa; font-size: 1rem; }
 
 /* Responsive Design */
 @media (max-width: 1200px) { .main-content { grid-template-columns: 1fr; gap: 20px; } .betting-slip { position: static; max-height: none; } }
