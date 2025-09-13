@@ -568,14 +568,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
-            <div class="lock-icon">🔒</div>
+            <div class="play-button">▶️</div>
             <div class="video-duration">4:20</div>
-            <div class="locked-badge">LOCKED</div>
+            <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
           <h3 class="video-title">Premium Only Content</h3>
-          <p class="video-description">🔒 Subscribe to unlock this exclusive video</p>
+          <p class="video-description">▶️ Subscribe to unlock this exclusive video</p>
           <div class="video-meta">
             <span class="views">👀 3.4K views</span>
             <span class="likes">❤️ 234 likes</span>
@@ -588,14 +588,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
-            <div class="lock-icon">🔒</div>
+            <div class="play-button">▶️</div>
             <div class="video-duration">5:12</div>
-            <div class="locked-badge">LOCKED</div>
+            <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
           <h3 class="video-title">VIP Exclusive</h3>
-          <p class="video-description">🔒 Premium subscribers only</p>
+          <p class="video-description">▶️ Premium subscribers only</p>
           <div class="video-meta">
             <span class="views">👀 1.8K views</span>
             <span class="likes">❤️ 145 likes</span>
@@ -608,14 +608,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="video-thumbnail">
           <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=225&fit=crop" alt="Locked Video">
           <div class="video-overlay">
-            <div class="lock-icon">🔒</div>
+            <div class="play-button">▶️</div>
             <div class="video-duration">2:58</div>
-            <div class="locked-badge">LOCKED</div>
+            <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
           <h3 class="video-title">Latest Upload</h3>
-          <p class="video-description">🔒 New content - Subscribe to access</p>
+          <p class="video-description">▶️ New content - Subscribe to access</p>
           <div class="video-meta">
             <span class="views">👀 4.2K views</span>
             <span class="likes">❤️ 312 likes</span>
@@ -886,7 +886,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
 .video-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
 .play-button { font-size: 3rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-.lock-icon { font-size: 3rem; color: #ff0040; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
 .video-duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
 .premium-badge { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #ff0040, #ff4081); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
 .locked-badge { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #666, #999); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
