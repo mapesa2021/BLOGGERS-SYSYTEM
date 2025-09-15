@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
       creatorIdDisplay: landingPage.creator_id_display,
       successRedirectUrl: landingPage.success_redirect_url,
       failureRedirectUrl: landingPage.failure_redirect_url,
-      subscriptionAmount: 500, // Default amount
-      currency: 'TZS' // Default currency
+      subscriptionAmount: 2000, // Default amount
+      currency: 'Tsh' // Default currency
     };
 
     return NextResponse.json(transformedData)

@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS creators (
     status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'suspended')),
     clubzila_creator_id VARCHAR(50) NOT NULL,
     clubzila_auth_id VARCHAR(50) NOT NULL,
-    subscription_amount DECIMAL(10,2) DEFAULT 500.00,
-    currency VARCHAR(3) DEFAULT 'TZS',
+    subscription_amount DECIMAL(10,2) DEFAULT 2000.00,
+    currency VARCHAR(3) DEFAULT 'Tsh',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     last_login_at TIMESTAMP WITH TIME ZONE

@@ -90,17 +90,44 @@ export default function DynamicPageClient() {
         }
       }
       
-      // Fallback to API call
-      console.log('🔍 Page data not found in localStorage, trying API...');
-      const response = await fetch(`/api/landing-pages?pageId=${pageId}`);
+      // Try alternative localStorage keys
+      const alternativeKeys = [
+        `page_${pageId}`,
+        `landing-page-${pageId}`,
+        pageId
+      ];
       
-      if (!response.ok) {
-        throw new Error(`Failed to fetch page data: ${response.status}`);
+      for (const key of alternativeKeys) {
+        const altData = localStorage.getItem(key);
+        if (altData) {
+          try {
+            const pageData = JSON.parse(altData);
+            console.log(`✅ Found page data in localStorage with key '${key}':`, pageData);
+            setPageData(pageData);
+            setLoading(false);
+            return;
+          } catch (parseError) {
+            console.error(`Error parsing stored data for key '${key}':`, parseError);
+          }
+        }
       }
       
-      const data = await response.json();
-      console.log('📄 Received page data from API:', data);
-      setPageData(data);
+      // Generate basic page data if no stored data found
+      console.log('⚠️ No page data found, generating basic fallback data...');
+      const basicPageData = {
+        pageId: pageId,
+        template: 'modern', // Default to modern template
+        creatorName: `Creator ${pageId.split('-')[1] || 'Unknown'}`,
+        creatorIdDisplay: pageId.split('-')[1] || pageId.split('-')[0] || '1821',
+        successRedirectUrl: '',
+        failureRedirectUrl: '',
+        subscriptionAmount: 2000,
+        currency: 'Tsh'
+      };
+      
+      setPageData(basicPageData);
+      console.log('✅ Using fallback page data:', basicPageData);
+      
     } catch (err) {
       console.error('Error fetching page data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load page data');

@@ -420,8 +420,8 @@ export default function Home() {
                       creatorIdDisplay: creatorData.creatorId,
                       successRedirectUrl: creatorData.successRedirectUrl,
                       failureRedirectUrl: creatorData.successRedirectUrl || '',
-                      subscriptionAmount: 500, // Default amount
-                      currency: 'TZS' // Default currency
+                      subscriptionAmount: 2000, // Default amount
+                      currency: 'Tsh' // Default currency
                     };
                     
                     console.log('💾 Storing page data:', pageData);
