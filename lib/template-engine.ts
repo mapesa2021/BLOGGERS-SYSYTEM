@@ -487,7 +487,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     <!-- Video Grid -->
     <div class="video-grid">
       <!-- Preview Video 1 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/02Jympy5/download-42.jpg" alt="Premium Video 1">
           <div class="video-overlay">
@@ -503,12 +503,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 45.2K views</span>
             <span class="likes">❤️ 2.8K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Preview Video 2 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/s2tr3L5p/download-43.jpg" alt="Premium Video 2">
           <div class="video-overlay">
@@ -524,12 +524,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 78.5K views</span>
             <span class="likes">❤️ 5.1K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Preview Video 3 -->
-      <div class="video-card preview">
+      <div class="video-card preview" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/C50pqfP5/download-44.jpg" alt="Premium Video 3">
           <div class="video-overlay">
@@ -545,12 +545,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 92.7K views</span>
             <span class="likes">❤️ 6.3K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 4 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/GtjwJhVQ/download-45.jpg" alt="Locked Video">
           <div class="video-overlay">
@@ -566,12 +566,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 134.8K views</span>
             <span class="likes">❤️ 8.9K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 5 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/Ghc13GTS/download-46.jpg" alt="Locked Video">
           <div class="video-overlay">
@@ -587,12 +587,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 187.3K views</span>
             <span class="likes">❤️ 12.4K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 6 -->
-      <div class="video-card locked">
+      <div class="video-card locked" onclick="openSubscriptionPopup()">
         <div class="video-thumbnail">
           <img src="https://i.postimg.cc/rFQ2DsSy/download-47.jpg" alt="Locked Video">
           <div class="video-overlay">
@@ -608,59 +608,63 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <span class="views">👀 256.1K views</span>
             <span class="likes">❤️ 17.2K likes</span>
           </div>
-          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation(); openSubscriptionPopup();">Jiunge na whatsapp Group</button>
         </div>
       </div>
     </div>
 
-    <!-- Subscription Section -->
-    <div class="subscription-section">
-      <div class="subscription-card">
-        <div class="subscription-header">
+    <!-- Subscription Popup -->
+    <div id="subscriptionPopup" class="popup-overlay" style="display: none;">
+      <div class="popup-content">
+        <div class="popup-header">
           <h3>JIUNGE NA GROUP LANGU UPATE XVIDEOS 10 KILA SIKU🍆💦🍑🔞</h3>
-          <p>NJOO UPATE CONNECTION ZOTE ZA MASTAA🍆👙💦</p>
+          <button class="close-popup" onclick="closeSubscriptionPopup()">&times;</button>
+        </div>
+        
+        <div class="popup-body">
+          <p class="popup-subtitle">NJOO UPATE CONNECTION ZOTE ZA MASTAA🍆👙💦</p>
           <div class="pricing-info">
             <span class="price">{{creatorPrice}} {{creatorCurrency}}</span>
             <span class="period">/month</span>
           </div>
-        </div>
-        
-        <div class="subscription-form">
-          <div class="form-step" id="step1">
-            <div class="form-description">Enter your mobile money number to unlock all videos</div>
-            <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
-            <button onclick="subscribe()" class="subscribe-btn">
-              <span class="btn-text">🔓 Unlock All Videos</span>
-              <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
-            </button>
-          </div>
           
-          <div class="form-step" id="step2" style="display: none;">
-            <div class="success-message">
-              <div class="success-icon">🎉</div>
-              <h3>Welcome to the VIP club!</h3>
-              <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
-              <div class="ussd-info">
-                <h4>📱 Complete Your Payment</h4>
-                <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
-              <div class="payment-steps">
-                <ol>
-                    <li>Check your phone for the USSD prompt</li>
-                  <li>Enter your mobile money PIN</li>
-                    <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
-                    <li>Wait for confirmation message</li>
-                </ol>
+          <div class="subscription-form">
+            <div class="form-step" id="step1">
+              <div class="form-description">Enter your mobile money number to unlock all videos</div>
+              <input type="tel" id="phoneNumber" placeholder="Enter your phone number" class="form-input" required>
+              <button onclick="subscribe()" class="subscribe-btn">
+                <span class="btn-text">🔓 Unlock All Videos</span>
+                <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
+              </button>
+            </div>
+            
+            <div class="form-step" id="step2" style="display: none;">
+              <div class="success-message">
+                <div class="success-icon">🎉</div>
+                <h3>Welcome to the VIP club!</h3>
+                <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
+                <div class="ussd-info">
+                  <h4>📱 Complete Your Payment</h4>
+                  <p>You will receive a USSD prompt on your phone <strong id="userPhone"></strong></p>
+                <div class="payment-steps">
+                  <ol>
+                      <li>Check your phone for the USSD prompt</li>
+                    <li>Enter your mobile money PIN</li>
+                      <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
+                      <li>Wait for confirmation message</li>
+                  </ol>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div class="form-step" id="step3" style="display: none;">
-            <div class="error-message">
-              <div class="error-icon">😔</div>
-              <h3>Oops! Something went wrong</h3>
-              <p id="errorText">Subscription failed</p>
-              <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+            
+            <div class="form-step" id="step3" style="display: none;">
+              <div class="error-message">
+                <div class="error-icon">😔</div>
+                <h3>Oops! Something went wrong</h3>
+                <p id="errorText">Subscription failed</p>
+                <button onclick="backToStep1()" class="subscribe-btn">Try Again</button>
+              </div>
             </div>
           </div>
         </div>
@@ -842,6 +846,43 @@ function backToStep1() {
   showStep(1);
   document.getElementById('phoneNumber').value = '';
 }
+
+// Popup Functions
+function openSubscriptionPopup() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSubscriptionPopup() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    popup.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Close popup when clicking outside or pressing escape
+document.addEventListener('DOMContentLoaded', function() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    // Close on outside click
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        closeSubscriptionPopup();
+      }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && popup.style.display !== 'none') {
+        closeSubscriptionPopup();
+      }
+    });
+  }
+});
 </script>`;
   }
 
@@ -890,6 +931,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .whatsapp-btn { width: 100%; background: #25D366; color: white; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
 .whatsapp-btn:hover { background: #1DA851; transform: translateY(-1px); }
 .whatsapp-btn:active { transform: translateY(0); }
+
+/* Popup Styles */
+.popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.popup-content { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 20px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; border: 1px solid #333; }
+.popup-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 2rem 2rem 1rem; border-bottom: 1px solid #333; }
+.popup-header h3 { color: #ffffff; font-size: 1.5rem; margin: 0; line-height: 1.3; flex: 1; }
+.close-popup { background: none; border: none; color: #aaaaaa; font-size: 2rem; cursor: pointer; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.3s ease; }
+.close-popup:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+.popup-body { padding: 1rem 2rem 2rem; }
+.popup-subtitle { color: #aaaaaa; text-align: center; margin-bottom: 1.5rem; font-size: 1rem; }
 
 /* Subscription Section */
 .subscription-section { margin: 3rem 0; }
@@ -1262,6 +1313,43 @@ function backToStep1() {
   showStep(1);
   document.getElementById('phoneNumber').value = '';
 }
+
+// Popup Functions
+function openSubscriptionPopup() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSubscriptionPopup() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    popup.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Close popup when clicking outside or pressing escape
+document.addEventListener('DOMContentLoaded', function() {
+  const popup = document.getElementById('subscriptionPopup');
+  if (popup) {
+    // Close on outside click
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        closeSubscriptionPopup();
+      }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && popup.style.display !== 'none') {
+        closeSubscriptionPopup();
+      }
+    });
+  }
+});
 </script>`;
   }
 
