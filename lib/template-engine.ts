@@ -111,8 +111,8 @@ export class TemplateEngine {
     html = html.replace(/\{\{creatorName\}\}/g, data.creatorName || data.creatorId || 'Creator');
     html = html.replace(/\{\{creatorBio\}\}/g, data.creatorBio || 'Welcome to my creator page!');
     html = html.replace(/\{\{creatorImage\}\}/g, data.creatorImage || 'https://via.placeholder.com/150x150/667eea/ffffff?text=Creator');
-    html = html.replace(/\{\{creatorPrice\}\}/g, (data.creatorPrice || 0).toString());
-    html = html.replace(/\{\{creatorCurrency\}\}/g, data.creatorCurrency || 'TZS');
+    html = html.replace(/\{\{creatorPrice\}\}/g, (data.creatorPrice || 2000).toString());
+    html = html.replace(/\{\{creatorCurrency\}\}/g, data.creatorCurrency || 'Tsh');
 
     return this.combineHTML(html, css, data);
   }
@@ -477,149 +477,138 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
   private getModernHTML(): string {
     return `<div class="video-platform">
-  <!-- Header -->
-  <header class="platform-header">
-    <div class="header-content">
-      <div class="creator-channel">
-        <img src="{{creatorImage}}" alt="{{creatorName}}" class="channel-avatar">
-        <div class="channel-info">
-          <h1 class="channel-name">{{creatorName}}</h1>
-          <p class="channel-subtitle">{{creatorBio}}</p>
-          <div class="channel-stats">
-            <span class="subscriber-count">🔥 Premium Content</span>
-            <span class="video-count">📹 Exclusive Videos</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
   <!-- Video Feed Section -->
   <main class="video-feed">
     <div class="feed-header">
-      <h2>🎬 Premium Video Collection</h2>
-      <p class="feed-subtitle">Subscribe to unlock all exclusive content</p>
+      <h2>JIUNGE NA GROUP LANGU UPATE XVIDEOS 10 KILA SIKU🍆💦🍑🔞</h2>
+      <p class="feed-subtitle">NJOO UPATE CONNECTION ZOTE ZA MASTAA🍆👙💦</p>
     </div>
 
     <!-- Video Grid -->
     <div class="video-grid">
       <!-- Preview Video 1 -->
-      <div class="video-card preview" onclick="openSubscriptionModal('Exclusive Content Preview', '2:45')">
+      <div class="video-card preview">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=225&fit=crop" alt="Premium Video 1">
+          <img src="https://i.postimg.cc/02Jympy5/download-42.jpg" alt="Premium Video 1">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">2:45</div>
+            <div class="video-duration">8:42</div>
             <div class="premium-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">Exclusive Content Preview</h3>
+          <h3 class="video-title">VIDEO ZA MASTAA ZOTE ZILIZOVUJA ZIPO HAPA JIUNGE UZIPATE</h3>
           <p class="video-description">🔥 Hot content - Subscribe to watch full video</p>
           <div class="video-meta">
-            <span class="views">👀 1.2K views</span>
-            <span class="likes">❤️ 89 likes</span>
+            <span class="views">👀 45.2K views</span>
+            <span class="likes">❤️ 2.8K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Preview Video 2 -->
-      <div class="video-card preview" onclick="openSubscriptionModal('VIP Exclusive Access', '1:30')">
+      <div class="video-card preview">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop" alt="Premium Video 2">
+          <img src="https://i.postimg.cc/s2tr3L5p/download-43.jpg" alt="Premium Video 2">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">1:30</div>
+            <div class="video-duration">12:18</div>
             <div class="premium-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">VIP Exclusive Access</h3>
+          <h3 class="video-title">VIDEO CALL WHATSAPP MPAKA UNAKOJOA</h3>
           <p class="video-description">💎 Premium content - Unlock with subscription</p>
           <div class="video-meta">
-            <span class="views">👀 856 views</span>
-            <span class="likes">❤️ 67 likes</span>
+            <span class="views">👀 78.5K views</span>
+            <span class="likes">❤️ 5.1K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Preview Video 3 -->
-      <div class="video-card preview" onclick="openSubscriptionModal('Special Content', '3:15')">
+      <div class="video-card preview">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=225&fit=crop" alt="Premium Video 3">
+          <img src="https://i.postimg.cc/C50pqfP5/download-44.jpg" alt="Premium Video 3">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">3:15</div>
+            <div class="video-duration">15:33</div>
             <div class="premium-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">Special Content</h3>
+          <h3 class="video-title">WATOTO WA CHUO MIKOA YOTE 🍆👙💦</h3>
           <p class="video-description">⭐ New upload - Subscribe to watch</p>
           <div class="video-meta">
-            <span class="views">👀 2.1K views</span>
-            <span class="likes">❤️ 156 likes</span>
+            <span class="views">👀 92.7K views</span>
+            <span class="likes">❤️ 6.3K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 4 -->
-      <div class="video-card locked" onclick="openSubscriptionModal('Premium Only Content', '4:20')">
+      <div class="video-card locked">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=225&fit=crop" alt="Locked Video">
+          <img src="https://i.postimg.cc/GtjwJhVQ/download-45.jpg" alt="Locked Video">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">4:20</div>
+            <div class="video-duration">18:56</div>
             <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">Premium Only Content</h3>
+          <h3 class="video-title">GROUP LA VIDEO ZA WAJAWAZITO WAKITOMBANA 10 KILA SIKU</h3>
           <p class="video-description">▶️ Subscribe to unlock this exclusive video</p>
           <div class="video-meta">
-            <span class="views">👀 3.4K views</span>
-            <span class="likes">❤️ 234 likes</span>
+            <span class="views">👀 134.8K views</span>
+            <span class="likes">❤️ 8.9K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 5 -->
-      <div class="video-card locked" onclick="openSubscriptionModal('VIP Exclusive', '5:12')">
+      <div class="video-card locked">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=225&fit=crop" alt="Locked Video">
+          <img src="https://i.postimg.cc/Ghc13GTS/download-46.jpg" alt="Locked Video">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">5:12</div>
+            <div class="video-duration">22:14</div>
             <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">VIP Exclusive</h3>
+          <h3 class="video-title">GROUP LA MALAYA KUTOMBANA NA KUFIRANA DAR NA DODOMA</h3>
           <p class="video-description">▶️ Premium subscribers only</p>
           <div class="video-meta">
-            <span class="views">👀 1.8K views</span>
-            <span class="likes">❤️ 145 likes</span>
+            <span class="views">👀 187.3K views</span>
+            <span class="likes">❤️ 12.4K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
 
       <!-- Locked Video 6 -->
-      <div class="video-card locked" onclick="openSubscriptionModal('Latest Upload', '2:58')">
+      <div class="video-card locked">
         <div class="video-thumbnail">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=225&fit=crop" alt="Locked Video">
+          <img src="https://i.postimg.cc/rFQ2DsSy/download-47.jpg" alt="Locked Video">
           <div class="video-overlay">
             <div class="play-button">▶️</div>
-            <div class="video-duration">2:58</div>
+            <div class="video-duration">25:07</div>
             <div class="locked-badge">PREMIUM</div>
           </div>
         </div>
         <div class="video-info">
-          <h3 class="video-title">Latest Upload</h3>
+          <h3 class="video-title">VIDEO ZA WANAFUNZI WA CHUO WAKIJAMIIANA</h3>
           <p class="video-description">▶️ New content - Subscribe to access</p>
           <div class="video-meta">
-            <span class="views">👀 4.2K views</span>
-            <span class="likes">❤️ 312 likes</span>
+            <span class="views">👀 256.1K views</span>
+            <span class="likes">❤️ 17.2K likes</span>
           </div>
+          <button class="whatsapp-btn">Jiunge na whatsapp Group</button>
         </div>
       </div>
     </div>
@@ -628,8 +617,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     <div class="subscription-section">
       <div class="subscription-card">
         <div class="subscription-header">
-          <h3>🎬 Unlock All Premium Videos</h3>
-          <p>Get instant access to {{creatorName}}'s exclusive video collection</p>
+          <h3>JIUNGE NA GROUP LANGU UPATE XVIDEOS 10 KILA SIKU🍆💦🍑🔞</h3>
+          <p>NJOO UPATE CONNECTION ZOTE ZA MASTAA🍆👙💦</p>
           <div class="pricing-info">
             <span class="price">{{creatorPrice}} {{creatorCurrency}}</span>
             <span class="period">/month</span>
@@ -713,72 +702,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       </div>
     </div>
   </main>
-  
-  <!-- Subscription Modal -->
-  <div id="subscriptionModal" class="subscription-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>🎬 Unlock Premium Video</h3>
-        <button class="close-btn" onclick="closeSubscriptionModal()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="video-preview">
-          <h4 id="modalVideoTitle">Video Title</h4>
-          <p id="modalVideoDuration">Duration: 0:00</p>
-        </div>
-        <div class="subscription-card">
-          <div class="subscription-header">
-            <h3>🔓 Unlock All Premium Videos</h3>
-            <p>Get instant access to {{creatorName}}'s exclusive video collection</p>
-            <div class="pricing-info">
-              <span class="price">{{creatorPrice}} {{creatorCurrency}}</span>
-              <span class="period">/month</span>
-            </div>
-          </div>
-          
-          <div class="subscription-form">
-            <div class="form-step" id="modalStep1">
-              <div class="form-description">Enter your mobile money number to unlock all videos</div>
-              <input type="tel" id="modalPhoneNumber" placeholder="Enter your phone number" class="form-input" required>
-              <button onclick="subscribeFromModal()" class="subscribe-btn">
-                <span class="btn-text">🔓 Unlock All Videos</span>
-                <span class="btn-price">{{creatorPrice}} {{creatorCurrency}}</span>
-              </button>
-            </div>
-            
-            <div class="form-step" id="modalStep2" style="display: none;">
-              <div class="success-message">
-                <div class="success-icon">🎉</div>
-                <h3>Welcome to the VIP club!</h3>
-                <p>Your subscription to <strong>{{creatorName}}</strong> is now active!</p>
-                <div class="ussd-info">
-                  <h4>📱 Complete Your Payment</h4>
-                  <p>You will receive a USSD prompt on your phone <strong id="modalUserPhone"></strong></p>
-                  <div class="payment-steps">
-                    <ol>
-                      <li>Check your phone for the USSD prompt</li>
-                      <li>Enter your mobile money PIN</li>
-                      <li>Confirm the payment of <strong>{{creatorPrice}} {{creatorCurrency}}</strong></li>
-                      <li>Wait for confirmation message</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-step" id="modalStep3" style="display: none;">
-              <div class="error-message">
-                <div class="error-icon">😔</div>
-                <h3>Oops! Something went wrong</h3>
-                <p id="modalErrorText">Subscription failed</p>
-                <button onclick="backToModalStep1()" class="subscribe-btn">Try Again</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   
   <footer class="footer">
     <p>&copy; 2024 {{creatorName}}. Powered by <a href="https://clubzila.com" target="_blank">Clubzila</a></p>
@@ -919,97 +842,6 @@ function backToStep1() {
   showStep(1);
   document.getElementById('phoneNumber').value = '';
 }
-
-// Modal Functions
-function openSubscriptionModal(videoTitle, videoDuration) {
-  document.getElementById('modalVideoTitle').textContent = videoTitle;
-  document.getElementById('modalVideoDuration').textContent = 'Duration: ' + videoDuration;
-  document.getElementById('subscriptionModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSubscriptionModal() {
-  document.getElementById('subscriptionModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-  // Reset modal form
-  backToModalStep1();
-}
-
-async function subscribeFromModal() {
-  const phoneNumber = document.getElementById('modalPhoneNumber').value.trim();
-  
-  if (!phoneNumber) {
-    alert('Please enter your mobile money phone number');
-    return;
-  }
-  
-  // Extract pageId from URL path
-  const pathParts = window.location.pathname.split('/');
-  const pageId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
-  
-  console.log('Subscribe from modal:', { pageId, phoneNumber, templateType: 'modern' });
-  
-  // Show processing popup
-  showProcessingState();
-  
-  try {
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        pageId: pageId,
-        phoneNumber: phoneNumber,
-        templateType: 'modern'
-      })
-    });
-    
-    const result = await response.json();
-    
-    // Hide processing popup
-    hideProcessingState();
-    
-    if (result.success) {
-      // Show success step with USSD instructions
-      document.getElementById('modalUserPhone').textContent = phoneNumber;
-      showModalStep(2);
-    } else {
-      showModalError(result.message || 'Subscription failed');
-    }
-  } catch (error) {
-    console.error('Subscription error:', error);
-    // Hide processing popup
-    hideProcessingState();
-    showModalError('Network error. Please try again.');
-  }
-}
-
-function showModalStep(stepNumber) {
-  // Hide all modal steps
-  for (let i = 1; i <= 3; i++) {
-    document.getElementById('modalStep' + i).style.display = 'none';
-  }
-  
-  // Show the specified step
-  document.getElementById('modalStep' + stepNumber).style.display = 'block';
-}
-
-function showModalError(message) {
-  document.getElementById('modalErrorText').textContent = message;
-  showModalStep(3);
-}
-
-function backToModalStep1() {
-  showModalStep(1);
-  document.getElementById('modalPhoneNumber').value = '';
-}
-
-// Close modal when clicking outside
-document.addEventListener('click', function(event) {
-  const modal = document.getElementById('subscriptionModal');
-  if (event.target === modal) {
-    closeSubscriptionModal();
-  }
-});
 </script>`;
   }
 
@@ -1051,8 +883,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .video-info { padding: 1rem; }
 .video-title { font-size: 1.1rem; font-weight: 600; color: #ffffff; margin-bottom: 0.5rem; line-height: 1.3; }
 .video-description { color: #aaaaaa; font-size: 0.9rem; margin-bottom: 0.75rem; }
-.video-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #888; }
+.video-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #888; margin-bottom: 1rem; }
 .views, .likes { display: flex; align-items: center; gap: 0.25rem; }
+
+/* WhatsApp Button */
+.whatsapp-btn { width: 100%; background: #25D366; color: white; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
+.whatsapp-btn:hover { background: #1DA851; transform: translateY(-1px); }
+.whatsapp-btn:active { transform: translateY(0); }
 
 /* Subscription Section */
 .subscription-section { margin: 3rem 0; }
@@ -2826,18 +2663,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .bet-details { background: #f8f9fa; border-radius: 10px; padding: 15px; margin-top: 15px; text-align: left; }
 .modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
 .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
-
-/* Subscription Modal */
-.subscription-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center; }
-.subscription-modal .modal-content { background: #1a1a1a; border-radius: 20px; padding: 0; max-width: 600px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5); animation: modalSlideIn 0.3s ease; }
-.subscription-modal .modal-header { background: linear-gradient(135deg, #ff0040, #ff4081); color: white; padding: 20px; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
-.subscription-modal .modal-header h3 { font-size: 1.5rem; font-weight: 600; margin: 0; }
-.subscription-modal .close-btn { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s ease; }
-.subscription-modal .close-btn:hover { background: rgba(255, 255, 255, 0.2); }
-.subscription-modal .modal-body { padding: 20px; }
-.subscription-modal .video-preview { background: #2d2d2d; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: center; }
-.subscription-modal .video-preview h4 { color: #ffffff; font-size: 1.2rem; margin-bottom: 10px; }
-.subscription-modal .video-preview p { color: #aaaaaa; font-size: 1rem; }
 
 /* Responsive Design */
 @media (max-width: 1200px) { .main-content { grid-template-columns: 1fr; gap: 20px; } .betting-slip { position: static; max-height: none; } }

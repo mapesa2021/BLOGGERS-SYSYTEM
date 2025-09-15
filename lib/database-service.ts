@@ -329,7 +329,7 @@ export class LegacyStorageService {
           creatorId: landingPage.creator_id_display,
           successRedirectUrl: landingPage.success_redirect_url,
           failureRedirectUrl: landingPage.failure_redirect_url,
-          subscriptionAmount: 500, // Default amount
+          subscriptionAmount: 2000, // Default amount
           currency: 'TZS',
           creatorName: landingPage.title
         }

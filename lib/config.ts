@@ -29,7 +29,7 @@ export const clubzilaConfig = {
   // Default values for payments
   defaults: {
     phoneNumber: process.env.CLUBZILA_PHONE_NUMBER || '0754546567',
-    amount: Number(process.env.CLUBZILA_AMOUNT) || 500,
+    amount: Number(process.env.CLUBZILA_AMOUNT) || 2000,
   }
 };
 
