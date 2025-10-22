@@ -229,6 +229,23 @@ export default function Home() {
                             onClick={(e) => {
                               e.stopPropagation();
                               const fixedUrl = `${window.location.origin}/page/107-1757-business-services-pro-fixed`;
+                              const pageId = '107-1757-business-services-pro-fixed';
+                              
+                              // Store the page data for the fixed URL
+                              const pageData = {
+                                pageId: pageId,
+                                template: 'business-services-pro',
+                                creatorName: 'Landing Page - 1757',
+                                creatorIdDisplay: '1757',
+                                successRedirectUrl: '',
+                                failureRedirectUrl: '',
+                                subscriptionAmount: 2000,
+                                currency: 'Tsh'
+                              };
+                              
+                              localStorage.setItem(`landing_page_${pageId}`, JSON.stringify(pageData));
+                              console.log('✅ Stored fixed page data in localStorage');
+                              
                               navigator.clipboard.writeText(fixedUrl);
                               // Show temporary confirmation
                               const button = e.currentTarget;
